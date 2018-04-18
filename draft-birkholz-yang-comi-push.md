@@ -52,24 +52,15 @@ author:
 
 normative:
   RFC7252:
-  RFC7641:
   RFC8040:
   RFC7049:
-  RFC8132:
-  RFC8071:
   RFC7950:
   RFC6241:
   RFC5277:
   I-D.ietf-core-yang-cbor: yangcbor
-  I-D.ietf-core-coap-pubsub: pubsub
   I-D.ietf-core-comi: comi
-  I-D.ietf-core-coap-tcp-tls: reliable
   I-D.ietf-netconf-subscribed-notifications: yangnote
   I-D.ietf-netconf-yang-push: yangpush
-  I-D.ietf-core-sid: sid
-  I-D.vanderstok-ace-coap-est: EST-coaps
-  I-D.ietf-anima-bootstrapping-keyinfra: BRSKI
-  I-D.ietf-netconf-zerotouch: yangzerotouch
   I-D.ietf-netconf-notification-messages: notemsgs
 
 informative:
