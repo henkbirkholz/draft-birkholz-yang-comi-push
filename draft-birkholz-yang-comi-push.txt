@@ -97,15 +97,15 @@ Table of Contents
      7.2.  change-type . . . . . . . . . . . . . . . . . . . . . . .   8
      7.3.  no sync-on-start  . . . . . . . . . . . . . . . . . . . .   8
    8.  YANG Push Operations for COMI . . . . . . . . . . . . . . . .   8
-   9.  Upcoming Features and Stories . . . . . . . . . . . . . . . .   8
-   10. IANA considerations . . . . . . . . . . . . . . . . . . . . .   9
-   11. Security Considerations . . . . . . . . . . . . . . . . . . .   9
-   12. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   9
-   13. Change Log  . . . . . . . . . . . . . . . . . . . . . . . . .   9
-   14. Normative References  . . . . . . . . . . . . . . . . . . . .   9
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  10
-
-
+     8.1.  Extension of the CoMI Event Stream Resource . . . . . . .   8
+     8.2.  Extension of the YANG Subscription Mechanism  . . . . . .   9
+   9.  Upcoming Features and Stories . . . . . . . . . . . . . . . .   9
+   10. IANA considerations . . . . . . . . . . . . . . . . . . . . .  10
+   11. Security Considerations . . . . . . . . . . . . . . . . . . .  10
+   12. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  10
+   13. Change Log  . . . . . . . . . . . . . . . . . . . . . . . . .  10
+   14. Normative References  . . . . . . . . . . . . . . . . . . . .  10
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  11
 
 
 
@@ -428,6 +428,59 @@ Internet-Draft                  CoMI Push                     April 2018
    subscription id.  There is more work to be done here to flesh that
    out.
 
+8.1.  Extension of the CoMI Event Stream Resource
+
+   A standard CoMI datastore as defined in [I-D.ietf-core-comi]
+   typically uses the datastore resource "/c" to provide the YANG
+   datastore tree and the resource "/s" to provide the YANG notification
+   stream.  Sub-resources under "/c" are represented in the format of
+   /c/sid.
+
+   CoMI Push extends the scope of the "/s" resource.  Sub-resources
+   under "/s" are represented as /s/key, where key is a numeric string
+   representation of the subscription identifier, e.g. "/s/65536/".  The
+   key representation reduces the ambiguity with respect to sid, which
+   uses an URI safe base64 representation.
+
+
+
+
+Birkholz, et al.        Expires October 20, 2018                [Page 8]
+
+Internet-Draft                  CoMI Push                     April 2018
+
+
+   Under each subscription identifier key provided as a sub-resource of
+   the "/s" resource, a YANG tree instance of the subscription
+   characteristics yang:ietf-subscribed-notifications/subscriptions (as
+   defined in YANG Push [I-D.ietf-netconf-yang-push], which aguments
+   ietf-subscribed-notification defined in
+   [I-D.ietf-netconf-subscribed-notifications]) is provided.  In the
+   following example every sid is illustrated as a "string" as there is
+   no sid for corresponding instance identifiers yet:
+
+   /s/"65536"/"stream"/"within-subscription"/"filter-spec"/"stream-
+   xpath-filter"/"stream-xpath-filter"
+
+   This example would point to the filter selection associated with
+   subscription id 65536.
+
+8.2.  Extension of the YANG Subscription Mechanism
+
+   YANG Push provides augmented RPC for establishing, modifying,
+   deleting, or killing a subscription.  CoMI uses the same module as
+   YANG Push and provides a corresponding interface to allow for a
+   corresponding confirmable POST message to RPC resources (see
+   [I-D.ietf-core-comi] Section 5.3.2.).
+
+   CoMI Push also defines the capabilites to point confirmable FETCH
+   messeges - including the Observe option - to sub-resources provided
+   by "/c".  If the body of the FETCH message includes a CBOR modeled
+   [I-D.ietf-core-yang-cbor] subtree filter expression, a new
+   subscription is created and a corresponding subscription id is
+   returned.  Additionally, a corresponding subscription sub-resource
+   under "/s" is created.
+
 9.  Upcoming Features and Stories
 
    o  maybe we should introduce /sn and /snmb for stream subscriptions
@@ -441,17 +494,17 @@ Internet-Draft                  CoMI Push                     April 2018
 
    o  my resource goes away during subscription (e.g.  FRU pulled)
 
+   o  back channel liveness check - important for udp and sudden outage
+      in telemetry flows
 
 
 
 
-Birkholz, et al.        Expires October 20, 2018                [Page 8]
+
+Birkholz, et al.        Expires October 20, 2018                [Page 9]
 
 Internet-Draft                  CoMI Push                     April 2018
 
-
-   o  back channel liveness check - important for udp and sudden outage
-      in telemetry flows
 
 10.  IANA considerations
 
@@ -496,21 +549,18 @@ Internet-Draft                  CoMI Push                     April 2018
               Event Streams", draft-ietf-netconf-subscribed-
               notifications-12 (work in progress), April 2018.
 
-
-
-
-
-
-Birkholz, et al.        Expires October 20, 2018                [Page 9]
-
-Internet-Draft                  CoMI Push                     April 2018
-
-
    [I-D.ietf-netconf-yang-push]
               Clemm, A., Voit, E., Prieto, A., Tripathy, A., Nilsen-
               Nygaard, E., Bierman, A., and B. Lengyel, "YANG Datastore
               Subscription", draft-ietf-netconf-yang-push-15 (work in
               progress), February 2018.
+
+
+
+Birkholz, et al.        Expires October 20, 2018               [Page 10]
+
+Internet-Draft                  CoMI Push                     April 2018
+
 
    [RFC5277]  Chisholm, S. and H. Trevino, "NETCONF Event
               Notifications", RFC 5277, DOI 10.17487/RFC5277, July 2008,
@@ -557,7 +607,13 @@ Authors' Addresses
 
 
 
-Birkholz, et al.        Expires October 20, 2018               [Page 10]
+
+
+
+
+
+
+Birkholz, et al.        Expires October 20, 2018               [Page 11]
 
 Internet-Draft                  CoMI Push                     April 2018
 
@@ -613,4 +669,4 @@ Internet-Draft                  CoMI Push                     April 2018
 
 
 
-Birkholz, et al.        Expires October 20, 2018               [Page 11]
+Birkholz, et al.        Expires October 20, 2018               [Page 12]
