@@ -314,6 +314,24 @@ OR
 
 Please note, that Concise COMI Push allows SIDs to be used as subscription id. There is more work to be done here to flesh that out.
 
+## Extension of the CoMI Event Stream Resource
+
+A standard CoMI datastore as defined in [I-D.ietf-core-comi] typically uses the datastore resource “/c” to provide the YANG datastore tree and the resource “/s” to provide the YANG notification stream. Sub-resources under “/c” are represented in the format of /c/sid.
+
+CoMI Push extends the scope of the “/s” resource. Sub-resources under “/s” are represented as /s/key, where key is a numeric string representation of the subscription identifier, e.g. “/s/65536/”. The key representation reduces the ambiguity with respect to sid, which uses an URI safe base64 representation.
+
+Under each subscription identifier key provided as a sub-resource of the “/s” resource, a YANG tree instance of the subscription characteristics yang:ietf-subscribed-notifications/subscriptions (as defined in YANG Push [I-D.ietf-netconf-yang-push], which aguments ietf-subscribed-notification defined in [I-D.ietf-netconf-subscribed-notifications]) is provided. In the following example every sid is illustrated as a “string” as there is no sid for corresponding instance identifiers yet:
+
+/s/”65536”/”stream”/”within-subscription”/”filter-spec”/”stream-xpath-filter”/”stream-xpath-filter“
+
+This example would point to the filter selection associated with subscription id 65536.
+
+## Extension of the YANG Subscription Mechanism
+
+YANG Push provides augmented RPC for establishing, modifying, deleting, or killing a subscription. CoMI uses the same module as YANG Push and provides a corresponding interface to allow for a corresponding confirmable POST message to RPC resources (see [I-D.ietf-core-comi] Section 5.3.2.).
+
+CoMI Push also defines the capabilites to point confirmable FETCH messeges – including the Observe option - to sub-resources provided by “/c”. If the body of the FETCH message includes a CBOR modeled [I-D.ietf-core-yang-cbor] subtree filter expression, a new subscription is created and a corresponding subscription id is returned. Additionally, a corresponding subscription sub-resource under “/s” is created.
+
 # Upcoming Features and Stories
 
 * maybe we should introduce /sn and /snmb for stream subscriptions and
