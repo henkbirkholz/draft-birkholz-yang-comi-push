@@ -5,7 +5,7 @@
 <head profile="http://www.w3.org/2006/03/hcard http://dublincore.org/documents/2008/08/04/dc-html/">
   <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
 
-  <title>Concise YANG Push</title>
+  <title>Concise YANG Telemetry</title>
 
   
 <style type="text/css">/*<![CDATA[*/
@@ -21,7 +21,7 @@ body {
 }
 
 .title, .filename, h1, h2, h3, h4, h5 {
-  font: 16px "Helvetica Neue","Roboto Condensed","Open Sans",Helvetica,Calibri,sans-serif;
+  font: 16px "Roboto Condensed","Helvetica Neue","Open Sans",Helvetica,Calibri,sans-serif;
   font-size-adjust: 0.5;
   font-weight: bold;
   color: #333;
@@ -277,42 +277,43 @@ ul.toc li {
 
   <link href="#rfc.toc" rel="Contents">
 <link href="#rfc.section.1" rel="Chapter" title="1 Introduction">
-<link href="#rfc.section.1.1" rel="Chapter" title="1.1 Additions to CoMI">
-<link href="#rfc.section.1.2" rel="Chapter" title="1.2 Telemetry-Specific CoMI datastores">
-<link href="#rfc.section.2" rel="Chapter" title="2 Subscription Content">
-<link href="#rfc.section.2.1" rel="Chapter" title="2.1 Selection Filter / Filter Selection (which one)?">
-<link href="#rfc.section.3" rel="Chapter" title="3 Subscription Characteristics">
-<link href="#rfc.section.3.1" rel="Chapter" title="3.1 Subscription Trigger">
-<link href="#rfc.section.3.1.1" rel="Chapter" title="3.1.1 Configured Subscription">
-<link href="#rfc.section.3.1.2" rel="Chapter" title="3.1.2 Dynamic Subscriptions">
-<link href="#rfc.section.3.2" rel="Chapter" title="3.2 Subscription Interval">
-<link href="#rfc.section.3.2.1" rel="Chapter" title="3.2.1 Periodic Subscription">
-<link href="#rfc.section.3.2.2" rel="Chapter" title="3.2.2 On-Change Subscription">
-<link href="#rfc.section.3.3" rel="Chapter" title="3.3 Subscription Type">
-<link href="#rfc.section.3.3.1" rel="Chapter" title="3.3.1 Stream Subscription">
-<link href="#rfc.section.3.3.2" rel="Chapter" title="3.3.2 Datastore Subscription">
-<link href="#rfc.section.4" rel="Chapter" title="4 Subscription Management (better word?)">
-<link href="#rfc.section.4.1" rel="Chapter" title="4.1 YANG RPCs">
-<link href="#rfc.section.4.2" rel="Chapter" title="4.2 NETCONF Access Control Model [RFC6536bis]">
-<link href="#rfc.section.5" rel="Chapter" title="5 Selection Filters">
-<link href="#rfc.section.5.1" rel="Chapter" title="5.1 SID for subtree Selection Filter">
-<link href="#rfc.section.5.2" rel="Chapter" title="5.2 CBOR-YANG for XPATH-like Selection Filter">
-<link href="#rfc.section.6" rel="Chapter" title="6 Update Triggers for Periodic Subscriptions">
-<link href="#rfc.section.6.1" rel="Chapter" title="6.1 Interval">
-<link href="#rfc.section.6.2" rel="Chapter" title="6.2 Anchor Time">
-<link href="#rfc.section.7" rel="Chapter" title="7 Update Triggers for On-Change Subscriptions">
-<link href="#rfc.section.7.1" rel="Chapter" title="7.1 dampening period">
-<link href="#rfc.section.7.2" rel="Chapter" title="7.2 change-type">
-<link href="#rfc.section.7.3" rel="Chapter" title="7.3 no sync-on-start">
-<link href="#rfc.section.8" rel="Chapter" title="8 YANG Push Operations for COMI">
-<link href="#rfc.section.8.1" rel="Chapter" title="8.1 Extension of the CoMI Event Stream Resource">
-<link href="#rfc.section.8.2" rel="Chapter" title="8.2 Extension of the YANG Subscription Mechanism">
-<link href="#rfc.section.9" rel="Chapter" title="9 Upcoming Features and Stories">
-<link href="#rfc.section.10" rel="Chapter" title="10 IANA considerations">
-<link href="#rfc.section.11" rel="Chapter" title="11 Security Considerations">
-<link href="#rfc.section.12" rel="Chapter" title="12 Acknowledgements">
-<link href="#rfc.section.13" rel="Chapter" title="13 Change Log">
-<link href="#rfc.references" rel="Chapter" title="14 Normative References">
+<link href="#rfc.section.2" rel="Chapter" title="2 CoMI Push Terminology">
+<link href="#rfc.section.2.1" rel="Chapter" title="2.1 Summary of YANG Push Additions to CoMI">
+<link href="#rfc.section.2.2" rel="Chapter" title="2.2 Telemetry-Specific CoMI datastores">
+<link href="#rfc.section.3" rel="Chapter" title="3 Subscription Content and State">
+<link href="#rfc.section.3.1" rel="Chapter" title="3.1 Selection Filter">
+<link href="#rfc.section.4" rel="Chapter" title="4 Subscription Characteristics">
+<link href="#rfc.section.4.1" rel="Chapter" title="4.1 Subscription Trigger">
+<link href="#rfc.section.4.1.1" rel="Chapter" title="4.1.1 CoMI Push Configured Subscriptions">
+<link href="#rfc.section.4.1.2" rel="Chapter" title="4.1.2 Dynamic Subscriptions">
+<link href="#rfc.section.4.2" rel="Chapter" title="4.2 Subscription Interval">
+<link href="#rfc.section.4.2.1" rel="Chapter" title="4.2.1 Periodic Subscription">
+<link href="#rfc.section.4.2.2" rel="Chapter" title="4.2.2 On-Change Subscription">
+<link href="#rfc.section.4.3" rel="Chapter" title="4.3 Subscription Type">
+<link href="#rfc.section.4.3.1" rel="Chapter" title="4.3.1 Stream Subscription">
+<link href="#rfc.section.4.3.2" rel="Chapter" title="4.3.2 Datastore Subscription">
+<link href="#rfc.section.5" rel="Chapter" title="5 Subscription Management (better word?)">
+<link href="#rfc.section.5.1" rel="Chapter" title="5.1 YANG RPCs">
+<link href="#rfc.section.5.2" rel="Chapter" title="5.2 NETCONF Access Control Model [RFC6536bis]">
+<link href="#rfc.section.6" rel="Chapter" title="6 Selection Filters">
+<link href="#rfc.section.6.1" rel="Chapter" title="6.1 SID for subtree Selection Filter">
+<link href="#rfc.section.6.2" rel="Chapter" title="6.2 CBOR-YANG for XPATH-like Selection Filter">
+<link href="#rfc.section.7" rel="Chapter" title="7 Update Triggers for Periodic Subscriptions">
+<link href="#rfc.section.7.1" rel="Chapter" title="7.1 Interval">
+<link href="#rfc.section.7.2" rel="Chapter" title="7.2 Anchor Time">
+<link href="#rfc.section.8" rel="Chapter" title="8 Update Triggers for On-Change Subscriptions">
+<link href="#rfc.section.8.1" rel="Chapter" title="8.1 dampening period">
+<link href="#rfc.section.8.2" rel="Chapter" title="8.2 change-type">
+<link href="#rfc.section.8.3" rel="Chapter" title="8.3 no sync-on-start">
+<link href="#rfc.section.9" rel="Chapter" title="9 YANG Push Operations for COMI">
+<link href="#rfc.section.9.1" rel="Chapter" title="9.1 Extension of the CoMI Event Stream Resource">
+<link href="#rfc.section.9.2" rel="Chapter" title="9.2 Extension of the YANG Subscription Mechanism">
+<link href="#rfc.section.10" rel="Chapter" title="10 Upcoming Features and Stories">
+<link href="#rfc.section.11" rel="Chapter" title="11 IANA considerations">
+<link href="#rfc.section.12" rel="Chapter" title="12 Security Considerations">
+<link href="#rfc.section.13" rel="Chapter" title="13 Acknowledgements">
+<link href="#rfc.section.14" rel="Chapter" title="14 Change Log">
+<link href="#rfc.references" rel="Chapter" title="15 Normative References">
 <link href="#rfc.authors" rel="Chapter">
 
 
@@ -322,8 +323,8 @@ ul.toc li {
   <meta name="dct.creator" content="Birkholz, H., Voit, E., Liu, X., and T. Zhou" />
   <meta name="dct.identifier" content="urn:ietf:id:draft-birkholz-yang-comi-push-latest" />
   <meta name="dct.issued" scheme="ISO8601" content="2018-04-18" />
-  <meta name="dct.abstract" content="This documents defines an YANG Augment to the base CoMI module definition. The mechanisms defined in YANG Push, YANG Subscribed Notifications &amp; NETCONF Event Notifications are mapped to CoAP operation in alignment with existing CoAP-based operations.  Specific additions include but are not limited to new FETCH Body definitions and simplified subtree subscriptions to intermediate data nodes in the module tree via SID." />
-  <meta name="description" content="This documents defines an YANG Augment to the base CoMI module definition. The mechanisms defined in YANG Push, YANG Subscribed Notifications &amp; NETCONF Event Notifications are mapped to CoAP operation in alignment with existing CoAP-based operations.  Specific additions include but are not limited to new FETCH Body definitions and simplified subtree subscriptions to intermediate data nodes in the module tree via SID." />
+  <meta name="dct.abstract" content="This documents defines an YANG Augment to the base CoMI module definition. The mechanisms defined in YANG Push, YANG Subscribed Notifications are mapped to CoAP operation in alignment with existing CoAP-based operations.  Specific additions include but are not limited to new FETCH Body definitions and simplified subtree subscriptions to intermediate data nodes in the module tree via SID." />
+  <meta name="description" content="This documents defines an YANG Augment to the base CoMI module definition. The mechanisms defined in YANG Push, YANG Subscribed Notifications are mapped to CoAP operation in alignment with existing CoAP-based operations.  Specific additions include but are not limited to new FETCH Body definitions and simplified subtree subscriptions to intermediate data nodes in the module tree via SID." />
 
 </head>
 
@@ -373,11 +374,11 @@ ul.toc li {
     </tbody>
   </table>
 
-  <p class="title">Concise YANG Push<br />
+  <p class="title">Concise YANG Telemetry<br />
   <span class="filename">draft-birkholz-yang-comi-push-latest</span></p>
   
   <h1 id="rfc.abstract"><a href="#rfc.abstract">Abstract</a></h1>
-<p>This documents defines an YANG Augment to the base CoMI module definition. The mechanisms defined in YANG Push, YANG Subscribed Notifications &amp; NETCONF Event Notifications are mapped to CoAP operation in alignment with existing CoAP-based operations.  Specific additions include but are not limited to new FETCH Body definitions and simplified subtree subscriptions to intermediate data nodes in the module tree via SID.</p>
+<p>This documents defines an YANG Augment to the base CoMI module definition. The mechanisms defined in YANG Push, YANG Subscribed Notifications are mapped to CoAP operation in alignment with existing CoAP-based operations.  Specific additions include but are not limited to new FETCH Body definitions and simplified subtree subscriptions to intermediate data nodes in the module tree via SID.</p>
 <h1 id="rfc.status"><a href="#rfc.status">Status of This Memo</a></h1>
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at https://datatracker.ietf.org/drafts/current/.</p>
@@ -394,77 +395,79 @@ ul.toc li {
 
   	<li>1.   <a href="#rfc.section.1">Introduction</a>
 </li>
-<ul><li>1.1.   <a href="#rfc.section.1.1">Additions to CoMI</a>
+<li>2.   <a href="#rfc.section.2">CoMI Push Terminology</a>
 </li>
-<li>1.2.   <a href="#rfc.section.1.2">Telemetry-Specific CoMI datastores</a>
+<ul><li>2.1.   <a href="#rfc.section.2.1">Summary of YANG Push Additions to CoMI</a>
 </li>
-</ul><li>2.   <a href="#rfc.section.2">Subscription Content</a>
+<li>2.2.   <a href="#rfc.section.2.2">Telemetry-Specific CoMI datastores</a>
 </li>
-<ul><li>2.1.   <a href="#rfc.section.2.1">Selection Filter / Filter Selection (which one)?</a>
+</ul><li>3.   <a href="#rfc.section.3">Subscription Content and State</a>
 </li>
-</ul><li>3.   <a href="#rfc.section.3">Subscription Characteristics</a>
+<ul><li>3.1.   <a href="#rfc.section.3.1">Selection Filter</a>
 </li>
-<ul><li>3.1.   <a href="#rfc.section.3.1">Subscription Trigger</a>
+</ul><li>4.   <a href="#rfc.section.4">Subscription Characteristics</a>
 </li>
-<ul><li>3.1.1.   <a href="#rfc.section.3.1.1">Configured Subscription</a>
+<ul><li>4.1.   <a href="#rfc.section.4.1">Subscription Trigger</a>
 </li>
-<li>3.1.2.   <a href="#rfc.section.3.1.2">Dynamic Subscriptions</a>
+<ul><li>4.1.1.   <a href="#rfc.section.4.1.1">CoMI Push Configured Subscriptions</a>
 </li>
-</ul><li>3.2.   <a href="#rfc.section.3.2">Subscription Interval</a>
+<li>4.1.2.   <a href="#rfc.section.4.1.2">Dynamic Subscriptions</a>
 </li>
-<ul><li>3.2.1.   <a href="#rfc.section.3.2.1">Periodic Subscription</a>
+</ul><li>4.2.   <a href="#rfc.section.4.2">Subscription Interval</a>
 </li>
-<li>3.2.2.   <a href="#rfc.section.3.2.2">On-Change Subscription</a>
+<ul><li>4.2.1.   <a href="#rfc.section.4.2.1">Periodic Subscription</a>
 </li>
-</ul><li>3.3.   <a href="#rfc.section.3.3">Subscription Type</a>
+<li>4.2.2.   <a href="#rfc.section.4.2.2">On-Change Subscription</a>
 </li>
-<ul><li>3.3.1.   <a href="#rfc.section.3.3.1">Stream Subscription</a>
+</ul><li>4.3.   <a href="#rfc.section.4.3">Subscription Type</a>
 </li>
-<li>3.3.2.   <a href="#rfc.section.3.3.2">Datastore Subscription</a>
+<ul><li>4.3.1.   <a href="#rfc.section.4.3.1">Stream Subscription</a>
 </li>
-</ul></ul><li>4.   <a href="#rfc.section.4">Subscription Management (better word?)</a>
+<li>4.3.2.   <a href="#rfc.section.4.3.2">Datastore Subscription</a>
 </li>
-<ul><li>4.1.   <a href="#rfc.section.4.1">YANG RPCs</a>
+</ul></ul><li>5.   <a href="#rfc.section.5">Subscription Management (better word?)</a>
 </li>
-<li>4.2.   <a href="#rfc.section.4.2">NETCONF Access Control Model [RFC6536bis]</a>
+<ul><li>5.1.   <a href="#rfc.section.5.1">YANG RPCs</a>
 </li>
-</ul><li>5.   <a href="#rfc.section.5">Selection Filters</a>
+<li>5.2.   <a href="#rfc.section.5.2">NETCONF Access Control Model [RFC6536bis]</a>
 </li>
-<ul><li>5.1.   <a href="#rfc.section.5.1">SID for subtree Selection Filter</a>
+</ul><li>6.   <a href="#rfc.section.6">Selection Filters</a>
 </li>
-<li>5.2.   <a href="#rfc.section.5.2">CBOR-YANG for XPATH-like Selection Filter</a>
+<ul><li>6.1.   <a href="#rfc.section.6.1">SID for subtree Selection Filter</a>
 </li>
-</ul><li>6.   <a href="#rfc.section.6">Update Triggers for Periodic Subscriptions</a>
+<li>6.2.   <a href="#rfc.section.6.2">CBOR-YANG for XPATH-like Selection Filter</a>
 </li>
-<ul><li>6.1.   <a href="#rfc.section.6.1">Interval</a>
+</ul><li>7.   <a href="#rfc.section.7">Update Triggers for Periodic Subscriptions</a>
 </li>
-<li>6.2.   <a href="#rfc.section.6.2">Anchor Time</a>
+<ul><li>7.1.   <a href="#rfc.section.7.1">Interval</a>
 </li>
-</ul><li>7.   <a href="#rfc.section.7">Update Triggers for On-Change Subscriptions</a>
+<li>7.2.   <a href="#rfc.section.7.2">Anchor Time</a>
 </li>
-<ul><li>7.1.   <a href="#rfc.section.7.1">dampening period</a>
+</ul><li>8.   <a href="#rfc.section.8">Update Triggers for On-Change Subscriptions</a>
 </li>
-<li>7.2.   <a href="#rfc.section.7.2">change-type</a>
+<ul><li>8.1.   <a href="#rfc.section.8.1">dampening period</a>
 </li>
-<li>7.3.   <a href="#rfc.section.7.3">no sync-on-start</a>
+<li>8.2.   <a href="#rfc.section.8.2">change-type</a>
 </li>
-</ul><li>8.   <a href="#rfc.section.8">YANG Push Operations for COMI</a>
+<li>8.3.   <a href="#rfc.section.8.3">no sync-on-start</a>
 </li>
-<ul><li>8.1.   <a href="#rfc.section.8.1">Extension of the CoMI Event Stream Resource</a>
+</ul><li>9.   <a href="#rfc.section.9">YANG Push Operations for COMI</a>
 </li>
-<li>8.2.   <a href="#rfc.section.8.2">Extension of the YANG Subscription Mechanism</a>
+<ul><li>9.1.   <a href="#rfc.section.9.1">Extension of the CoMI Event Stream Resource</a>
 </li>
-</ul><li>9.   <a href="#rfc.section.9">Upcoming Features and Stories</a>
+<li>9.2.   <a href="#rfc.section.9.2">Extension of the YANG Subscription Mechanism</a>
 </li>
-<li>10.   <a href="#rfc.section.10">IANA considerations</a>
+</ul><li>10.   <a href="#rfc.section.10">Upcoming Features and Stories</a>
 </li>
-<li>11.   <a href="#rfc.section.11">Security Considerations</a>
+<li>11.   <a href="#rfc.section.11">IANA considerations</a>
 </li>
-<li>12.   <a href="#rfc.section.12">Acknowledgements</a>
+<li>12.   <a href="#rfc.section.12">Security Considerations</a>
 </li>
-<li>13.   <a href="#rfc.section.13">Change Log</a>
+<li>13.   <a href="#rfc.section.13">Acknowledgements</a>
 </li>
-<li>14.   <a href="#rfc.references">Normative References</a>
+<li>14.   <a href="#rfc.section.14">Change Log</a>
+</li>
+<li>15.   <a href="#rfc.references">Normative References</a>
 </li>
 <li><a href="#rfc.authors">Authors' Addresses</a>
 </li>
@@ -479,18 +482,27 @@ ul.toc li {
 <p></p>
 
 <ul>
-<li>the Constrained Application Protocol (CoAP <a href="#RFC7252" class="xref">[RFC7252]</a>) to facilitate an HTTP-esque interaction model, and</li>
-<li>the Concise Binary Object Representation (CBOR <a href="#RFC7049" class="xref">[RFC7049]</a>) to facilitate an efficient content encoding.</li>
-<li>YANG identifier strings are represented as numbers</li>
+<li>the Constrained Application Protocol (CoAP <a href="#RFC7252" class="xref">[RFC7252]</a>) to facilitate an HTTP-esque interaction model,</li>
+<li>the Concise Binary Object Representation (CBOR <a href="#RFC7049" class="xref">[RFC7049]</a>) to facilitate an efficient content encoding, and</li>
+<li>YANG identifier strings are represented as numbers called YANG Schema Item Identifier (SID) defined in <a href="#I-D.ietf-core-yang-cbor" class="xref">[I-D.ietf-core-yang-cbor]</a>.</li>
 </ul>
-<p id="rfc.section.1.p.3">Due to the utilization of CoAP, the interaction model of CoMI is quite similar to RESTCONF <a href="#RFC8040" class="xref">[RFC8040]</a>. RESTCONF <a href="#RFC7950" class="xref">[RFC7950]</a> supports subscriptions to a YANG datastore via notification definitions in YANG modules, which - when subscribed to via the base subscription YANG RPC defined in <a href="#RFC7950" class="xref">[RFC7950]</a> - result in series [-cabo-series] of Server Sent Events [W3C.REC-eventsource-20150203]}.  A corresponding Event Stream specification for NETCONF <a href="#RFC6241" class="xref">[RFC6241]</a> Event Notifications is defined in section 3.2.3 of <a href="#RFC5277" class="xref">[RFC5277]</a>. To simplify corresponding terminology, this document defines the following term:</p>
+<p id="rfc.section.1.p.3">This documents defines additions to CoMI called Concise YANG Telemetry that:</p>
+<p></p>
+
+<ul>
+<li>enrich its capabilities to subscribe to a variety of YANG modeled notifications&#8212;based on YANG Subscribed Notifications <a href="#I-D.ietf-netconf-subscribed-notifications" class="xref">[I-D.ietf-netconf-subscribed-notifications]</a>, and</li>
+<li>enable subscriptions to changes data note values in modules provided by the YANG datastore (or parts of them)&#8212;based on YANG Push <a href="#I-D.ietf-netconf-yang-push" class="xref">[I-D.ietf-netconf-yang-push]</a>.</li>
+</ul>
+<p id="rfc.section.1.p.5">Due to the utilization of CoAP, the interaction model of CoMI is quite similar to RESTCONF <a href="#RFC8040" class="xref">[RFC8040]</a>. RESTCONF <a href="#RFC7950" class="xref">[RFC7950]</a> supports subscriptions to a YANG datastore via notification definitions in YANG modules, which&#8212;when subscribed to via the base subscription YANG RPC defined in <a href="#RFC7950" class="xref">[RFC7950]</a>&#8212;result in Series [-cabo-series] of Server Sent Events [W3C.REC-eventsource-20150203]}.  A corresponding Event Stream specification for NETCONF <a href="#RFC6241" class="xref">[RFC6241]</a> Event Notifications is defined in section 3.2.3 of <a href="#RFC5277" class="xref">[RFC5277]</a>. To simplify corresponding terminology (and especially consolidate the impedance mismatch of Notifications and Events), this document defines the following term:</p>
 <p></p>
 
 <dl>
 <dt>YANG Telemetry:</dt>
-<dd style="margin-left: 8">A Series of YANG Notifications or YANG Notification Bundle Messages that are composed of YANG modeled data, sent from a YANG datastore to a YANG client either solicited or unsolicited, and can guarantee well-defined levels of Visibility with respect to Data Node Value changes.</dd>
+<dd style="margin-left: 8">A Series of YANG Notifications or YANG Notification Bundle Messages that are composed of YANG modeled data, sent from a YANG datastore to a YANG client either solicited or unsolicited, and that can guarantee well-defined levels of Visibility with respect to Data Node Value changes.</dd>
+<dt></dt>
+<dd style="margin-left: 8">While the focus of YANG is typically on management and operations, the scope of YANG Telemetry extends into the Security Area with respect to Security Events. YANG Telemetry characteristics that address security requirements, such as Visibility, are addressed in this document.</dd>
 </dl>
-<p id="rfc.section.1.p.5">This definition is based on the following existing terminology:</p>
+<p id="rfc.section.1.p.7">The definition of YANG Telemetry is based on the following existing terminology:</p>
 <p></p>
 
 <dl>
@@ -508,53 +520,68 @@ ul.toc li {
 <dt></dt>
 <dd style="margin-left: 8">Defined in COMI as "the value assigned to a data node instance. Data node values are serialized into the payload according to the rules defined in section 4 of <a href="#I-D.ietf-core-yang-cbor" class="xref">[I-D.ietf-core-yang-cbor]</a>".</dd>
 </dl>
-<h1 id="rfc.section.1.1">
-<a href="#rfc.section.1.1">1.1.</a> <a href="#additions-to-comi" id="additions-to-comi">Additions to CoMI</a>
+<h1 id="rfc.section.2">
+<a href="#rfc.section.2">2.</a> <a href="#comi-push-terminology" id="comi-push-terminology">CoMI Push Terminology</a>
 </h1>
-<p id="rfc.section.1.1.p.1">This documents defines a bindings of the mechanisms and YANG statement definitions described in YANG Push <a href="#I-D.ietf-netconf-yang-push" class="xref">[I-D.ietf-netconf-yang-push]</a> and YANG Subscribed Notifications to the CoAP Management Interface. This includes:</p>
+<p id="rfc.section.2.p.1">In addition to the illustration of the scope of YANG Telemetry above, this section highlights the most important terms that are vital to the functionality of CoMI Push.</p>
+<p></p>
+
+<dl>
+<dt>CoAP Requestor:</dt>
+<dd style="margin-left: 8">TBD</dd>
+<dt>CoAP Token:</dt>
+<dd style="margin-left: 8">TODO</dd>
+</dl>
+<h1 id="rfc.section.2.1">
+<a href="#rfc.section.2.1">2.1.</a> <a href="#summary-of-yang-push-additions-to-comi" id="summary-of-yang-push-additions-to-comi">Summary of YANG Push Additions to CoMI</a>
+</h1>
+<p id="rfc.section.2.1.p.1">This documents defines the Concise YANG Push binding to the CoAP Management Interface: a composition of mechanisms and YANG statement definitions that are described in YANG Push <a href="#I-D.ietf-netconf-yang-push" class="xref">[I-D.ietf-netconf-yang-push]</a> and&#8212;in consequence&#8212;YANG Subscribed Notifications <a href="#I-D.ietf-netconf-subscribed-notifications" class="xref">[I-D.ietf-netconf-subscribed-notifications]</a> to the CoAP Management Interface. In summary, these additions include:</p>
 <p></p>
 
 <ul>
-<li>A Concise YANG Push capale COMI does support the "start-time" and "stop-time" query parameters to retrieve past notifications.</li>
-<li>CoAP requests using the Observe Option to establish subscription state</li>
-<li>FETCH Body definitions that</li>
+<li>a CoAP POST operation to create, modify, delete or kill Telemetry subscription state,</li>
+<li>a CoAP PATCH operation to create, modify, delete or kill modify one or more Telemetry subscription states,</li>
+<li>a CoAP GET operation including the Observe option to receive a Telemetry stream,</li>
+<li>a CoAP FETCH operation including the Observe option to receive multiple Telemetry streams,</li>
+<li>an extension of the "/s" resource that includes sub-resource, such as subscription identifiers and corresponding SID instances, and</li>
+<li>the capability to direct GET and FETCH operations including the Observe option at resources that are sub-resources of "/c".</li>
 </ul>
-<h1 id="rfc.section.1.2">
-<a href="#rfc.section.1.2">1.2.</a> <a href="#telemetry-specific-comi-datastores" id="telemetry-specific-comi-datastores">Telemetry-Specific CoMI datastores</a>
+<h1 id="rfc.section.2.2">
+<a href="#rfc.section.2.2">2.2.</a> <a href="#telemetry-specific-comi-datastores" id="telemetry-specific-comi-datastores">Telemetry-Specific CoMI datastores</a>
 </h1>
-<p id="rfc.section.1.2.p.1">The CoMI architecture assumes that both YANG client and YANG datastore (server) retain or have access to knowledge about the same YANG specification (see Figure 1 in <a href="#I-D.ietf-core-comi" class="xref">[I-D.ietf-core-comi]</a>). This is not necessarily true for a YANG Push capable CoMI server. Highly constrained nodes can emit series of subscribed notifications unsolicitedly; allowing them to create well-formed YANG-modeled Telemetry from hard-coded building blocks of YANG-modeled data, which are in compliance to YANG modules. In consequence, while taking on the role of a YANG datastore, a YANG Push capable CoMI server SHOULD be capable to process YANG queries, but MAY not be due to the lack of corresponding functions or knowledge of a complete YANG module.</p>
-<p id="rfc.section.1.2.p.2">As these flavors of YANG datastores are not necessarily able to create CoMI responses based on client request, it is likely that highly constrained datastores initiate a Call-Home procedure (see [insert NETCONF Call Home here]) acting as if a request was already received (see Configured Subscription above), enticing a very specific request they can fulfill (dynamic subscription) or rendezvous via a discoverable YANG Zero Touch component. In all these use cases, the datastore intends to create device specific telemetry to be collected by corresponding YANG clients.</p>
-<p id="rfc.section.1.2.p.3">In essence, incorporating a complete YANG module is not required to enable the initiation of telemetry within a very specific scope.</p>
-<h1 id="rfc.section.2">
-<a href="#rfc.section.2">2.</a> <a href="#subscription-content" id="subscription-content">Subscription Content</a>
+<p id="rfc.section.2.2.p.1">The CoMI architecture assumes that both YANG client and YANG datastore (server) retain or have access to knowledge about the same YANG specification (see Figure 1 in <a href="#I-D.ietf-core-comi" class="xref">[I-D.ietf-core-comi]</a>). This is not necessarily true for a YANG Push capable CoMI server. Highly constrained nodes can emit series of subscribed notifications unsolicitedly; allowing them to create well-formed YANG-modeled Telemetry from hard-coded building blocks of YANG-modeled data, which are in compliance to YANG modules. In consequence, while taking on the role of a YANG datastore, a YANG Push capable CoMI server SHOULD be capable to process YANG queries, but MAY not be due to the lack of corresponding functions or knowledge of a complete YANG module.</p>
+<p id="rfc.section.2.2.p.2">As these flavors of YANG datastores are not necessarily able to create CoMI responses based on client request, it is likely that highly constrained datastores initiate a Call-Home procedure (see [insert NETCONF Call Home here]) acting as if a request was already received (see Configured Subscription above), enticing a very specific request they can fulfill (dynamic subscription) or rendezvous via a discoverable YANG Zero Touch component. In all these use cases, the datastore intends to create device specific Telemetry to be collected by corresponding YANG clients.</p>
+<p id="rfc.section.2.2.p.3">In essence, incorporating a complete YANG module is not required to enable the initiation of YANG Telemetry within a very specific scope.</p>
+<h1 id="rfc.section.3">
+<a href="#rfc.section.3">3.</a> <a href="#subscription-content-and-state" id="subscription-content-and-state">Subscription Content and State</a>
 </h1>
-<p id="rfc.section.2.p.1">Two generic YANG notification statements for update records are introduced via augments by YANG Push <a href="#I-D.ietf-netconf-subscribed-notifications" class="xref">[I-D.ietf-netconf-subscribed-notifications]</a> to enable the following capabilities:</p>
+<p id="rfc.section.3.p.1">Two generic YANG notification statements for update records are introduced by YANG Push augments to enable the following capabilities:</p>
 <p></p>
 
 <dl>
 <dt>push-update:</dt>
-<dd style="margin-left: 8">A notification that defines a complete, filtered update of the YANG datastore nodes per the terms of a subscription.</dd>
+<dd style="margin-left: 8">A notification that includes a complete (and potentially filtered) update of data node values of YANG datastore nodes per the terms of a subscription.</dd>
 <dt>push-change-update:</dt>
-<dd style="margin-left: 8">A notification that defines an incremental, filtered update of changes (e.g.  create, delete or value changes) to YANG datastore nodes since the last update notification.</dd>
+<dd style="margin-left: 8">A notification that includes an incremental (and potentially filtered) update of data node values of YANG datastore nodes since the last (change-)update notification.</dd>
 </dl>
-<p id="rfc.section.2.p.3">Subscription state (e.g. type of subscription or triggering the creation of a subscription id via the YANG datastore) is determined by the YANG client.</p>
-<h1 id="rfc.section.2.1">
-<a href="#rfc.section.2.1">2.1.</a> <a href="#selection-filter-filter-selection-which-one" id="selection-filter-filter-selection-which-one">Selection Filter / Filter Selection (which one)?</a>
+<p id="rfc.section.3.p.3">Every update notification (bundle) in a Series that is the context of a subscription is emitted per the characteristics of the subscription state maintained by the YANG datastore. Subscription state can be created on the YANG datastore during manufacturing, onboarding, enrollment, deployment, or maintenance of the YANG datastore.</p>
+<h1 id="rfc.section.3.1">
+<a href="#rfc.section.3.1">3.1.</a> <a href="#selection-filter" id="selection-filter">Selection Filter</a>
 </h1>
-<p id="rfc.section.2.1.p.1">A vital part of the subscription state that defines the content conveyed via an individual subscription is the filter expression included in the subscription establishment request. A filter expression enables a YANG datastore to emit only a subset of the notification content; reducing the volume of data in motion, significantly.</p>
-<p id="rfc.section.2.1.p.2">Two generic YANG Filter Expressions enable a YANG datastore to emit only filtered updates of data node instances:</p>
+<p id="rfc.section.3.1.p.1">A vital part of the subscription state that defines the content of a Telemetry stream is the filter expression included in the subscription characteristics. A filter expression enables a YANG datastore to emit only a subset of potential notification content; reducing the volume of data in motion, significantly.</p>
+<p id="rfc.section.3.1.p.2">Two generic YANG Filter Expressions enable a YANG datastore to emit filtered subsets of data node value updates:</p>
 <p></p>
 
 <dl>
 <dt>Subtree Filter Expression:</dt>
-<dd style="margin-left: 8">A data node identifier with respect to a specific data node in a YANG module is used to create update records that only include updates about the identified node and its child nodes. Effectively, a data node identifier points to the root node of the subtree.</dd>
-<dt>XPATH Fitler Expression:</dt>
-<dd style="margin-left: 8">A more detailed selection of customized subsets of data node instance that update records are created for. The representation of XPATH Filter Expressions for COMI is defined in <a href="#I-D.ietf-core-yang-cbor" class="xref">[I-D.ietf-core-yang-cbor]</a>.</dd>
+<dd style="margin-left: 8">A SID pointing to a specific data node in a YANG module (including notification statements) is used to create update records that include updates about the identified data node and its potential child nodes. Effectively, a single SID points to the root node of the subtree update records are created for.</dd>
+<dt>XPATH Filter Expression:</dt>
+<dd style="margin-left: 8">A more detailed selection of SIDs and corresponding data node values that update records are created for. The corresponding representation of XPATH Filter Expressions for COMI is defined in <a href="#I-D.ietf-core-yang-cbor" class="xref">[I-D.ietf-core-yang-cbor]</a>.</dd>
 </dl>
-<h1 id="rfc.section.3">
-<a href="#rfc.section.3">3.</a> <a href="#subscription-characteristics" id="subscription-characteristics">Subscription Characteristics</a>
+<h1 id="rfc.section.4">
+<a href="#rfc.section.4">4.</a> <a href="#subscription-characteristics" id="subscription-characteristics">Subscription Characteristics</a>
 </h1>
-<p id="rfc.section.3.p.1">Distinct subscriptions are categorized via three different kinds of subscription characteristics:</p>
+<p id="rfc.section.4.p.1">Distinct YANG Telemetry streams are defined by the following three primary subscription characteristics:</p>
 <p></p>
 
 <ol>
@@ -562,83 +589,92 @@ ul.toc li {
 <li>Subscription Interval (periodic / on-change)</li>
 <li>Subscription Type (stream / datastore)</li>
 </ol>
-<p id="rfc.section.3.p.3">These characteristics define how subscription state is spawned and how the resulting series of notification behaves. Corresponding parameters are set in the "establish-subscription" RPC as defined in <a href="#I-D.ietf-netconf-subscribed-notifications" class="xref">[I-D.ietf-netconf-subscribed-notifications]</a>.</p>
-<h1 id="rfc.section.3.1">
-<a href="#rfc.section.3.1">3.1.</a> <a href="#subscription-trigger" id="subscription-trigger">Subscription Trigger</a>
+<p id="rfc.section.4.p.3">These characteristics define how subscription state is deployed and how the resulting Telemetry stream behaves. As an example, corresponding subscription state can be created by a YANG client via the "establish-subscription" RPC as defined in <a href="#I-D.ietf-netconf-subscribed-notifications" class="xref">[I-D.ietf-netconf-subscribed-notifications]</a>.</p>
+<h1 id="rfc.section.4.1">
+<a href="#rfc.section.4.1">4.1.</a> <a href="#subscription-trigger" id="subscription-trigger">Subscription Trigger</a>
 </h1>
-<h1 id="rfc.section.3.1.1">
-<a href="#rfc.section.3.1.1">3.1.1.</a> <a href="#configured-subscription" id="configured-subscription">Configured Subscription</a>
+<p id="rfc.section.4.1.p.1">In general, to establish a Telemetry stream via YANG Push there are three options:</p>
+<p></p>
+
+<ol>
+<li>a YANG client starts to receive a Telemetry stream from a YANG datastore, unsolicitedly. In this case, persistent subscription characteristics are created on the YANG data store before deployment, e.g. during onboarding, and come into effect directly after deployment.</li>
+<li>a YANG client starts to receive a Telemetry stream from a YANG datastore, solicitedly. In this case, persistent subscription characteristics are created on both the YANG client and the YANG datastore before deployment.</li>
+<li>a YANG datastore initiates contact with a YANG client via a Rendezvous, Join, or Call Home procedure and triggers the initiation of a telemetry stream. In this case, the subscription characteristics are configured on the YANG client and come into effect when the YANG datastore successfully discovered its home.</li>
+</ol>
+<h1 id="rfc.section.4.1.1">
+<a href="#rfc.section.4.1.1">4.1.1.</a> <a href="#comi-push-configured-subscriptions" id="comi-push-configured-subscriptions">CoMI Push Configured Subscriptions</a>
 </h1>
-<h1 id="rfc.section.3.1.2">
-<a href="#rfc.section.3.1.2">3.1.2.</a> <a href="#dynamic-subscriptions" id="dynamic-subscriptions">Dynamic Subscriptions</a>
+<p id="rfc.section.4.1.1.p.1">CoAP defines a strict coupling of request and corresponding response messages via the CoAP Token. Every CoAP Request MUST include a CoAP Token that is generated by the requestor (client). Analogously, every CoAP response that is associated with that request MUST include the corresponding CoAP Token in order for the CoAP Request not to be discarded,</p>
+<h1 id="rfc.section.4.1.2">
+<a href="#rfc.section.4.1.2">4.1.2.</a> <a href="#dynamic-subscriptions" id="dynamic-subscriptions">Dynamic Subscriptions</a>
 </h1>
-<h1 id="rfc.section.3.2">
-<a href="#rfc.section.3.2">3.2.</a> <a href="#subscription-interval" id="subscription-interval">Subscription Interval</a>
+<h1 id="rfc.section.4.2">
+<a href="#rfc.section.4.2">4.2.</a> <a href="#subscription-interval" id="subscription-interval">Subscription Interval</a>
 </h1>
-<h1 id="rfc.section.3.2.1">
-<a href="#rfc.section.3.2.1">3.2.1.</a> <a href="#periodic-subscription" id="periodic-subscription">Periodic Subscription</a>
+<h1 id="rfc.section.4.2.1">
+<a href="#rfc.section.4.2.1">4.2.1.</a> <a href="#periodic-subscription" id="periodic-subscription">Periodic Subscription</a>
 </h1>
-<h1 id="rfc.section.3.2.2">
-<a href="#rfc.section.3.2.2">3.2.2.</a> <a href="#on-change-subscription" id="on-change-subscription">On-Change Subscription</a>
+<h1 id="rfc.section.4.2.2">
+<a href="#rfc.section.4.2.2">4.2.2.</a> <a href="#on-change-subscription" id="on-change-subscription">On-Change Subscription</a>
 </h1>
-<h1 id="rfc.section.3.2.2.1">
-<a href="#rfc.section.3.2.2.1">3.2.2.1.</a> <a href="#on-change-subscription-prerequisites" id="on-change-subscription-prerequisites">On-Change Subscription Prerequisites</a>
+<h1 id="rfc.section.4.2.2.1">
+<a href="#rfc.section.4.2.2.1">4.2.2.1.</a> <a href="#on-change-subscription-prerequisites" id="on-change-subscription-prerequisites">On-Change Subscription Prerequisites</a>
 </h1>
-<p id="rfc.section.3.2.2.1.p.1">An On-Change Subscription capability MUST be explicitly annotated in a YANG module definition in order to prevent subscription to meaningless nodes. E.g. it is advisable not to allow for subscriptions to YANG modules representing rapidly changing counters.</p>
-<p id="rfc.section.3.2.2.1.p.2">The actual syntax and corresponding semantics of statements that intend to annotate On-Change Subscription capabilities is out-of-scope of <a href="#I-D.ietf-netconf-yang-push" class="xref">[I-D.ietf-netconf-yang-push]</a> or <a href="#I-D.ietf-netconf-subscribed-notifications" class="xref">[I-D.ietf-netconf-subscribed-notifications]</a> and in consequence also out-of-scope of this document.</p>
-<h1 id="rfc.section.3.2.2.2">
-<a href="#rfc.section.3.2.2.2">3.2.2.2.</a> <a href="#visibility" id="visibility">Visibility</a>
+<p id="rfc.section.4.2.2.1.p.1">An On-Change Subscription capability MUST be explicitly annotated in a YANG module definition in order to prevent subscription to meaningless nodes. E.g. it is advisable not to allow for subscriptions to YANG modules representing rapidly changing counters.</p>
+<p id="rfc.section.4.2.2.1.p.2">The actual syntax and corresponding semantics of statements that intend to annotate On-Change Subscription capabilities is out-of-scope of <a href="#I-D.ietf-netconf-yang-push" class="xref">[I-D.ietf-netconf-yang-push]</a> or <a href="#I-D.ietf-netconf-subscribed-notifications" class="xref">[I-D.ietf-netconf-subscribed-notifications]</a> and in consequence also out-of-scope of this document.</p>
+<h1 id="rfc.section.4.2.2.2">
+<a href="#rfc.section.4.2.2.2">4.2.2.2.</a> <a href="#visibility" id="visibility">Visibility</a>
 </h1>
-<p id="rfc.section.3.2.2.2.p.1">"publisher MUST set the "updates-not-sent" flag on any update record which is known to be missing information." * dampening-period MUST be set to 0 in order to ensure complete visibility * non-zero may just indicate that there was a change, but not which one (e.g. interface-flapping)</p>
-<h1 id="rfc.section.3.3">
-<a href="#rfc.section.3.3">3.3.</a> <a href="#subscription-type" id="subscription-type">Subscription Type</a>
+<p id="rfc.section.4.2.2.2.p.1">"publisher MUST set the "updates-not-sent" flag on any update record which is known to be missing information." * dampening-period MUST be set to 0 in order to ensure complete visibility * non-zero may just indicate that there was a change, but not which one (e.g. interface-flapping)</p>
+<h1 id="rfc.section.4.3">
+<a href="#rfc.section.4.3">4.3.</a> <a href="#subscription-type" id="subscription-type">Subscription Type</a>
 </h1>
-<p id="rfc.section.3.3.p.1">The YANG Push subscription trigger mechanisms illustrated above create subscription state between a YANG client and a YANG datastore. As long as this subscription state between these two entities persists, a datastore can emit series of YANG notifications to a YANG client, if appropriate conditions are met, e.g. the YANG client expects solicited event notifications coming from the datastore due to a dynamic subscription.</p>
-<p id="rfc.section.3.3.p.2">YANG Push <a href="#I-D.ietf-netconf-yang-push" class="xref">[I-D.ietf-netconf-yang-push]</a> and YANG Subscribed Notifications <a href="#I-D.ietf-netconf-subscribed-notifications" class="xref">[I-D.ietf-netconf-subscribed-notifications]</a> extend this mechanism by enabling subscriptions to changes of YANG module data node state in a YANG datastore resulting in two types of sources - or two different types of YANG Notification Series [-cabo-series], respectively:</p>
+<p id="rfc.section.4.3.p.1">The YANG Push subscription trigger mechanisms illustrated above create subscription state between a YANG client and a YANG datastore. As long as this subscription state between these two entities persists, a datastore can emit series of YANG notifications to a YANG client, if appropriate conditions are met, e.g. the YANG client expects solicited event notifications coming from the datastore due to a dynamic subscription.</p>
+<p id="rfc.section.4.3.p.2">YANG Push <a href="#I-D.ietf-netconf-yang-push" class="xref">[I-D.ietf-netconf-yang-push]</a> and YANG Subscribed Notifications <a href="#I-D.ietf-netconf-subscribed-notifications" class="xref">[I-D.ietf-netconf-subscribed-notifications]</a> extend this mechanism by enabling subscriptions to changes of YANG module data node state in a YANG datastore resulting in two types of sources - or two different types of YANG Notification Series [-cabo-series], respectively:</p>
 <p></p>
 
 <ul>
 <li>event stream telemetry</li>
 <li>datastore changes telemetry</li>
 </ul>
-<h1 id="rfc.section.3.3.1">
-<a href="#rfc.section.3.3.1">3.3.1.</a> <a href="#stream-subscription" id="stream-subscription">Stream Subscription</a>
+<h1 id="rfc.section.4.3.1">
+<a href="#rfc.section.4.3.1">4.3.1.</a> <a href="#stream-subscription" id="stream-subscription">Stream Subscription</a>
 </h1>
-<h1 id="rfc.section.3.3.2">
-<a href="#rfc.section.3.3.2">3.3.2.</a> <a href="#datastore-subscription" id="datastore-subscription">Datastore Subscription</a>
-</h1>
-<h1 id="rfc.section.4">
-<a href="#rfc.section.4">4.</a> <a href="#subscription-management-better-word" id="subscription-management-better-word">Subscription Management (better word?)</a>
-</h1>
-<h1 id="rfc.section.4.1">
-<a href="#rfc.section.4.1">4.1.</a> <a href="#yang-rpcs" id="yang-rpcs">YANG RPCs</a>
-</h1>
-<h1 id="rfc.section.4.2">
-<a href="#rfc.section.4.2">4.2.</a> <a href="#netconf-access-control-model-rfc6536bis" id="netconf-access-control-model-rfc6536bis">NETCONF Access Control Model [RFC6536bis]</a>
+<h1 id="rfc.section.4.3.2">
+<a href="#rfc.section.4.3.2">4.3.2.</a> <a href="#datastore-subscription" id="datastore-subscription">Datastore Subscription</a>
 </h1>
 <h1 id="rfc.section.5">
-<a href="#rfc.section.5">5.</a> <a href="#selection-filters" id="selection-filters">Selection Filters</a>
+<a href="#rfc.section.5">5.</a> <a href="#subscription-management-better-word" id="subscription-management-better-word">Subscription Management (better word?)</a>
 </h1>
 <h1 id="rfc.section.5.1">
-<a href="#rfc.section.5.1">5.1.</a> <a href="#sid-for-subtree-selection-filter" id="sid-for-subtree-selection-filter">SID for subtree Selection Filter</a>
+<a href="#rfc.section.5.1">5.1.</a> <a href="#yang-rpcs" id="yang-rpcs">YANG RPCs</a>
 </h1>
 <h1 id="rfc.section.5.2">
-<a href="#rfc.section.5.2">5.2.</a> <a href="#cbor-yang-for-xpath-like-selection-filter" id="cbor-yang-for-xpath-like-selection-filter">CBOR-YANG for XPATH-like Selection Filter</a>
+<a href="#rfc.section.5.2">5.2.</a> <a href="#netconf-access-control-model-rfc6536bis" id="netconf-access-control-model-rfc6536bis">NETCONF Access Control Model [RFC6536bis]</a>
 </h1>
 <h1 id="rfc.section.6">
-<a href="#rfc.section.6">6.</a> <a href="#update-triggers-for-periodic-subscriptions" id="update-triggers-for-periodic-subscriptions">Update Triggers for Periodic Subscriptions</a>
+<a href="#rfc.section.6">6.</a> <a href="#selection-filters" id="selection-filters">Selection Filters</a>
 </h1>
 <h1 id="rfc.section.6.1">
-<a href="#rfc.section.6.1">6.1.</a> <a href="#interval" id="interval">Interval</a>
+<a href="#rfc.section.6.1">6.1.</a> <a href="#sid-for-subtree-selection-filter" id="sid-for-subtree-selection-filter">SID for subtree Selection Filter</a>
 </h1>
 <h1 id="rfc.section.6.2">
-<a href="#rfc.section.6.2">6.2.</a> <a href="#anchor-time" id="anchor-time">Anchor Time</a>
+<a href="#rfc.section.6.2">6.2.</a> <a href="#cbor-yang-for-xpath-like-selection-filter" id="cbor-yang-for-xpath-like-selection-filter">CBOR-YANG for XPATH-like Selection Filter</a>
 </h1>
 <h1 id="rfc.section.7">
-<a href="#rfc.section.7">7.</a> <a href="#update-triggers-for-on-change-subscriptions" id="update-triggers-for-on-change-subscriptions">Update Triggers for On-Change Subscriptions</a>
+<a href="#rfc.section.7">7.</a> <a href="#update-triggers-for-periodic-subscriptions" id="update-triggers-for-periodic-subscriptions">Update Triggers for Periodic Subscriptions</a>
 </h1>
 <h1 id="rfc.section.7.1">
-<a href="#rfc.section.7.1">7.1.</a> <a href="#dampening-period" id="dampening-period">dampening period</a>
+<a href="#rfc.section.7.1">7.1.</a> <a href="#interval" id="interval">Interval</a>
+</h1>
+<h1 id="rfc.section.7.2">
+<a href="#rfc.section.7.2">7.2.</a> <a href="#anchor-time" id="anchor-time">Anchor Time</a>
+</h1>
+<h1 id="rfc.section.8">
+<a href="#rfc.section.8">8.</a> <a href="#update-triggers-for-on-change-subscriptions" id="update-triggers-for-on-change-subscriptions">Update Triggers for On-Change Subscriptions</a>
+</h1>
+<h1 id="rfc.section.8.1">
+<a href="#rfc.section.8.1">8.1.</a> <a href="#dampening-period" id="dampening-period">dampening period</a>
 </h1>
 <p></p>
 
@@ -646,22 +682,22 @@ ul.toc li {
 <li>requires bundled messages, in order to maintain visibility</li>
 <li>applies to update record creation, not transmission</li>
 </ul>
-<h1 id="rfc.section.7.2">
-<a href="#rfc.section.7.2">7.2.</a> <a href="#change-type" id="change-type">change-type</a>
+<h1 id="rfc.section.8.2">
+<a href="#rfc.section.8.2">8.2.</a> <a href="#change-type" id="change-type">change-type</a>
 </h1>
 <p></p>
 
 <ul><li>create, delete, change (where is the complete list?)</li></ul>
-<h1 id="rfc.section.7.3">
-<a href="#rfc.section.7.3">7.3.</a> <a href="#no-sync-on-start" id="no-sync-on-start">no sync-on-start</a>
+<h1 id="rfc.section.8.3">
+<a href="#rfc.section.8.3">8.3.</a> <a href="#no-sync-on-start" id="no-sync-on-start">no sync-on-start</a>
 </h1>
 <p></p>
 
 <ul><li>full set at start of sub is omitted</li></ul>
-<h1 id="rfc.section.8">
-<a href="#rfc.section.8">8.</a> <a href="#yang-push-operations-for-comi" id="yang-push-operations-for-comi">YANG Push Operations for COMI</a>
+<h1 id="rfc.section.9">
+<a href="#rfc.section.9">9.</a> <a href="#yang-push-operations-for-comi" id="yang-push-operations-for-comi">YANG Push Operations for COMI</a>
 </h1>
-<p id="rfc.section.8.p.1">Every subscription-id is created by the YANG datastore and is used in the corresponding subscription sate to provide the root identifier, by which dedicated subscription characteristics are associated with an established subscription. In consequence, the basic interaction model of Concise YANG Push is split into two operations that are initiated by the YANG client in sequence:</p>
+<p id="rfc.section.9.p.1">Every subscription-id is created by the YANG datastore and is used in the corresponding subscription sate to provide the root identifier, by which dedicated subscription characteristics are associated with an established subscription. In consequence, the basic interaction model of Concise YANG Push is split into two operations that are initiated by the YANG client in sequence:</p>
 <p></p>
 
 <ul>
@@ -669,22 +705,22 @@ ul.toc li {
 <li>a GET Observe operation on the event stream resource /s/subscription-id or a FETCH operation on /s including a FETCH body with content-format "application/yang-selectors+cbor" and one or more subscription-id as content.  OR</li>
 <li>a GET Observe operation on /c/subscription-id to get subscribed notifications</li>
 </ul>
-<p id="rfc.section.8.p.3">Please note, that Concise COMI Push allows SIDs to be used as subscription id. There is more work to be done here to flesh that out.</p>
-<h1 id="rfc.section.8.1">
-<a href="#rfc.section.8.1">8.1.</a> <a href="#extension-of-the-comi-event-stream-resource" id="extension-of-the-comi-event-stream-resource">Extension of the CoMI Event Stream Resource</a>
+<p id="rfc.section.9.p.3">Please note, that Concise COMI Push allows SIDs to be used as subscription id. There is more work to be done here to flesh that out.</p>
+<h1 id="rfc.section.9.1">
+<a href="#rfc.section.9.1">9.1.</a> <a href="#extension-of-the-comi-event-stream-resource" id="extension-of-the-comi-event-stream-resource">Extension of the CoMI Event Stream Resource</a>
 </h1>
-<p id="rfc.section.8.1.p.1">A standard CoMI datastore as defined in <a href="#I-D.ietf-core-comi" class="xref">[I-D.ietf-core-comi]</a> typically uses the datastore resource "/c" to provide the YANG datastore tree and the resource "/s" to provide the YANG notification stream. Sub-resources under "/c" are represented in the format of /c/sid.</p>
-<p id="rfc.section.8.1.p.2">CoMI Push extends the scope of the "/s" resource. Sub-resources under "/s" are represented as /s/key, where key is a numeric string representation of the subscription identifier, e.g. "/s/65536/". The key representation reduces the ambiguity with respect to sid, which uses an URI safe base64 representation.</p>
-<p id="rfc.section.8.1.p.3">Under each subscription identifier key provided as a sub-resource of the "/s" resource, a YANG tree instance of the subscription characteristics yang:ietf-subscribed-notifications/subscriptions (as defined in YANG Push <a href="#I-D.ietf-netconf-yang-push" class="xref">[I-D.ietf-netconf-yang-push]</a>, which aguments ietf-subscribed-notification defined in <a href="#I-D.ietf-netconf-subscribed-notifications" class="xref">[I-D.ietf-netconf-subscribed-notifications]</a>) is provided. In the following example every sid is illustrated as a "string" as there is no sid for corresponding instance identifiers yet:</p>
-<p id="rfc.section.8.1.p.4">/s/"65536"/"stream"/"within-subscription"/"filter-spec"/"stream-xpath-filter"/"stream-xpath-filter"</p>
-<p id="rfc.section.8.1.p.5">This example would point to the filter selection associated with subscription id 65536.</p>
-<h1 id="rfc.section.8.2">
-<a href="#rfc.section.8.2">8.2.</a> <a href="#extension-of-the-yang-subscription-mechanism" id="extension-of-the-yang-subscription-mechanism">Extension of the YANG Subscription Mechanism</a>
+<p id="rfc.section.9.1.p.1">A standard CoMI datastore as defined in <a href="#I-D.ietf-core-comi" class="xref">[I-D.ietf-core-comi]</a> typically uses the datastore resource "/c" to provide the YANG datastore tree and the resource "/s" to provide the YANG notification stream. Sub-resources under "/c" are represented in the format of /c/sid.</p>
+<p id="rfc.section.9.1.p.2">CoMI Push extends the scope of the "/s" resource. Sub-resources under "/s" are represented as /s/key, where key is a numeric string representation of the subscription identifier, e.g. "/s/65536/". The key representation reduces the ambiguity with respect to sid, which uses an URI safe base64 representation.</p>
+<p id="rfc.section.9.1.p.3">Under each subscription identifier key provided as a sub-resource of the "/s" resource, a YANG tree instance of the subscription characteristics yang:ietf-subscribed-notifications/subscriptions (as defined in YANG Push <a href="#I-D.ietf-netconf-yang-push" class="xref">[I-D.ietf-netconf-yang-push]</a>, which aguments ietf-subscribed-notification defined in <a href="#I-D.ietf-netconf-subscribed-notifications" class="xref">[I-D.ietf-netconf-subscribed-notifications]</a>) is provided. In the following example every sid is illustrated as a "string" as there is no sid for corresponding instance identifiers yet:</p>
+<p id="rfc.section.9.1.p.4">/s/"65536"/"stream"/"within-subscription"/"filter-spec"/"stream-xpath-filter"/"stream-xpath-filter"</p>
+<p id="rfc.section.9.1.p.5">This example would point to the filter selection associated with subscription id 65536.</p>
+<h1 id="rfc.section.9.2">
+<a href="#rfc.section.9.2">9.2.</a> <a href="#extension-of-the-yang-subscription-mechanism" id="extension-of-the-yang-subscription-mechanism">Extension of the YANG Subscription Mechanism</a>
 </h1>
-<p id="rfc.section.8.2.p.1">YANG Push provides augmented RPC for establishing, modifying, deleting, or killing a subscription. CoMI uses the same module as YANG Push and provides a corresponding interface to allow for a corresponding confirmable POST message to RPC resources (see <a href="#I-D.ietf-core-comi" class="xref">[I-D.ietf-core-comi]</a> Section 5.3.2.).</p>
-<p id="rfc.section.8.2.p.2">CoMI Push also defines the capabilites to point confirmable FETCH messeges &#8211; including the Observe option - to sub-resources provided by "/c". If the body of the FETCH message includes a CBOR modeled <a href="#I-D.ietf-core-yang-cbor" class="xref">[I-D.ietf-core-yang-cbor]</a> subtree filter expression, a new subscription is created and a corresponding subscription id is returned. Additionally, a corresponding subscription sub-resource under "/s" is created.</p>
-<h1 id="rfc.section.9">
-<a href="#rfc.section.9">9.</a> <a href="#upcoming-features-and-stories" id="upcoming-features-and-stories">Upcoming Features and Stories</a>
+<p id="rfc.section.9.2.p.1">YANG Push provides augmented RPC for establishing, modifying, deleting, or killing a subscription. CoMI uses the same module as YANG Push and provides a corresponding interface to allow for a corresponding confirmable POST message to RPC resources (see <a href="#I-D.ietf-core-comi" class="xref">[I-D.ietf-core-comi]</a> Section 5.3.2.).</p>
+<p id="rfc.section.9.2.p.2">CoMI Push also defines the capabilites to point confirmable FETCH messeges &#8211; including the Observe option - to sub-resources provided by "/c". If the body of the FETCH message includes a CBOR modeled <a href="#I-D.ietf-core-yang-cbor" class="xref">[I-D.ietf-core-yang-cbor]</a> subtree filter expression, a new subscription is created and a corresponding subscription id is returned. Additionally, a corresponding subscription sub-resource under "/s" is created.</p>
+<h1 id="rfc.section.10">
+<a href="#rfc.section.10">10.</a> <a href="#upcoming-features-and-stories" id="upcoming-features-and-stories">Upcoming Features and Stories</a>
 </h1>
 <p></p>
 
@@ -695,24 +731,24 @@ ul.toc li {
 <li>my resource goes away during subscription (e.g. FRU pulled)</li>
 <li>back channel liveness check - important for udp and sudden outage in telemetry flows</li>
 </ul>
-<h1 id="rfc.section.10">
-<a href="#rfc.section.10">10.</a> <a href="#iana-considerations" id="iana-considerations">IANA considerations</a>
-</h1>
-<p id="rfc.section.10.p.1">This document includes no requests to IANA, but solutions drafts incubated via this document might.</p>
 <h1 id="rfc.section.11">
-<a href="#rfc.section.11">11.</a> <a href="#security-considerations" id="security-considerations">Security Considerations</a>
+<a href="#rfc.section.11">11.</a> <a href="#iana-considerations" id="iana-considerations">IANA considerations</a>
 </h1>
-<p id="rfc.section.11.p.1">This document includes no security considerations, but solution drafts incubated via this document will.</p>
+<p id="rfc.section.11.p.1">This document includes no requests to IANA, but solutions drafts incubated via this document might.</p>
 <h1 id="rfc.section.12">
-<a href="#rfc.section.12">12.</a> <a href="#acknowledgements" id="acknowledgements">Acknowledgements</a>
+<a href="#rfc.section.12">12.</a> <a href="#security-considerations" id="security-considerations">Security Considerations</a>
 </h1>
-<p id="rfc.section.12.p.1">Carsten Bormann, Klaus Hartke, Michel Veillette</p>
+<p id="rfc.section.12.p.1">This document includes no security considerations, but solution drafts incubated via this document will.</p>
 <h1 id="rfc.section.13">
-<a href="#rfc.section.13">13.</a> <a href="#change-log" id="change-log">Change Log</a>
+<a href="#rfc.section.13">13.</a> <a href="#acknowledgements" id="acknowledgements">Acknowledgements</a>
 </h1>
-<p id="rfc.section.13.p.1">First version -00</p>
+<p id="rfc.section.13.p.1">Carsten Bormann, Klaus Hartke, Michel Veillette</p>
+<h1 id="rfc.section.14">
+<a href="#rfc.section.14">14.</a> <a href="#change-log" id="change-log">Change Log</a>
+</h1>
+<p id="rfc.section.14.p.1">First version -00</p>
 <h1 id="rfc.references">
-<a href="#rfc.references">14.</a> Normative References</h1>
+<a href="#rfc.references">15.</a> Normative References</h1>
 <table><tbody>
 <tr>
 <td class="reference"><b id="I-D.ietf-core-comi">[I-D.ietf-core-comi]</b></td>
