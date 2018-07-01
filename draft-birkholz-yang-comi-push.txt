@@ -549,7 +549,7 @@ Internet-Draft                  CoMI Push                     April 2018
 10.  YANG Push Operations for COMI
 
    Every subscription-id is created by the YANG datastore and is used in
-   the corresponding subscription sate to provide the root identifier,
+   the corresponding subscription state to provide the root identifier,
    by which dedicated subscription characteristics are associated with
    an established subscription.  In consequence, the basic interaction
    model of Concise YANG Push is split into two operations that are
