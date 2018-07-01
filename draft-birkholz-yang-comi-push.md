@@ -426,7 +426,7 @@ different types of YANG Notification Series [-cabo-series], respectively:
 
 # YANG Push Operations for COMI
 
-Every subscription-id is created by the YANG datastore and is used in the corresponding subscription sate to provide the root identifier, by which dedicated subscription characteristics are associated with an established subscription. In consequence, the basic interaction model of Concise YANG Push is split into two operations that are initiated by the YANG client in sequence:
+Every subscription-id is created by the YANG datastore and is used in the corresponding subscription state to provide the root identifier, by which dedicated subscription characteristics are associated with an established subscription. In consequence, the basic interaction model of Concise YANG Push is split into two operations that are initiated by the YANG client in sequence:
 
 * a PATCH operation on /c executing the establish-subscription RPC corresponding to the included PATCH body with content-type "application/yang-patch+cbo" that returns the subscription-id (or an error response)
 * a GET Observe operation on the event stream resource /s/subscription-id or a FETCH operation on /s including a FETCH body with content-format "application/yang-selectors+cbor" and one or more subscription-id as content.
