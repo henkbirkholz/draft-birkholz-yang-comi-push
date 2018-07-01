@@ -132,24 +132,58 @@ such as Visibility and Resilient YANG Subscriptions, are addressed in this docum
 
 The definition of YANG Telemetry is based on the following existing terminology:
 
+Data Node Value:
+
+: Defined in CoMI as the value assigned to a data node instance. Data node
+values are serialized into the payload according to the rules defined in
+section 4 of {{-yangcbor}}.
+
+Update Record:
+
+: A single YANG data item in a Series of YANG Notifications or YANG Notification Bundle
+Messages conveying the changes to a YANG datastore's module's Data Node Values.
+
 Series:
 
-: Series Transfer Pattern are described in {{-series}} and describe the
-conveyance of associated data items over time, where a client is able to obtain
+: Series Transfer Pattern are described in {{-series}} as the conveyance of a
+sequence of associated data items over time, where a client is able to obtain
 the Series and to learn about new items.
 
 : YANG Customized Subscriptions or a YANG Datastore Subscription creates an
 specific Series Transfer Pattern composed of individual YANG Notifications or
 YANG Notification Bundle Messages that include related updated records.
 
+Visibility:
+
+: A level of assurance that Update Records will be received by a YANG Client.
+
+: There might be reasons, such as resource exhaustion or dampening
+settings, that result in Updates Records lost in transit or not being emitted by
+the YANG datastore. Sequential Message-IDs or specific YANG Notifications
+that report, e.g., about past events of resource exhaustion will inform the YANG
+Client about the characteristics of the loss of Update Records.
+
 YANG Client:
 
-: Called a YANG-based client in {{RFC7950}}, a YANG Client is the entity
-communicating with a YANG Sever (running potentially multiple YANG datastores).
+: Called a YANG-based client or just client in {{RFC7950}}, a YANG Client is the
+entity communicating with a YANG Sever (running potentially multiple YANG
+datastores) in order to access YANG-defined data.
 
-: YANG Client is a representation agnostic term. Specific protocols that
+: YANG Client is a representation agnostic term. Specific network protocols that
 operate on YANG Servers via YANG Clients use representations, such as XML, JSON,
 or CBOR.
+
+YANG Data Item:
+
+: An instance of YANG a modules Data Node Values or the changes to Data Node
+Values, conveyed as data in motion, serialized in a specific representation, such
+as XML, JSON, or CBOR.
+
+YANG Datastore:
+
+: Defined in {{RFC6241}}, a datastore is a conceptual place to store and access
+information. A datastore might be implemented, for example, using files, a
+database, flash memory locations, or combinations thereof.
 
 YANG Notification:
 
@@ -170,33 +204,6 @@ receiving application layer process.
 : Examples of header object include, but are not limited to: timestamps,
 signatures, or evidence about the integrity of the agents creating messages or
 notifications.
-
-Update Record:
-
-: A single YANG data item in a Series of YANG Notifications or YANG Notification Bundle
-Messages conveying the changes to a YANG datastore's module's Data Node Values.
-
-YANG Data Item:
-
-: An instance of YANG module Data Node Values or the changes to Data Node
-Values, conveyed as data in motion, serialized in a specific representation, such
-as XML, JSON, or CBOR.
-
-Visibility:
-
-: A level of assurance that Update Records will be received by a YANG Client.
-
-: There might be reasons, such as resource exhaustion or dampening
-settings, that result in Updates Records lost in transit or not being emitted by
-the YANG datastore. Sequential Message-IDs or specific YANG Notifications
-that report, e.g., about past events of resource exhaustion will inform the YANG
-Client about the characteristics of the loss of Update Records.
-
-Data Node Value:
-
-: Defined in CoMI as the value assigned to a data node instance. Data node
-values are serialized into the payload according to the rules defined in
-section 4 of {{-yangcbor}}.
 
 ## CoAP Terminology
 
