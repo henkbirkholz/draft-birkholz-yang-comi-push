@@ -98,14 +98,14 @@ Table of Contents
      8.2.  Anchor Time . . . . . . . . . . . . . . . . . . . . . . .  10
    9.  Update Triggers for On-Change Subscriptions . . . . . . . . .  10
      9.1.  dampening period  . . . . . . . . . . . . . . . . . . . .  10
-     9.2.  change-type . . . . . . . . . . . . . . . . . . . . . . .  10
+     9.2.  change-type . . . . . . . . . . . . . . . . . . . . . . .  11
      9.3.  no sync-on-start  . . . . . . . . . . . . . . . . . . . .  11
    10. YANG Push Operations for COMI . . . . . . . . . . . . . . . .  11
      10.1.  Extension of the CoMI Event Stream Resource  . . . . . .  11
      10.2.  Extension of the YANG Subscription Mechanism . . . . . .  12
    11. Upcoming Features and Stories . . . . . . . . . . . . . . . .  12
    12. IANA considerations . . . . . . . . . . . . . . . . . . . . .  12
-   13. Security Considerations . . . . . . . . . . . . . . . . . . .  12
+   13. Security Considerations . . . . . . . . . . . . . . . . . . .  13
 
 
 
@@ -190,59 +190,24 @@ Internet-Draft                  CoMI Push                     April 2018
    The definition of YANG Telemetry is based on the following existing
    terminology:
 
-   Series:  Series Transfer Pattern are described in
-      [I-D.bormann-t2trg-stp] and describe the conveyance of associated
-      data items over time, where a client is able to obtain the Series
-      and to learn about new items.
-
-      YANG Customized Subscriptions or a YANG Datastore Subscription
-      creates an specific Series Transfer Pattern composed of individual
-      YANG Notifications or YANG Notification Bundle Messages that
-      include related updated records.
-
-   YANG Client:  Called a YANG-based client in [RFC7950], a YANG Client
-      is the entity communicating with a YANG Sever (running potentially
-      multiple YANG datastores).
-
-      YANG Client is a representation agnostic term.  Specific protocols
-      that operate on YANG Servers via YANG Clients use representations,
-      such as XML, JSON, or CBOR.
-
-   YANG Notification:  Defined in [RFC6241], a Notification is a server-
-      initiated message indicating that a certain event has been
-      recognized by the server.
-
-      While this definition is found in [RFC6241], which is based on
-      YANG 1.0 [RFC6020], it also applies to the general definition of
-      the YANG Notification statement in YANG 1.1 [RFC7950].
-
-   YANG Notification (Bundle) Message:  An encapsulation header for one
-      or more YANG notifications as defined in
-
-
-
-Birkholz, et al.        Expires October 20, 2018                [Page 4]
-
-Internet-Draft                  CoMI Push                     April 2018
-
-
-      [I-D.ietf-netconf-notification-messages].  The message header
-      includes a specific set of well-known objects, which are of
-      potential use to networking layers prior being interpreted by some
-      receiving application layer process.
-
-      Examples of header object include, but are not limited to:
-      timestamps, signatures, or evidence about the integrity of the
-      agents creating messages or notifications.
+   Data Node Value:  Defined in CoMI as the value assigned to a data
+      node instance.  Data node values are serialized into the payload
+      according to the rules defined in section 4 of
+      [I-D.ietf-core-yang-cbor].
 
    Update Record:  A single YANG data item in a Series of YANG
       Notifications or YANG Notification Bundle Messages conveying the
       changes to a YANG datastore's module's Data Node Values.
 
-   YANG Data Item:  An instance of YANG module Data Node Values or the
-      changes to Data Node Values, conveyed as data in motion,
-      serialized in a specific representation, such as XML, JSON, or
-      CBOR.
+   Series:  Series Transfer Pattern are described in
+      [I-D.bormann-t2trg-stp] as the conveyance of a sequence of
+      associated data items over time, where a client is able to obtain
+      the Series and to learn about new items.
+
+      YANG Customized Subscriptions or a YANG Datastore Subscription
+      creates an specific Series Transfer Pattern composed of individual
+      YANG Notifications or YANG Notification Bundle Messages that
+      include related updated records.
 
    Visibility:  A level of assurance that Update Records will be
       received by a YANG Client.
@@ -254,10 +219,50 @@ Internet-Draft                  CoMI Push                     April 2018
       of resource exhaustion will inform the YANG Client about the
       characteristics of the loss of Update Records.
 
-   Data Node Value:  Defined in CoMI as the value assigned to a data
-      node instance.  Data node values are serialized into the payload
-      according to the rules defined in section 4 of
-      [I-D.ietf-core-yang-cbor].
+
+
+Birkholz, et al.        Expires October 20, 2018                [Page 4]
+
+Internet-Draft                  CoMI Push                     April 2018
+
+
+   YANG Client:  Called a YANG-based client or just client in [RFC7950],
+      a YANG Client is the entity communicating with a YANG Sever
+      (running potentially multiple YANG datastores) in order to access
+      YANG-defined data.
+
+      YANG Client is a representation agnostic term.  Specific network
+      protocols that operate on YANG Servers via YANG Clients use
+      representations, such as XML, JSON, or CBOR.
+
+   YANG Data Item:  An instance of YANG a modules Data Node Values or
+      the changes to Data Node Values, conveyed as data in motion,
+      serialized in a specific representation, such as XML, JSON, or
+      CBOR.
+
+   YANG Datastore:  Defined in [RFC6241], a datastore is a conceptual
+      place to store and access information.  A datastore might be
+      implemented, for example, using files, a database, flash memory
+      locations, or combinations thereof.
+
+   YANG Notification:  Defined in [RFC6241], a Notification is a server-
+      initiated message indicating that a certain event has been
+      recognized by the server.
+
+      While this definition is found in [RFC6241], which is based on
+      YANG 1.0 [RFC6020], it also applies to the general definition of
+      the YANG Notification statement in YANG 1.1 [RFC7950].
+
+   YANG Notification (Bundle) Message:  An encapsulation header for one
+      or more YANG notifications as defined in
+      [I-D.ietf-netconf-notification-messages].  The message header
+      includes a specific set of well-known objects, which are of
+      potential use to networking layers prior being interpreted by some
+      receiving application layer process.
+
+      Examples of header object include, but are not limited to:
+      timestamps, signatures, or evidence about the integrity of the
+      agents creating messages or notifications.
 
 2.1.  CoAP Terminology
 
@@ -270,17 +275,17 @@ Internet-Draft                  CoMI Push                     April 2018
       Telemetry, a YANG client that is creating dynamic subscriptions is
       a CoAP Requestor.
 
-   CoAP Token:  A token used to match a CoAP response with a CoAP
-      request.  It is intended for use as a client-local identifier for
-      to differentiate between concurrent requests (similar to a request
-      ID).
-
 
 
 Birkholz, et al.        Expires October 20, 2018                [Page 5]
 
 Internet-Draft                  CoMI Push                     April 2018
 
+
+   CoAP Token:  A token used to match a CoAP response with a CoAP
+      request.  It is intended for use as a client-local identifier for
+      to differentiate between concurrent requests (similar to a request
+      ID).
 
 3.  Summary of the Additions to CoMI
 
@@ -325,11 +330,6 @@ Internet-Draft                  CoMI Push                     April 2018
    highly constrained datastores initiate a Call-Home procedure (see
    [insert NETCONF Call Home here]) acting as if a request was already
    received (see Configured Subscription above), enticing a very
-   specific request they can fulfill (dynamic subscription) or
-   rendezvous via a discoverable YANG Zero Touch component.  In all
-   these use cases, the datastore intends to create device specific
-   Telemetry to be collected by corresponding YANG clients.
-
 
 
 
@@ -337,6 +337,11 @@ Birkholz, et al.        Expires October 20, 2018                [Page 6]
 
 Internet-Draft                  CoMI Push                     April 2018
 
+
+   specific request they can fulfill (dynamic subscription) or
+   rendezvous via a discoverable YANG Zero Touch component.  In all
+   these use cases, the datastore intends to create device specific
+   Telemetry to be collected by corresponding YANG clients.
 
    In essence, incorporating a complete YANG module is not required to
    enable the initiation of Concise YANG Telemetry within a very
@@ -380,11 +385,6 @@ Internet-Draft                  CoMI Push                     April 2018
       a YANG module (including notification statements) is used to
       create update records that include updates about the identified
       data node and its potential child nodes.  Effectively, a single
-      SID points to the root node of the subtree update records are
-      created for.
-
-   XPATH Filter Expression:  A more detailed selection of SIDs and
-      corresponding data node values that update records are created
 
 
 
@@ -394,6 +394,11 @@ Birkholz, et al.        Expires October 20, 2018                [Page 7]
 Internet-Draft                  CoMI Push                     April 2018
 
 
+      SID points to the root node of the subtree update records are
+      created for.
+
+   XPATH Filter Expression:  A more detailed selection of SIDs and
+      corresponding data node values that update records are created
       for.  The corresponding representation of XPATH Filter Expressions
       for COMI is defined in [I-D.ietf-core-yang-cbor].
 
@@ -437,11 +442,6 @@ Internet-Draft                  CoMI Push                     April 2018
 
    3.  a YANG datastore initiates contact with a YANG client via a
        Rendezvous, Join, or Call Home procedure and triggers the
-       initiation of a telemetry stream.  In this case, the subscription
-       characteristics are configured on the YANG client and come into
-       effect when the YANG datastore successfully discovered its home.
-
-
 
 
 
@@ -449,6 +449,10 @@ Birkholz, et al.        Expires October 20, 2018                [Page 8]
 
 Internet-Draft                  CoMI Push                     April 2018
 
+
+       initiation of a telemetry stream.  In this case, the subscription
+       characteristics are configured on the YANG client and come into
+       effect when the YANG datastore successfully discovered its home.
 
 5.1.1.  CoMI Push Configured Subscriptions
 
@@ -494,10 +498,6 @@ Internet-Draft                  CoMI Push                     April 2018
    create subscription state between a YANG client and a YANG datastore.
    As long as this subscription state between these two entities
    persists, a datastore can emit series of YANG notifications to a YANG
-   client, if appropriate conditions are met, e.g. the YANG client
-   expects solicited event notifications coming from the datastore due
-   to a dynamic subscription.
-
 
 
 
@@ -505,6 +505,10 @@ Birkholz, et al.        Expires October 20, 2018                [Page 9]
 
 Internet-Draft                  CoMI Push                     April 2018
 
+
+   client, if appropriate conditions are met, e.g. the YANG client
+   expects solicited event notifications coming from the datastore due
+   to a dynamic subscription.
 
    YANG Push [I-D.ietf-netconf-yang-push] and YANG Subscribed
    Notifications [I-D.ietf-netconf-subscribed-notifications] extend this
@@ -547,10 +551,6 @@ Internet-Draft                  CoMI Push                     April 2018
 
    o  applies to update record creation, not transmission
 
-9.2.  change-type
-
-   o  create, delete, change (where is the complete list?)
-
 
 
 
@@ -561,6 +561,10 @@ Birkholz, et al.        Expires October 20, 2018               [Page 10]
 
 Internet-Draft                  CoMI Push                     April 2018
 
+
+9.2.  change-type
+
+   o  create, delete, change (where is the complete list?)
 
 9.3.  no sync-on-start
 
@@ -605,11 +609,7 @@ Internet-Draft                  CoMI Push                     April 2018
    defined in YANG Push [I-D.ietf-netconf-yang-push], which augments
    ietf-subscribed-notification defined in
    [I-D.ietf-netconf-subscribed-notifications]) is provided.  In the
-   following example every sid is illustrated as a "string" as there is
-   no sid for corresponding instance identifiers yet:
 
-   /s/"65536"/"stream"/"within-subscription"/"filter-spec"/"stream-
-   xpath-filter"/"stream-xpath-filter"
 
 
 
@@ -617,6 +617,12 @@ Birkholz, et al.        Expires October 20, 2018               [Page 11]
 
 Internet-Draft                  CoMI Push                     April 2018
 
+
+   following example every sid is illustrated as a "string" as there is
+   no sid for corresponding instance identifiers yet:
+
+   /s/"65536"/"stream"/"within-subscription"/"filter-spec"/"stream-
+   xpath-filter"/"stream-xpath-filter"
 
    This example would point to the filter selection associated with
    subscription id 65536.
@@ -658,12 +664,6 @@ Internet-Draft                  CoMI Push                     April 2018
    This document includes no requests to IANA, but solutions drafts
    incubated via this document might.
 
-13.  Security Considerations
-
-   This document includes no security considerations, but solution
-   drafts incubated via this document will.
-
-
 
 
 
@@ -673,6 +673,11 @@ Birkholz, et al.        Expires October 20, 2018               [Page 12]
 
 Internet-Draft                  CoMI Push                     April 2018
 
+
+13.  Security Considerations
+
+   This document includes no security considerations, but solution
+   drafts incubated via this document will.
 
 14.  Acknowledgements
 
@@ -717,11 +722,6 @@ Internet-Draft                  CoMI Push                     April 2018
               Subscription", draft-ietf-netconf-yang-push-16 (work in
               progress), May 2018.
 
-   [RFC5277]  Chisholm, S. and H. Trevino, "NETCONF Event
-              Notifications", RFC 5277, DOI 10.17487/RFC5277, July 2008,
-              <https://www.rfc-editor.org/info/rfc5277>.
-
-
 
 
 
@@ -729,6 +729,10 @@ Birkholz, et al.        Expires October 20, 2018               [Page 13]
 
 Internet-Draft                  CoMI Push                     April 2018
 
+
+   [RFC5277]  Chisholm, S. and H. Trevino, "NETCONF Event
+              Notifications", RFC 5277, DOI 10.17487/RFC5277, July 2008,
+              <https://www.rfc-editor.org/info/rfc5277>.
 
    [RFC6020]  Bjorklund, M., Ed., "YANG - A Data Modeling Language for
               the Network Configuration Protocol (NETCONF)", RFC 6020,
@@ -772,10 +776,6 @@ Authors' Addresses
    Cisco Systems
 
    Email: evoit@cisco.com
-
-
-
-
 
 
 

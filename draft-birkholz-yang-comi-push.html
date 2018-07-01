@@ -511,14 +511,26 @@ ul.toc li {
 <p></p>
 
 <dl>
+<dt>Data Node Value:</dt>
+<dd style="margin-left: 8">Defined in CoMI as the value assigned to a data node instance. Data node values are serialized into the payload according to the rules defined in section 4 of <a href="#I-D.ietf-core-yang-cbor" class="xref">[I-D.ietf-core-yang-cbor]</a>.</dd>
+<dt>Update Record:</dt>
+<dd style="margin-left: 8">A single YANG data item in a Series of YANG Notifications or YANG Notification Bundle Messages conveying the changes to a YANG datastore's module's Data Node Values.</dd>
 <dt>Series:</dt>
-<dd style="margin-left: 8">Series Transfer Pattern are described in <a href="#I-D.bormann-t2trg-stp" class="xref">[I-D.bormann-t2trg-stp]</a> and describe the conveyance of associated data items over time, where a client is able to obtain the Series and to learn about new items.</dd>
+<dd style="margin-left: 8">Series Transfer Pattern are described in <a href="#I-D.bormann-t2trg-stp" class="xref">[I-D.bormann-t2trg-stp]</a> as the conveyance of a sequence of associated data items over time, where a client is able to obtain the Series and to learn about new items.</dd>
 <dt></dt>
 <dd style="margin-left: 8">YANG Customized Subscriptions or a YANG Datastore Subscription creates an specific Series Transfer Pattern composed of individual YANG Notifications or YANG Notification Bundle Messages that include related updated records.</dd>
-<dt>YANG Client:</dt>
-<dd style="margin-left: 8">Called a YANG-based client in <a href="#RFC7950" class="xref">[RFC7950]</a>, a YANG Client is the entity communicating with a YANG Sever (running potentially multiple YANG datastores).</dd>
+<dt>Visibility:</dt>
+<dd style="margin-left: 8">A level of assurance that Update Records will be received by a YANG Client.</dd>
 <dt></dt>
-<dd style="margin-left: 8">YANG Client is a representation agnostic term. Specific protocols that operate on YANG Servers via YANG Clients use representations, such as XML, JSON, or CBOR.</dd>
+<dd style="margin-left: 8">There might be reasons, such as resource exhaustion or dampening settings, that result in Updates Records lost in transit or not being emitted by the YANG datastore. Sequential Message-IDs or specific YANG Notifications that report, e.g., about past events of resource exhaustion will inform the YANG Client about the characteristics of the loss of Update Records.</dd>
+<dt>YANG Client:</dt>
+<dd style="margin-left: 8">Called a YANG-based client or just client in <a href="#RFC7950" class="xref">[RFC7950]</a>, a YANG Client is the entity communicating with a YANG Sever (running potentially multiple YANG datastores) in order to access YANG-defined data.</dd>
+<dt></dt>
+<dd style="margin-left: 8">YANG Client is a representation agnostic term. Specific network protocols that operate on YANG Servers via YANG Clients use representations, such as XML, JSON, or CBOR.</dd>
+<dt>YANG Data Item:</dt>
+<dd style="margin-left: 8">An instance of YANG a modules Data Node Values or the changes to Data Node Values, conveyed as data in motion, serialized in a specific representation, such as XML, JSON, or CBOR.</dd>
+<dt>YANG Datastore:</dt>
+<dd style="margin-left: 8">Defined in <a href="#RFC6241" class="xref">[RFC6241]</a>, a datastore is a conceptual place to store and access information. A datastore might be implemented, for example, using files, a database, flash memory locations, or combinations thereof.</dd>
 <dt>YANG Notification:</dt>
 <dd style="margin-left: 8">Defined in <a href="#RFC6241" class="xref">[RFC6241]</a>, a Notification is a server-initiated message indicating that a certain event has been recognized by the server.</dd>
 <dt></dt>
@@ -527,16 +539,6 @@ ul.toc li {
 <dd style="margin-left: 8">An encapsulation header for one or more YANG notifications as defined in <a href="#I-D.ietf-netconf-notification-messages" class="xref">[I-D.ietf-netconf-notification-messages]</a>. The message header includes a specific set of well-known objects, which are of potential use to networking layers prior being interpreted by some receiving application layer process.</dd>
 <dt></dt>
 <dd style="margin-left: 8">Examples of header object include, but are not limited to: timestamps, signatures, or evidence about the integrity of the agents creating messages or notifications.</dd>
-<dt>Update Record:</dt>
-<dd style="margin-left: 8">A single YANG data item in a Series of YANG Notifications or YANG Notification Bundle Messages conveying the changes to a YANG datastore's module's Data Node Values.</dd>
-<dt>YANG Data Item:</dt>
-<dd style="margin-left: 8">An instance of YANG module Data Node Values or the changes to Data Node Values, conveyed as data in motion, serialized in a specific representation, such as XML, JSON, or CBOR.</dd>
-<dt>Visibility:</dt>
-<dd style="margin-left: 8">A level of assurance that Update Records will be received by a YANG Client.</dd>
-<dt></dt>
-<dd style="margin-left: 8">There might be reasons, such as resource exhaustion or dampening settings, that result in Updates Records lost in transit or not being emitted by the YANG datastore. Sequential Message-IDs or specific YANG Notifications that report, e.g., about past events of resource exhaustion will inform the YANG Client about the characteristics of the loss of Update Records.</dd>
-<dt>Data Node Value:</dt>
-<dd style="margin-left: 8">Defined in CoMI as the value assigned to a data node instance. Data node values are serialized into the payload according to the rules defined in section 4 of <a href="#I-D.ietf-core-yang-cbor" class="xref">[I-D.ietf-core-yang-cbor]</a>.</dd>
 </dl>
 <h1 id="rfc.section.2.1">
 <a href="#rfc.section.2.1">2.1.</a> <a href="#coap-terminology" id="coap-terminology">CoAP Terminology</a>
