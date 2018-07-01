@@ -216,7 +216,7 @@ additions include:
 
 * a CoAP POST operation to create, modify, delete or kill Telemetry subscription
   state,
-* a CoAP PATCH operation to create, modify, delete or kill modify one or more
+* a CoAP iPATCH operation to create, modify, delete or kill modify one or more
   Telemetry subscription states,
 * a CoAP GET operation including the Observe option to receive a Telemetry
   stream,
@@ -428,12 +428,8 @@ different types of YANG Notification Series [-cabo-series], respectively:
 
 Every subscription-id is created by the YANG datastore and is used in the corresponding subscription state to provide the root identifier, by which dedicated subscription characteristics are associated with an established subscription. In consequence, the basic interaction model of Concise YANG Push is split into two operations that are initiated by the YANG client in sequence:
 
-* a PATCH operation on /c executing the establish-subscription RPC corresponding to the included PATCH body with content-type "application/yang-patch+cbo" that returns the subscription-id (or an error response)
+* a POST operation on /c executing the establish-subscription RPC corresponding to the included request body with content-type "application/yang-value+cbor" that returns the subscription-id (or an error response) in an "application/yang-value+cbor" response
 * a GET Observe operation on the event stream resource /s/subscription-id or a FETCH operation on /s including a FETCH body with content-format "application/yang-selectors+cbor" and one or more subscription-id as content.
-OR
-* a GET Observe operation on /c/subscription-id to get subscribed notifications
-
-Please note, that Concise COMI Push allows SIDs to be used as subscription id. There is more work to be done here to flesh that out.
 
 ## Extension of the CoMI Event Stream Resource
 
@@ -441,7 +437,7 @@ A standard CoMI datastore as defined in [I-D.ietf-core-comi] typically uses the 
 
 CoMI Push extends the scope of the “/s” resource. Sub-resources under “/s” are represented as /s/key, where key is a numeric string representation of the subscription identifier, e.g. “/s/65536/”. The key representation reduces the ambiguity with respect to sid, which uses an URI safe base64 representation.
 
-Under each subscription identifier key provided as a sub-resource of the “/s” resource, a YANG tree instance of the subscription characteristics yang:ietf-subscribed-notifications/subscriptions (as defined in YANG Push [I-D.ietf-netconf-yang-push], which aguments ietf-subscribed-notification defined in [I-D.ietf-netconf-subscribed-notifications]) is provided. In the following example every sid is illustrated as a “string” as there is no sid for corresponding instance identifiers yet:
+Under each subscription identifier key provided as a sub-resource of the “/s” resource, a YANG tree instance of the subscription characteristics yang:ietf-subscribed-notifications/subscriptions (as defined in YANG Push [I-D.ietf-netconf-yang-push], which augments ietf-subscribed-notification defined in [I-D.ietf-netconf-subscribed-notifications]) is provided. In the following example every sid is illustrated as a “string” as there is no sid for corresponding instance identifiers yet:
 
 /s/”65536”/”stream”/”within-subscription”/”filter-spec”/”stream-xpath-filter”/”stream-xpath-filter“
 
