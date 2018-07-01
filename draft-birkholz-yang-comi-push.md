@@ -57,22 +57,26 @@ normative:
   RFC7950:
   RFC6241:
   RFC5277:
+  RFC6020:
   I-D.ietf-core-yang-cbor: yangcbor
   I-D.ietf-core-comi: comi
   I-D.ietf-netconf-subscribed-notifications: yangnote
   I-D.ietf-netconf-yang-push: yangpush
   I-D.ietf-netconf-notification-messages: notemsgs
+  I-D.bormann-t2trg-stp: series
 
 informative:
 
 --- abstract
 
-This documents defines an YANG Augment to the base CoMI module definition. The
-mechanisms defined in YANG Push, YANG Subscribed Notifications are mapped
-to CoAP operation in alignment with existing CoAP-based operations.
-Specific additions include but are not limited to new FETCH Body definitions
-and simplified subtree subscriptions to intermediate data nodes in the module
-tree via SID.
+This documents defines CoAP operations that implement the capabilities of YANG
+Datastore Subscriptions and YANG Customized Subscriptions for the CoAP
+Management Interface (CoMI). The '/s' resource, as defined in CoMI, is
+extended analogously to include a set of sub-resources, each of them
+representing an observable resource identified by its subscription-id. Specific
+additions include but are not limited to new FETCH Body definitions and
+simplified subtree subscriptions to intermediate data nodes in YANG datastore
+modules using SID.
 
 --- middle
 
@@ -87,64 +91,98 @@ are the use of:
 * the Constrained Application Protocol (CoAP {{RFC7252}}) to facilitate an
   HTTP-esque interaction model,
 * the Concise Binary Object Representation (CBOR {{RFC7049}}) to facilitate an
-  efficient content encoding, and
+  efficient content encoding using {{-yangcbor}}, and
 * YANG identifier strings are represented as numbers called YANG
-  Schema Item Identifier (SID) defined in {{-yangcbor}}.
+  Schema Item Identifier (SID), also defined in {{-yangcbor}}.
 
-This documents defines additions to CoMI called Concise YANG Telemetry that:
+This document defines additions to CoMI called Concise YANG Telemetry that:
 
 * enrich its capabilities to subscribe to a variety of YANG modeled
-  notifications---based on YANG Subscribed Notifications {{-yangnote}}, and
+  notifications---based on YANG Customized Subscriptions to a Publisher's Event
+  Streams {{-yangnote}}, and
 * enable subscriptions to changes data note values in modules provided by the
-  YANG datastore (or parts of them)---based on YANG Push {{-yangpush}}.
+  YANG datastore (or parts of them)---based on YANG Datastore Subscription
+  {{-yangpush}}.
 
 Due to the utilization of CoAP, the interaction model of CoMI is quite similar
-to RESTCONF {{RFC8040}}. RESTCONF {{RFC7950}} supports subscriptions to a YANG
-datastore via notification definitions in YANG modules, which---when subscribed
+to RESTCONF {{RFC8040}}. RESTCONF supports subscriptions to a YANG
+datastore via notification statements in YANG modules, which---when subscribed
 to via the base subscription YANG RPC defined in {{RFC7950}}---result in
-Series [-cabo-series] of Server Sent Events [W3C.REC-eventsource-20150203]}.
+Series {{-series}} of Server Sent Events [W3C.REC-eventsource-20150203]}.
 A corresponding Event Stream specification for NETCONF {{RFC6241}} Event
 Notifications is defined in section 3.2.3 of {{RFC5277}}. To simplify
 corresponding terminology (and especially consolidate the impedance mismatch of
-Notifications and Events), this document defines the following term:
+the terms Notifications and Events), this document defines the following new term:
 
 YANG Telemetry:
 
 : A Series of YANG Notifications or YANG Notification Bundle Messages that are
-  composed of YANG modeled data, sent from a YANG datastore to a YANG client
-  either solicited or unsolicited, and that can guarantee well-defined levels of
-  Visibility with respect to Data Node Value changes.
+composed of YANG modeled data, potentially composing update records, sent from a YANG
+datastore to a YANG client either solicited or unsolicited in a fashion that can
+guarantee well-defined levels of Visibility with respect to Data Node Value
+changes.
 
-: While the focus of YANG is typically on management and operations, the scope
-  of YANG Telemetry extends into the Security Area with respect to Security
-  Events. YANG Telemetry characteristics that address security requirements,
-  such as Visibility, are addressed in this document.
+While the focus of YANG is typically on management and operations, the scope
+of YANG Telemetry extends into the Security Area with respect to Security
+Events. Because of this, YANG Telemetry characteristics that address security requirements,
+such as Visibility and Resilient YANG Subscriptions, are addressed in this document.
 
 The definition of YANG Telemetry is based on the following existing terminology:
 
 Series:
 
-: pull stuff from [-cabo-series] here
+: Series Transfer Pattern are described in {{-series}} and describe the
+conveyance of associated data items over time, where a client is able to obtain
+the Series and to learn about new items.
+
+: YANG Customized Subscriptions or a YANG Datastore Subscription creates an
+specific Series Transfer Pattern composed of individual YANG Notifications or
+YANG Notification Bundle Messages that include related updated records.
 
 YANG Notification:
 
-: pull stuff from {{-yangnote}} here
+: Defined in {{RFC6241}}, a Notification is a server-initated message indicating
+that a certain event has been recognized by the server.
 
-YANG Notification Bundle Message:
+: While this definition is found in {{RFC6241}}, which is based on YANG 1.0
+{{RFC6020}}, it also applies to the general definition of the YANG Notification
+statement in YANG 1.1 {{RFC7950}}.
 
-: pull stuff from {{-notemsgs}} here
+YANG Notification (Bundle) Message:
+
+: An encapsulation header for one or more YANG notifications as defined in
+{{-notemsgs}}. The message header includes a specific set of well-known objects,
+which are of potential use to networking layers prior being interpreted by some
+receiving application layer process.
+
+: Examples include, but are not limited to: timestamps, signatures, or evidence
+about the integrity of the agents creating messages or notifications.
+
+Update Record:
+
+: A single YANG data item in a Series of YANG Notifications or YANG Notification Bundle
+Messages conveying the changes to a YANG datastore's module's Data Node Values.
+
+YANG Data Item:
+
+: An instance of YANG module Data Node Values or the changes to Data Node
+Values, conveyed as data in motion, serialized in a specific representation, such
+as XML, JSON, or CBOR.
 
 Visibility:
 
-: Eric? :)
+: A level of assurance that Update Records will be received by a
+YANG Client. There might be reasons, such as resource exhaustion or dampening
+settings, that result in Updates Records lost in transit or not being emitted by
+the YANG datastore. Sequential Message-IDs or specific YANG Notifications are
+that report, e.g., about past events of resource exhaustion will inform the YANG
+Client about the characteristics of the loss of Update Records.
 
 Data Node Value:
 
-: {{-comi}}:
-
-: Defined in COMI as "the value assigned to a data node instance. Data node
-  values are serialized into the payload according to the rules defined in
-  section 4 of {{-yangcbor}}".
+: Defined in CoMI as the value assigned to a data node instance. Data node
+values are serialized into the payload according to the rules defined in
+section 4 of {{-yangcbor}}.
 
 
 # CoMI Push Terminology
