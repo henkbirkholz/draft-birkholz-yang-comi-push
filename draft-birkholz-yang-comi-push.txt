@@ -18,12 +18,15 @@ Expires: October 20, 2018                                  Cisco Systems
 
 Abstract
 
-   This documents defines an YANG Augment to the base CoMI module
-   definition.  The mechanisms defined in YANG Push, YANG Subscribed
-   Notifications are mapped to CoAP operation in alignment with existing
-   CoAP-based operations.  Specific additions include but are not
-   limited to new FETCH Body definitions and simplified subtree
-   subscriptions to intermediate data nodes in the module tree via SID.
+   This documents defines CoAP operations that implement the
+   capabilities of YANG Datastore Subscriptions and YANG Customized
+   Subscriptions for the CoAP Management Interface (CoMI).  The '/s'
+   resource, as defined in CoMI, is extended analogously to include a
+   set of sub-resources, each of them representing an observable
+   resource identified by its subscription-id.  Specific additions
+   include but are not limited to new FETCH Body definitions and
+   simplified subtree subscriptions to intermediate data nodes in YANG
+   datastore modules using SID.
 
 Status of This Memo
 
@@ -47,9 +50,6 @@ Copyright Notice
    Copyright (c) 2018 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
-   This document is subject to BCP 78 and the IETF Trust's Legal
-   Provisions Relating to IETF Documents
-   (https://trustee.ietf.org/license-info) in effect on the date of
 
 
 
@@ -58,6 +58,9 @@ Birkholz, et al.        Expires October 20, 2018                [Page 1]
 Internet-Draft                  CoMI Push                     April 2018
 
 
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents
+   (https://trustee.ietf.org/license-info) in effect on the date of
    publication of this document.  Please review these documents
    carefully, as they describe your rights and restrictions with respect
    to this document.  Code Components extracted from this document must
@@ -68,44 +71,41 @@ Internet-Draft                  CoMI Push                     April 2018
 Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   3
-   2.  CoMI Push Terminology . . . . . . . . . . . . . . . . . . . .   4
-     2.1.  Summary of YANG Push Additions to CoMI  . . . . . . . . .   4
-     2.2.  Telemetry-Specific CoMI datastores  . . . . . . . . . . .   5
-   3.  Subscription Content and State  . . . . . . . . . . . . . . .   5
-     3.1.  Selection Filter  . . . . . . . . . . . . . . . . . . . .   6
-   4.  Subscription Characteristics  . . . . . . . . . . . . . . . .   6
-     4.1.  Subscription Trigger  . . . . . . . . . . . . . . . . . .   7
-       4.1.1.  CoMI Push Configured Subscriptions  . . . . . . . . .   7
-       4.1.2.  Dynamic Subscriptions . . . . . . . . . . . . . . . .   7
-     4.2.  Subscription Interval . . . . . . . . . . . . . . . . . .   7
-       4.2.1.  Periodic Subscription . . . . . . . . . . . . . . . .   7
-       4.2.2.  On-Change Subscription  . . . . . . . . . . . . . . .   7
-     4.3.  Subscription Type . . . . . . . . . . . . . . . . . . . .   8
-       4.3.1.  Stream Subscription . . . . . . . . . . . . . . . . .   8
-       4.3.2.  Datastore Subscription  . . . . . . . . . . . . . . .   8
-   5.  Subscription Management (better word?)  . . . . . . . . . . .   8
-     5.1.  YANG RPCs . . . . . . . . . . . . . . . . . . . . . . . .   8
-     5.2.  NETCONF Access Control Model [RFC6536bis] . . . . . . . .   8
-   6.  Selection Filters . . . . . . . . . . . . . . . . . . . . . .   9
-     6.1.  SID for subtree Selection Filter  . . . . . . . . . . . .   9
-     6.2.  CBOR-YANG for XPATH-like Selection Filter . . . . . . . .   9
-   7.  Update Triggers for Periodic Subscriptions  . . . . . . . . .   9
-     7.1.  Interval  . . . . . . . . . . . . . . . . . . . . . . . .   9
-     7.2.  Anchor Time . . . . . . . . . . . . . . . . . . . . . . .   9
-   8.  Update Triggers for On-Change Subscriptions . . . . . . . . .   9
-     8.1.  dampening period  . . . . . . . . . . . . . . . . . . . .   9
-     8.2.  change-type . . . . . . . . . . . . . . . . . . . . . . .   9
-     8.3.  no sync-on-start  . . . . . . . . . . . . . . . . . . . .   9
-   9.  YANG Push Operations for COMI . . . . . . . . . . . . . . . .   9
-     9.1.  Extension of the CoMI Event Stream Resource . . . . . . .  10
-     9.2.  Extension of the YANG Subscription Mechanism  . . . . . .  10
-   10. Upcoming Features and Stories . . . . . . . . . . . . . . . .  11
-   11. IANA considerations . . . . . . . . . . . . . . . . . . . . .  11
-   12. Security Considerations . . . . . . . . . . . . . . . . . . .  11
-   13. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  11
-   14. Change Log  . . . . . . . . . . . . . . . . . . . . . . . . .  11
-   15. Normative References  . . . . . . . . . . . . . . . . . . . .  11
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  13
+   2.  CoMI Push Terminology . . . . . . . . . . . . . . . . . . . .   5
+     2.1.  Summary of YANG Push Additions to CoMI  . . . . . . . . .   5
+     2.2.  Telemetry-Specific CoMI datastores  . . . . . . . . . . .   6
+   3.  Subscription Content and State  . . . . . . . . . . . . . . .   6
+     3.1.  Selection Filter  . . . . . . . . . . . . . . . . . . . .   7
+   4.  Subscription Characteristics  . . . . . . . . . . . . . . . .   7
+     4.1.  Subscription Trigger  . . . . . . . . . . . . . . . . . .   8
+       4.1.1.  CoMI Push Configured Subscriptions  . . . . . . . . .   8
+       4.1.2.  Dynamic Subscriptions . . . . . . . . . . . . . . . .   8
+     4.2.  Subscription Interval . . . . . . . . . . . . . . . . . .   8
+       4.2.1.  Periodic Subscription . . . . . . . . . . . . . . . .   8
+       4.2.2.  On-Change Subscription  . . . . . . . . . . . . . . .   8
+     4.3.  Subscription Type . . . . . . . . . . . . . . . . . . . .   9
+       4.3.1.  Stream Subscription . . . . . . . . . . . . . . . . .   9
+       4.3.2.  Datastore Subscription  . . . . . . . . . . . . . . .   9
+   5.  Subscription Management (better word?)  . . . . . . . . . . .   9
+     5.1.  YANG RPCs . . . . . . . . . . . . . . . . . . . . . . . .   9
+     5.2.  NETCONF Access Control Model [RFC6536bis] . . . . . . . .   9
+   6.  Selection Filters . . . . . . . . . . . . . . . . . . . . . .  10
+     6.1.  SID for subtree Selection Filter  . . . . . . . . . . . .  10
+     6.2.  CBOR-YANG for XPATH-like Selection Filter . . . . . . . .  10
+   7.  Update Triggers for Periodic Subscriptions  . . . . . . . . .  10
+     7.1.  Interval  . . . . . . . . . . . . . . . . . . . . . . . .  10
+     7.2.  Anchor Time . . . . . . . . . . . . . . . . . . . . . . .  10
+   8.  Update Triggers for On-Change Subscriptions . . . . . . . . .  10
+     8.1.  dampening period  . . . . . . . . . . . . . . . . . . . .  10
+     8.2.  change-type . . . . . . . . . . . . . . . . . . . . . . .  10
+     8.3.  no sync-on-start  . . . . . . . . . . . . . . . . . . . .  10
+   9.  YANG Push Operations for COMI . . . . . . . . . . . . . . . .  10
+     9.1.  Extension of the CoMI Event Stream Resource . . . . . . .  11
+     9.2.  Extension of the YANG Subscription Mechanism  . . . . . .  11
+   10. Upcoming Features and Stories . . . . . . . . . . . . . . . .  12
+   11. IANA considerations . . . . . . . . . . . . . . . . . . . . .  12
+   12. Security Considerations . . . . . . . . . . . . . . . . . . .  12
+   13. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  12
 
 
 
@@ -113,6 +113,10 @@ Birkholz, et al.        Expires October 20, 2018                [Page 2]
 
 Internet-Draft                  CoMI Push                     April 2018
 
+
+   14. Change Log  . . . . . . . . . . . . . . . . . . . . . . . . .  12
+   15. Normative References  . . . . . . . . . . . . . . . . . . . .  12
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  14
 
 1.  Introduction
 
@@ -126,42 +130,38 @@ Internet-Draft                  CoMI Push                     April 2018
       facilitate an HTTP-esque interaction model,
 
    o  the Concise Binary Object Representation (CBOR [RFC7049]) to
-      facilitate an efficient content encoding, and
+      facilitate an efficient content encoding using
+      [I-D.ietf-core-yang-cbor], and
 
    o  YANG identifier strings are represented as numbers called YANG
-      Schema Item Identifier (SID) defined in [I-D.ietf-core-yang-cbor].
+      Schema Item Identifier (SID), also defined in
+      [I-D.ietf-core-yang-cbor].
 
-   This documents defines additions to CoMI called Concise YANG
-   Telemetry that:
+   This document defines additions to CoMI called Concise YANG Telemetry
+   that:
 
    o  enrich its capabilities to subscribe to a variety of YANG modeled
-      notifications--based on YANG Subscribed Notifications
+      notifications--based on YANG Customized Subscriptions to a
+      Publisher's Event Streams
       [I-D.ietf-netconf-subscribed-notifications], and
 
    o  enable subscriptions to changes data note values in modules
       provided by the YANG datastore (or parts of them)--based on YANG
-      Push [I-D.ietf-netconf-yang-push].
+      Datastore Subscription [I-D.ietf-netconf-yang-push].
 
    Due to the utilization of CoAP, the interaction model of CoMI is
-   quite similar to RESTCONF [RFC8040].  RESTCONF [RFC7950] supports
-   subscriptions to a YANG datastore via notification definitions in
-   YANG modules, which--when subscribed to via the base subscription
-   YANG RPC defined in [RFC7950]--result in Series [-cabo-series] of
-   Server Sent Events [W3C.REC-eventsource-20150203]}.  A corresponding
-   Event Stream specification for NETCONF [RFC6241] Event Notifications
-   is defined in section 3.2.3 of [RFC5277].  To simplify corresponding
-   terminology (and especially consolidate the impedance mismatch of
-   Notifications and Events), this document defines the following term:
+   quite similar to RESTCONF [RFC8040].  RESTCONF supports subscriptions
+   to a YANG datastore via notification statements in YANG modules,
+   which--when subscribed to via the base subscription YANG RPC defined
+   in [RFC7950]--result in Series [I-D.bormann-t2trg-stp] of Server Sent
+   Events [W3C.REC-eventsource-20150203]}.  A corresponding Event Stream
+   specification for NETCONF [RFC6241] Event Notifications is defined in
+   section 3.2.3 of [RFC5277].  To simplify corresponding terminology
+   (and especially consolidate the impedance mismatch of the terms
+   Notifications and Events), this document defines the following new
+   term:
 
-   YANG Telemetry:  A Series of YANG Notifications or YANG Notification
-      Bundle Messages that are composed of YANG modeled data, sent from
-      a YANG datastore to a YANG client either solicited or unsolicited,
-      and that can guarantee well-defined levels of Visibility with
-      respect to Data Node Value changes.
 
-      While the focus of YANG is typically on management and operations,
-      the scope of YANG Telemetry extends into the Security Area with
-      respect to Security Events.  YANG Telemetry characteristics that
 
 
 
@@ -170,27 +170,84 @@ Birkholz, et al.        Expires October 20, 2018                [Page 3]
 Internet-Draft                  CoMI Push                     April 2018
 
 
-      address security requirements, such as Visibility, are addressed
-      in this document.
+   YANG Telemetry:  A Series of YANG Notifications or YANG Notification
+      Bundle Messages that are composed of YANG modeled data,
+      potentially composing update records, sent from a YANG datastore
+      to a YANG client either solicited or unsolicited in a fashion that
+      can guarantee well-defined levels of Visibility with respect to
+      Data Node Value changes.
+
+   While the focus of YANG is typically on management and operations,
+   the scope of YANG Telemetry extends into the Security Area with
+   respect to Security Events.  Because of this, YANG Telemetry
+   characteristics that address security requirements, such as
+   Visibility and Resilient YANG Subscriptions, are addressed in this
+   document.
 
    The definition of YANG Telemetry is based on the following existing
    terminology:
 
-   Series:  pull stuff from [-cabo-series] here
+   Series:  Series Transfer Pattern are described in
+      [I-D.bormann-t2trg-stp] and describe the conveyance of associated
+      data items over time, where a client is able to obtain the Series
+      and to learn about new items.
 
-   YANG Notification:  pull stuff from
-      [I-D.ietf-netconf-subscribed-notifications] here
+      YANG Customized Subscriptions or a YANG Datastore Subscription
+      creates an specific Series Transfer Pattern composed of individual
+      YANG Notifications or YANG Notification Bundle Messages that
+      include related updated records.
 
-   YANG Notification Bundle Message:  pull stuff from [I-D.ietf-netconf-
-      notification-messages] here
+   YANG Notification:  Defined in [RFC6241], a Notification is a server-
+      initated message indicating that a certain event has been
+      recognized by the server.
 
-   Visibility:  Eric? :)
+      While this definition is found in [RFC6241], which is based on
+      YANG 1.0 [RFC6020], it also applies to the general definition of
+      the YANG Notification statement in YANG 1.1 [RFC7950].
 
-   Data Node Value:  [I-D.ietf-core-comi]:
+   YANG Notification (Bundle) Message:  An encapsulation header for one
+      or more YANG notifications as defined in
+      [I-D.ietf-netconf-notification-messages].  The message header
+      includes a specific set of well-known objects, which are of
+      potential use to networking layers prior being interpreted by some
+      receiving application layer process.
 
-      Defined in COMI as "the value assigned to a data node instance.
-      Data node values are serialized into the payload according to the
-      rules defined in section 4 of [I-D.ietf-core-yang-cbor]".
+      Examples include, but are not limited to: timestamps, signatures,
+      or evidence about the integrity of the agents creating messages or
+      notifications.
+
+
+
+
+
+
+Birkholz, et al.        Expires October 20, 2018                [Page 4]
+
+Internet-Draft                  CoMI Push                     April 2018
+
+
+   Update Record:  A single YANG data item in a Series of YANG
+      Notifications or YANG Notification Bundle Messages conveying the
+      changes to a YANG datastore's module's Data Node Values.
+
+   YANG Data Item:  An instance of YANG module Data Node Values or the
+      changes to Data Node Values, conveyed as data in motion,
+      serialized in a specific representation, such as XML, JSON, or
+      CBOR.
+
+   Visibility:  A level of assurance that Update Records will be
+      received by a YANG Client.  There might be reasons, such as
+      resource exhaustion or dampening settings, that result in Updates
+      Records lost in transit or not being emitted by the YANG
+      datastore.  Sequential Message-IDs or specific YANG Notifications
+      are that report, e.g., about past events of resource exhaustion
+      will inform the YANG Client about the characteristics of the loss
+      of Update Records.
+
+   Data Node Value:  Defined in CoMI as the value assigned to a data
+      node instance.  Data node values are serialized into the payload
+      according to the rules defined in section 4 of
+      [I-D.ietf-core-yang-cbor].
 
 2.  CoMI Push Terminology
 
@@ -220,8 +277,7 @@ Internet-Draft                  CoMI Push                     April 2018
 
 
 
-
-Birkholz, et al.        Expires October 20, 2018                [Page 4]
+Birkholz, et al.        Expires October 20, 2018                [Page 5]
 
 Internet-Draft                  CoMI Push                     April 2018
 
@@ -277,7 +333,7 @@ Internet-Draft                  CoMI Push                     April 2018
 
 
 
-Birkholz, et al.        Expires October 20, 2018                [Page 5]
+Birkholz, et al.        Expires October 20, 2018                [Page 6]
 
 Internet-Draft                  CoMI Push                     April 2018
 
@@ -333,7 +389,7 @@ Internet-Draft                  CoMI Push                     April 2018
 
 
 
-Birkholz, et al.        Expires October 20, 2018                [Page 6]
+Birkholz, et al.        Expires October 20, 2018                [Page 7]
 
 Internet-Draft                  CoMI Push                     April 2018
 
@@ -389,7 +445,7 @@ Internet-Draft                  CoMI Push                     April 2018
 
 
 
-Birkholz, et al.        Expires October 20, 2018                [Page 7]
+Birkholz, et al.        Expires October 20, 2018                [Page 8]
 
 Internet-Draft                  CoMI Push                     April 2018
 
@@ -445,7 +501,7 @@ Internet-Draft                  CoMI Push                     April 2018
 
 
 
-Birkholz, et al.        Expires October 20, 2018                [Page 8]
+Birkholz, et al.        Expires October 20, 2018                [Page 9]
 
 Internet-Draft                  CoMI Push                     April 2018
 
@@ -501,7 +557,7 @@ Internet-Draft                  CoMI Push                     April 2018
 
 
 
-Birkholz, et al.        Expires October 20, 2018                [Page 9]
+Birkholz, et al.        Expires October 20, 2018               [Page 10]
 
 Internet-Draft                  CoMI Push                     April 2018
 
@@ -557,7 +613,7 @@ Internet-Draft                  CoMI Push                     April 2018
 
 
 
-Birkholz, et al.        Expires October 20, 2018               [Page 10]
+Birkholz, et al.        Expires October 20, 2018               [Page 11]
 
 Internet-Draft                  CoMI Push                     April 2018
 
@@ -602,18 +658,18 @@ Internet-Draft                  CoMI Push                     April 2018
 
 15.  Normative References
 
+   [I-D.bormann-t2trg-stp]
+              Bormann, C., "The Series Transfer Pattern (STP)", draft-
+              bormann-t2trg-stp-00 (work in progress), March 2018.
+
    [I-D.ietf-core-comi]
               Veillette, M., Stok, P., Pelov, A., and A. Bierman, "CoAP
-              Management Interface", draft-ietf-core-comi-02 (work in
-              progress), December 2017.
+              Management Interface", draft-ietf-core-comi-03 (work in
+              progress), June 2018.
 
 
 
-
-
-
-
-Birkholz, et al.        Expires October 20, 2018               [Page 11]
+Birkholz, et al.        Expires October 20, 2018               [Page 12]
 
 Internet-Draft                  CoMI Push                     April 2018
 
@@ -634,17 +690,22 @@ Internet-Draft                  CoMI Push                     April 2018
               Voit, E., Clemm, A., Prieto, A., Nilsen-Nygaard, E., and
               A. Tripathy, "Customized Subscriptions to a Publisher's
               Event Streams", draft-ietf-netconf-subscribed-
-              notifications-12 (work in progress), April 2018.
+              notifications-13 (work in progress), June 2018.
 
    [I-D.ietf-netconf-yang-push]
               Clemm, A., Voit, E., Prieto, A., Tripathy, A., Nilsen-
               Nygaard, E., Bierman, A., and B. Lengyel, "YANG Datastore
-              Subscription", draft-ietf-netconf-yang-push-15 (work in
-              progress), February 2018.
+              Subscription", draft-ietf-netconf-yang-push-16 (work in
+              progress), May 2018.
 
    [RFC5277]  Chisholm, S. and H. Trevino, "NETCONF Event
               Notifications", RFC 5277, DOI 10.17487/RFC5277, July 2008,
               <https://www.rfc-editor.org/info/rfc5277>.
+
+   [RFC6020]  Bjorklund, M., Ed., "YANG - A Data Modeling Language for
+              the Network Configuration Protocol (NETCONF)", RFC 6020,
+              DOI 10.17487/RFC6020, October 2010,
+              <https://www.rfc-editor.org/info/rfc6020>.
 
    [RFC6241]  Enns, R., Ed., Bjorklund, M., Ed., Schoenwaelder, J., Ed.,
               and A. Bierman, Ed., "Network Configuration Protocol
@@ -660,19 +721,18 @@ Internet-Draft                  CoMI Push                     April 2018
               DOI 10.17487/RFC7252, June 2014,
               <https://www.rfc-editor.org/info/rfc7252>.
 
-   [RFC7950]  Bjorklund, M., Ed., "The YANG 1.1 Data Modeling Language",
-              RFC 7950, DOI 10.17487/RFC7950, August 2016,
-              <https://www.rfc-editor.org/info/rfc7950>.
 
 
 
 
-
-
-Birkholz, et al.        Expires October 20, 2018               [Page 12]
+Birkholz, et al.        Expires October 20, 2018               [Page 13]
 
 Internet-Draft                  CoMI Push                     April 2018
 
+
+   [RFC7950]  Bjorklund, M., Ed., "The YANG 1.1 Data Modeling Language",
+              RFC 7950, DOI 10.17487/RFC7950, August 2016,
+              <https://www.rfc-editor.org/info/rfc7950>.
 
    [RFC8040]  Bierman, A., Bjorklund, M., and K. Watsen, "RESTCONF
               Protocol", RFC 8040, DOI 10.17487/RFC8040, January 2017,
@@ -721,8 +781,4 @@ Authors' Addresses
 
 
 
-
-
-
-
-Birkholz, et al.        Expires October 20, 2018               [Page 13]
+Birkholz, et al.        Expires October 20, 2018               [Page 14]
