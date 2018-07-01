@@ -142,6 +142,15 @@ the Series and to learn about new items.
 specific Series Transfer Pattern composed of individual YANG Notifications or
 YANG Notification Bundle Messages that include related updated records.
 
+YANG Client:
+
+: Called a YANG-based client in {{RFC7950}}, a YANG Client is the entity
+communicating with a YANG Sever (running potentially multiple YANG datastores).
+
+: YANG Client is a representation agnostic term. Specific protocols that
+operate on YANG Servers via YANG Clients use representations, such as XML, JSON,
+or CBOR.
+
 YANG Notification:
 
 : Defined in {{RFC6241}}, a Notification is a server-initiated message indicating
