@@ -102,7 +102,7 @@ Table of Contents
      9.3.  no sync-on-start  . . . . . . . . . . . . . . . . . . . .  10
    10. YANG Push Operations for COMI . . . . . . . . . . . . . . . .  10
      10.1.  Extension of the CoMI Event Stream Resource  . . . . . .  11
-     10.2.  Extension of the YANG Subscription Mechanism . . . . . .  12
+     10.2.  Extension of the YANG Subscription Mechanism . . . . . .  11
    11. Upcoming Features and Stories . . . . . . . . . . . . . . . .  12
    12. IANA considerations . . . . . . . . . . . . . . . . . . . . .  12
    13. Security Considerations . . . . . . . . . . . . . . . . . . .  12
@@ -115,8 +115,8 @@ Internet-Draft                  CoMI Push                     April 2018
 
 
    14. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  12
-   15. Change Log  . . . . . . . . . . . . . . . . . . . . . . . . .  13
-   16. Normative References  . . . . . . . . . . . . . . . . . . . .  13
+   15. Change Log  . . . . . . . . . . . . . . . . . . . . . . . . .  12
+   16. Normative References  . . . . . . . . . . . . . . . . . . . .  12
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  14
 
 1.  Introduction
@@ -282,7 +282,7 @@ Birkholz, et al.        Expires October 20, 2018                [Page 5]
 Internet-Draft                  CoMI Push                     April 2018
 
 
-   o  a CoAP PATCH operation to create, modify, delete or kill modify
+   o  a CoAP iPATCH operation to create, modify, delete or kill modify
       one or more Telemetry subscription states,
 
    o  a CoAP GET operation including the Observe option to receive a
@@ -562,22 +562,15 @@ Birkholz, et al.        Expires October 20, 2018               [Page 10]
 Internet-Draft                  CoMI Push                     April 2018
 
 
-   o  a PATCH operation on /c executing the establish-subscription RPC
-      corresponding to the included PATCH body with content-type
-      "application/yang-patch+cbo" that returns the subscription-id (or
-      an error response)
+   o  a POST operation on /c executing the establish-subscription RPC
+      corresponding to the included request body with content-type
+      "application/yang-value+cbor" that returns the subscription-id (or
+      an error response) in an "application/yang-value+cbor" response
 
    o  a GET Observe operation on the event stream resource /s/
       subscription-id or a FETCH operation on /s including a FETCH body
       with content-format "application/yang-selectors+cbor" and one or
-      more subscription-id as content.  OR
-
-   o  a GET Observe operation on /c/subscription-id to get subscribed
-      notifications
-
-   Please note, that Concise COMI Push allows SIDs to be used as
-   subscription id.  There is more work to be done here to flesh that
-   out.
+      more subscription-id as content.
 
 10.1.  Extension of the CoMI Event Stream Resource
 
@@ -596,7 +589,7 @@ Internet-Draft                  CoMI Push                     April 2018
    Under each subscription identifier key provided as a sub-resource of
    the "/s" resource, a YANG tree instance of the subscription
    characteristics yang:ietf-subscribed-notifications/subscriptions (as
-   defined in YANG Push [I-D.ietf-netconf-yang-push], which aguments
+   defined in YANG Push [I-D.ietf-netconf-yang-push], which augments
    ietf-subscribed-notification defined in
    [I-D.ietf-netconf-subscribed-notifications]) is provided.  In the
    following example every sid is illustrated as a "string" as there is
@@ -608,6 +601,13 @@ Internet-Draft                  CoMI Push                     April 2018
    This example would point to the filter selection associated with
    subscription id 65536.
 
+10.2.  Extension of the YANG Subscription Mechanism
+
+   YANG Push provides augmented RPC for establishing, modifying,
+   deleting, or killing a subscription.  CoMI uses the same module as
+   YANG Push and provides a corresponding interface to allow for a
+   corresponding confirmable POST message to RPC resources (see
+   [I-D.ietf-core-comi] Section 5.3.2.).
 
 
 
@@ -617,14 +617,6 @@ Birkholz, et al.        Expires October 20, 2018               [Page 11]
 
 Internet-Draft                  CoMI Push                     April 2018
 
-
-10.2.  Extension of the YANG Subscription Mechanism
-
-   YANG Push provides augmented RPC for establishing, modifying,
-   deleting, or killing a subscription.  CoMI uses the same module as
-   YANG Push and provides a corresponding interface to allow for a
-   corresponding confirmable POST message to RPC resources (see
-   [I-D.ietf-core-comi] Section 5.3.2.).
 
    CoMI Push also defines the capabilites to point confirmable FETCH
    messeges - including the Observe option - to sub-resources provided
@@ -664,16 +656,6 @@ Internet-Draft                  CoMI Push                     April 2018
 
    Carsten Bormann, Klaus Hartke, Michel Veillette
 
-
-
-
-
-
-Birkholz, et al.        Expires October 20, 2018               [Page 12]
-
-Internet-Draft                  CoMI Push                     April 2018
-
-
 15.  Change Log
 
    First version -00
@@ -683,6 +665,14 @@ Internet-Draft                  CoMI Push                     April 2018
    [I-D.bormann-t2trg-stp]
               Bormann, C., "The Series Transfer Pattern (STP)", draft-
               bormann-t2trg-stp-00 (work in progress), March 2018.
+
+
+
+
+Birkholz, et al.        Expires October 20, 2018               [Page 12]
+
+Internet-Draft                  CoMI Push                     April 2018
+
 
    [I-D.ietf-core-comi]
               Veillette, M., Stok, P., Pelov, A., and A. Bierman, "CoAP
@@ -722,14 +712,6 @@ Internet-Draft                  CoMI Push                     April 2018
               DOI 10.17487/RFC6020, October 2010,
               <https://www.rfc-editor.org/info/rfc6020>.
 
-
-
-
-Birkholz, et al.        Expires October 20, 2018               [Page 13]
-
-Internet-Draft                  CoMI Push                     April 2018
-
-
    [RFC6241]  Enns, R., Ed., Bjorklund, M., Ed., Schoenwaelder, J., Ed.,
               and A. Bierman, Ed., "Network Configuration Protocol
               (NETCONF)", RFC 6241, DOI 10.17487/RFC6241, June 2011,
@@ -738,6 +720,15 @@ Internet-Draft                  CoMI Push                     April 2018
    [RFC7049]  Bormann, C. and P. Hoffman, "Concise Binary Object
               Representation (CBOR)", RFC 7049, DOI 10.17487/RFC7049,
               October 2013, <https://www.rfc-editor.org/info/rfc7049>.
+
+
+
+
+
+Birkholz, et al.        Expires October 20, 2018               [Page 13]
+
+Internet-Draft                  CoMI Push                     April 2018
+
 
    [RFC7252]  Shelby, Z., Hartke, K., and C. Bormann, "The Constrained
               Application Protocol (CoAP)", RFC 7252,
@@ -778,14 +769,6 @@ Authors' Addresses
    Email: Xufeng_Liu@jabil.com
 
 
-
-
-
-Birkholz, et al.        Expires October 20, 2018               [Page 14]
-
-Internet-Draft                  CoMI Push                     April 2018
-
-
    Tianran Zhou
    Huawei
    156 Beiqing Rd.
@@ -798,43 +781,4 @@ Internet-Draft                  CoMI Push                     April 2018
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Birkholz, et al.        Expires October 20, 2018               [Page 15]
+Birkholz, et al.        Expires October 20, 2018               [Page 14]

@@ -554,7 +554,7 @@ ul.toc li {
 
 <ul>
 <li>a CoAP POST operation to create, modify, delete or kill Telemetry subscription state,</li>
-<li>a CoAP PATCH operation to create, modify, delete or kill modify one or more Telemetry subscription states,</li>
+<li>a CoAP iPATCH operation to create, modify, delete or kill modify one or more Telemetry subscription states,</li>
 <li>a CoAP GET operation including the Observe option to receive a Telemetry stream,</li>
 <li>a CoAP FETCH operation including the Observe option to receive multiple Telemetry streams,</li>
 <li>an extension of the "/s" resource that includes sub-resource, such as subscription identifiers and corresponding SID instances, and</li>
@@ -717,17 +717,15 @@ ul.toc li {
 <p></p>
 
 <ul>
-<li>a PATCH operation on /c executing the establish-subscription RPC corresponding to the included PATCH body with content-type "application/yang-patch+cbo" that returns the subscription-id (or an error response)</li>
-<li>a GET Observe operation on the event stream resource /s/subscription-id or a FETCH operation on /s including a FETCH body with content-format "application/yang-selectors+cbor" and one or more subscription-id as content.  OR</li>
-<li>a GET Observe operation on /c/subscription-id to get subscribed notifications</li>
+<li>a POST operation on /c executing the establish-subscription RPC corresponding to the included request body with content-type "application/yang-value+cbor" that returns the subscription-id (or an error response) in an "application/yang-value+cbor" response</li>
+<li>a GET Observe operation on the event stream resource /s/subscription-id or a FETCH operation on /s including a FETCH body with content-format "application/yang-selectors+cbor" and one or more subscription-id as content.</li>
 </ul>
-<p id="rfc.section.10.p.3">Please note, that Concise COMI Push allows SIDs to be used as subscription id. There is more work to be done here to flesh that out.</p>
 <h1 id="rfc.section.10.1">
 <a href="#rfc.section.10.1">10.1.</a> <a href="#extension-of-the-comi-event-stream-resource" id="extension-of-the-comi-event-stream-resource">Extension of the CoMI Event Stream Resource</a>
 </h1>
 <p id="rfc.section.10.1.p.1">A standard CoMI datastore as defined in <a href="#I-D.ietf-core-comi" class="xref">[I-D.ietf-core-comi]</a> typically uses the datastore resource "/c" to provide the YANG datastore tree and the resource "/s" to provide the YANG notification stream. Sub-resources under "/c" are represented in the format of /c/sid.</p>
 <p id="rfc.section.10.1.p.2">CoMI Push extends the scope of the "/s" resource. Sub-resources under "/s" are represented as /s/key, where key is a numeric string representation of the subscription identifier, e.g. "/s/65536/". The key representation reduces the ambiguity with respect to sid, which uses an URI safe base64 representation.</p>
-<p id="rfc.section.10.1.p.3">Under each subscription identifier key provided as a sub-resource of the "/s" resource, a YANG tree instance of the subscription characteristics yang:ietf-subscribed-notifications/subscriptions (as defined in YANG Push <a href="#I-D.ietf-netconf-yang-push" class="xref">[I-D.ietf-netconf-yang-push]</a>, which aguments ietf-subscribed-notification defined in <a href="#I-D.ietf-netconf-subscribed-notifications" class="xref">[I-D.ietf-netconf-subscribed-notifications]</a>) is provided. In the following example every sid is illustrated as a "string" as there is no sid for corresponding instance identifiers yet:</p>
+<p id="rfc.section.10.1.p.3">Under each subscription identifier key provided as a sub-resource of the "/s" resource, a YANG tree instance of the subscription characteristics yang:ietf-subscribed-notifications/subscriptions (as defined in YANG Push <a href="#I-D.ietf-netconf-yang-push" class="xref">[I-D.ietf-netconf-yang-push]</a>, which augments ietf-subscribed-notification defined in <a href="#I-D.ietf-netconf-subscribed-notifications" class="xref">[I-D.ietf-netconf-subscribed-notifications]</a>) is provided. In the following example every sid is illustrated as a "string" as there is no sid for corresponding instance identifiers yet:</p>
 <p id="rfc.section.10.1.p.4">/s/"65536"/"stream"/"within-subscription"/"filter-spec"/"stream-xpath-filter"/"stream-xpath-filter"</p>
 <p id="rfc.section.10.1.p.5">This example would point to the filter selection associated with subscription id 65536.</p>
 <h1 id="rfc.section.10.2">
