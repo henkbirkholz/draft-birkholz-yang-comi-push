@@ -104,6 +104,9 @@ This document defines additions to CoMI called Concise YANG Telemetry that:
   YANG datastore (or parts of them)---based on YANG Datastore Subscription
   {{-yangpush}}.
 
+
+# Terminology
+
 Due to the utilization of CoAP, the interaction model of CoMI is quite similar
 to RESTCONF {{RFC8040}}. RESTCONF supports subscriptions to a YANG
 datastore via notification statements in YANG modules, which---when subscribed
@@ -122,7 +125,7 @@ datastore to a YANG client either solicited or unsolicited in a fashion that can
 guarantee well-defined levels of Visibility with respect to Data Node Value
 changes.
 
-While the focus of YANG is typically on management and operations, the scope
+Please note: while the focus of YANG is typically on management and operations, the scope
 of YANG Telemetry extends into the Security Area with respect to Security
 Events. Because of this, YANG Telemetry characteristics that address security requirements,
 such as Visibility and Resilient YANG Subscriptions, are addressed in this document.
@@ -141,7 +144,7 @@ YANG Notification Bundle Messages that include related updated records.
 
 YANG Notification:
 
-: Defined in {{RFC6241}}, a Notification is a server-initated message indicating
+: Defined in {{RFC6241}}, a Notification is a server-initiated message indicating
 that a certain event has been recognized by the server.
 
 : While this definition is found in {{RFC6241}}, which is based on YANG 1.0
@@ -155,8 +158,9 @@ YANG Notification (Bundle) Message:
 which are of potential use to networking layers prior being interpreted by some
 receiving application layer process.
 
-: Examples include, but are not limited to: timestamps, signatures, or evidence
-about the integrity of the agents creating messages or notifications.
+: Examples of header object include, but are not limited to: timestamps,
+signatures, or evidence about the integrity of the agents creating messages or
+notifications.
 
 Update Record:
 
@@ -171,10 +175,11 @@ as XML, JSON, or CBOR.
 
 Visibility:
 
-: A level of assurance that Update Records will be received by a
-YANG Client. There might be reasons, such as resource exhaustion or dampening
+: A level of assurance that Update Records will be received by a YANG Client.
+
+: There might be reasons, such as resource exhaustion or dampening
 settings, that result in Updates Records lost in transit or not being emitted by
-the YANG datastore. Sequential Message-IDs or specific YANG Notifications are
+the YANG datastore. Sequential Message-IDs or specific YANG Notifications
 that report, e.g., about past events of resource exhaustion will inform the YANG
 Client about the characteristics of the loss of Update Records.
 
@@ -184,28 +189,29 @@ Data Node Value:
 values are serialized into the payload according to the rules defined in
 section 4 of {{-yangcbor}}.
 
-
-# CoMI Push Terminology
+## CoAP Terminology
 
 In addition to the illustration of the scope of YANG Telemetry above, this
 section highlights the most important terms that are vital to the functionality
-of CoMI Push.
+of Concise YANG Telemetry.
 
 CoAP Requestor:
 
-: TBD
+: The entity that emits CoAP requests to a CoAP Node with server capabilities.
+In the context of Concise YANG Telemetry, a YANG client that is creating
+dynamic subscriptions is a CoAP Requestor.
 
 CoAP Token:
 
-: TODO
+: A token used to match a CoAP response with a CoAP request. It is intended for
+use as a client-local identifier for to differentiate between concurrent
+requests (similar to a request ID).
 
 
-## Summary of YANG Push Additions to CoMI
+# Summary of the Additions to CoMI
 
-This documents defines the Concise YANG Push binding to the CoAP Management
-Interface: a composition of mechanisms and YANG statement definitions that are
-described in YANG Push {{-yangpush}} and---in consequence---YANG Subscribed
-Notifications {{-yangnote}} to the CoAP Management Interface. In summary, these
+This documents defines the binding of YANG Datastore Subscriptions and YANG
+Customized Subscriptions to the CoAP Management Interface. In summary, these
 additions include:
 
 * a CoAP POST operation to create, modify, delete or kill Telemetry subscription
@@ -245,30 +251,31 @@ the datastore intends to create device specific Telemetry to be collected by
 corresponding YANG clients.
 
 In essence, incorporating a complete YANG module is not required to enable the
-initiation of YANG Telemetry within a very specific scope.
+initiation of Concise YANG Telemetry within a very specific scope.
 
 
 # Subscription Content and State
 
-Two generic YANG notification statements for update records are introduced by
-YANG Push augments to enable the following capabilities:
+Two generic YANG notification statements for Update Records are introduced by
+YANG Datastore Subscriptions augments to enable the following capabilities:
 
 push-update:
 
 : A notification that includes a complete (and potentially filtered) update of
-  data node values of YANG datastore nodes per the terms of a subscription.
+data node values of YANG datastore nodes per the terms of a subscription.
 
 push-change-update:
 
 : A notification that includes an incremental (and potentially filtered) update
-  of data node values of YANG datastore nodes since the last (change-)update
-  notification.
+of data node values of YANG datastore nodes since the last (change-)update
+notification.
 
-Every update notification (bundle) in a Series that is the context of a
+Every Update Record Notification (Bundle) Message in a Series that is the context of a
 subscription is emitted per the characteristics of the subscription state
 maintained by the YANG datastore. Subscription state can be created on the YANG
 datastore during manufacturing, onboarding, enrollment, deployment, or
-maintenance of the YANG datastore.
+maintenance of the YANG datastore. Most typically, subscription state is created
+by a YANG Client (e.g. a Network Management System) via a dynamic subscription.
 
 
 ## Selection Filter
@@ -284,15 +291,21 @@ subsets of data node value updates:
 Subtree Filter Expression:
 
 : A SID pointing to a specific data node in a YANG module (including
-  notification statements) is used to create update records that include updates
-  about the identified data node and its potential child nodes. Effectively, a
-  single SID points to the root node of the subtree update records are created for.
+notification statements) is used to create update records that include updates
+about the identified data node and its potential child nodes. Effectively, a
+single SID points to the root node of the subtree update records are created for.
 
 XPATH Filter Expression:
 
 : A more detailed selection of SIDs and corresponding data
-  node values that update records are created for. The corresponding
-  representation of XPATH Filter Expressions for COMI is defined in {{-yangcbor}}.
+node values that update records are created for. The corresponding
+representation of XPATH Filter Expressions for COMI is defined in {{-yangcbor}}.
+
+Conditional SID Selectors:
+
+: The SID concept introduced by CoMI and represented via YANG modeled CBOR allows
+for a simplified Filter Expression that retains all the capabilities of an XPATH
+Filter Expression, while using a significantly simpler representation.
 
 # Subscription Characteristics
 
