@@ -33,7 +33,7 @@ author:
   email: evoit@cisco.com
 
 normative:
-  RFC7252:
+  RFC7252: coap
   RFC8040:
   RFC7049:
   RFC7950:
@@ -164,7 +164,7 @@ Visibility:
 : A level of assurance that Update Records will be received by a YANG Client.
 
 : There might be reasons, such as resource exhaustion or dampening
-settings, that result in Updates Records lost in transit or not being emitted by
+settings, that result in Update Records being lost in transit or not being emitted by
 the YANG datastore. Sequential Message-IDs or specific YANG Notifications
 that report, e.g., about past events of resource exhaustion will inform the YANG
 Client about the characteristics of the loss of Update Records.
@@ -245,7 +245,7 @@ dynamic subscriptions is a CoAP Requestor.
 
 CoAP Token:
 
-: A token used to match a CoAP response with a CoAP request. It is intended for
+: A token used to match a CoAP response with a CoAP request {{-coap}}. It is intended for
 use as a client-local identifier to differentiate between concurrent
 requests (similar to a request ID).
 
@@ -280,7 +280,7 @@ The CoMI architecture (and YANG in general) assumes that both YANG client and YA
 retain or have access to knowledge about the same YANG specification (see Figure
 1 in {{-comi}}). This is not necessarily true for a YANG Push capable CoMI
 server. Highly constrained nodes can emit Series of subscribed notifications
-unsolicitedly; allowing them to create well-formed YANG-modeled Telemetry from
+without previous solicitation: this allows them to create well-formed YANG-modeled Telemetry from
 hard-coded building blocks of YANG-modeled data, which are in compliance to YANG
 modules. In consequence, while taking on the role of a YANG datastore, a YANG
 Subscription capable CoMI server SHOULD be capable to process YANG queries, but MAY not
@@ -376,16 +376,15 @@ defined in {{-yangnote}}.
 There are three options how to establish a YANG Telemetry stream via YANG Subscriptions:
 
 1. a YANG client starts to receive a Telemetry stream from a YANG datastore,
-unsolicitedly. In this case, persistent subscription characteristics are
-retained on a YANG datastore before deployment (e.g. during onboarding), but
-are unknown to the YANG Client and
+without previous solicitation. To enable this, persistent subscription characteristics must have been configured on the YANG datastore before deployment (e.g. during onboarding), but
+may be left unknown to the YANG Client.  They then
 have to be acquired or inferred via procedures that are---at the time of this
-writing---out-of-scope of this document. In essence,
+writing---out-of-scope of this document.  In essence,
 corresponding CoAP Tokens are unknown to the YANG Client when the first YANG
 Data Item is received from the datastore.
 
 2. a YANG client starts to receive a Telemetry stream from a YANG datastore,
-solicitedly. In this case, persistent subscription characteristics are
+after being solicited to do so. In this case, persistent subscription characteristics are
 known by a YANG Client and a YANG datastore before deployment or acquired after
 their deployment. In essence, corresponding CoAP Tokens and Subscription State
 are already known by the YANG Client and the YANG datastore when the first YANG
