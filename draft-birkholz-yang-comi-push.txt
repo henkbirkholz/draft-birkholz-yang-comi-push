@@ -791,6 +791,10 @@ Internet-Draft                  CoMI Push                     April 2018
    returned.  Additionally, a corresponding subscription sub-resource
    under "/s" is created.
 
+   As usual in CoMI, iPATCH requests can be used to perform a number of
+   operations on the datastore in one request, such as deleting,
+   creating, and updating subscriptions.
+
 11.  Upcoming Features and Stories
 
    o  maybe we should introduce /sn and /snmb for stream subscriptions
@@ -827,10 +831,6 @@ Internet-Draft                  CoMI Push                     April 2018
 
 16.  Normative References
 
-   [I-D.bormann-t2trg-stp]
-              Bormann, C. and K. Hartke, "The Series Transfer Pattern
-              (STP)", draft-bormann-t2trg-stp-01 (work in progress),
-              July 2018.
 
 
 
@@ -841,6 +841,11 @@ Birkholz & Voit         Expires October 20, 2018               [Page 15]
 
 Internet-Draft                  CoMI Push                     April 2018
 
+
+   [I-D.bormann-t2trg-stp]
+              Bormann, C. and K. Hartke, "The Series Transfer Pattern
+              (STP)", draft-bormann-t2trg-stp-01 (work in progress),
+              July 2018.
 
    [I-D.ietf-core-comi]
               Veillette, M., Stok, P., Pelov, A., and A. Bierman, "CoAP
@@ -885,11 +890,6 @@ Internet-Draft                  CoMI Push                     April 2018
               (NETCONF)", RFC 6241, DOI 10.17487/RFC6241, June 2011,
               <https://www.rfc-editor.org/info/rfc6241>.
 
-   [RFC7049]  Bormann, C. and P. Hoffman, "Concise Binary Object
-              Representation (CBOR)", RFC 7049, DOI 10.17487/RFC7049,
-              October 2013, <https://www.rfc-editor.org/info/rfc7049>.
-
-
 
 
 
@@ -897,6 +897,10 @@ Birkholz & Voit         Expires October 20, 2018               [Page 16]
 
 Internet-Draft                  CoMI Push                     April 2018
 
+
+   [RFC7049]  Bormann, C. and P. Hoffman, "Concise Binary Object
+              Representation (CBOR)", RFC 7049, DOI 10.17487/RFC7049,
+              October 2013, <https://www.rfc-editor.org/info/rfc7049>.
 
    [RFC7252]  Shelby, Z., Hartke, K., and C. Bormann, "The Constrained
               Application Protocol (CoAP)", RFC 7252,
@@ -930,10 +934,6 @@ Authors' Addresses
    Cisco Systems
 
    Email: evoit@cisco.com
-
-
-
-
 
 
 
