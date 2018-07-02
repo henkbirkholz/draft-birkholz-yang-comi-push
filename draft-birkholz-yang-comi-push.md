@@ -52,7 +52,7 @@ informative:
 
 --- abstract
 
-This documents defines CoAP operations that implement the capabilities of YANG
+This document defines CoAP operations that implement the capabilities of YANG
 Datastore Subscriptions and YANG Customized Subscriptions for the CoAP
 Management Interface (CoMI). The '/s' resource, as defined in CoMI, is
 extended analogously to include a set of sub-resources, each of them
@@ -378,9 +378,9 @@ There are three options how to establish a YANG Telemetry stream via YANG Subscr
 1. a YANG client starts to receive a Telemetry stream from a YANG datastore,
 unsolicitedly. In this case, persistent subscription characteristics are
 retained on a YANG datastore before deployment (e.g. during onboarding), but
-are unknownn to the YANG Client and
+are unknown to the YANG Client and
 have to be acquired or inferred via procedures that are---at the time of this
-wirting---out-of-scope of this document. In essence,
+writing---out-of-scope of this document. In essence,
 corresponding CoAP Tokens are unknown to the YANG Client when the first YANG
 Data Item is received from the datastore.
 
