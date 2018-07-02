@@ -775,8 +775,8 @@ Internet-Draft                  CoMI Push                     April 2018
    corresponding confirmable POST message to RPC resources (see
    [I-D.ietf-core-comi] Section 5.3.2.).
 
-   CoMI Push also defines the capabilites to point confirmable FETCH
-   messeges - including the Observe option - to sub-resources provided
+   CoMI Push also defines the capabilities to point confirmable FETCH
+   messages - including the Observe option - to sub-resources provided
    by "/c".  If the body of the FETCH message includes a CBOR modeled
 
 
