@@ -31,24 +31,6 @@ author:
   name: Eric Voit
   org: Cisco Systems
   email: evoit@cisco.com
-- ins: X. Liu
-  name: Xufeng Liu
-  org: Jabil
-  abbrev: Jabil
-  email: Xufeng_Liu@jabil.com
-  street: 8281 Greensboro Drive, Suite 200
-  region: McLean VA
-  code: 22102
-  country: USA
-- ins: T. Zhou
-  name: Tianran Zhou
-  org: Huawei
-  abbrev: Huawei
-  email: zhoutianran@huawei.com
-  street: 156 Beiqing Rd.
-  region: Haidian District
-  city: Beijing
-  country: China
 
 normative:
   RFC7252:
@@ -58,6 +40,7 @@ normative:
   RFC6241:
   RFC5277:
   RFC6020:
+  RFC8071:
   I-D.ietf-core-yang-cbor: yangcbor
   I-D.ietf-core-comi: comi
   I-D.ietf-netconf-subscribed-notifications: yangnote
@@ -205,23 +188,47 @@ receiving application layer process.
 signatures, or evidence about the integrity of the agents creating messages or
 notifications.
 
+YANG Subscription:
+
+: A Subscription in the context of YANG is defined in {{RFC5277}} NETCONF
+Event Notification as an agreement and method to receive event notifications
+over a NETCONF session.  A concept related to the delivery of notifications (if
+there are any to send) involving destination and selection of notifications.
+
+: In the context of Concise YANG Telemetry, this is a parent term that
+encompasses the concepts of YANG Datastore Subscriptions, YANG Customized
+Subscriptions, and traditional subscription to notifications as defined by YANG
+based network protocols in accordance to YANG 1.1.
+
 ## CoAP Terminology
 
 In addition to the illustration of the scope of YANG Telemetry above, this
 section highlights the most important terms that are vital to the functionality
-of Concise YANG Telemetry.
+of Concise YANG Telemetry with respect to the Constrained Application Protocol:
+
+CoAP Call Home:
+
+A procedure similar to the one defined in {{RFC8071}} NETCONF Call Home and
+RESTCONF Call Home, in which a YANG datastore can trigger a YANG Client to
+initiate a YANG Subscription (typically by taking on the role of a CoAP client
+and indicating to a CoAP node that is including a YANG Client to initiate a YANG
+Subscription).
 
 CoAP Requestor:
 
 : The entity that emits CoAP requests to a CoAP Node with server capabilities.
-In the context of Concise YANG Telemetry, a YANG client that is creating
+In the context of Concise YANG Telemetry, a YANG client, for example. that is creating
 dynamic subscriptions is a CoAP Requestor.
 
 CoAP Token:
 
 : A token used to match a CoAP response with a CoAP request. It is intended for
-use as a client-local identifier for to differentiate between concurrent
+use as a client-local identifier to differentiate between concurrent
 requests (similar to a request ID).
+
+: A CoAP Token must be known, or at least deterministically inferable by a YANG
+Client in order to receive a Series of CoAP responses that compose Concise YANG
+Telemetry.
 
 
 # Summary of the Additions to CoMI
@@ -320,7 +327,7 @@ representation of XPATH Filter Expressions for COMI is defined in {{-yangcbor}}.
 Conditional SID Selectors:
 
 : The SID concept introduced by CoMI and represented via YANG modeled CBOR allows
-for a simplified Filter Expression that retains all the capabilities of an XPATH
+for a simplified Filter Expression that retains most of the capabilities of an XPATH
 Filter Expression, while using a significantly simpler representation.
 
 # Subscription Characteristics
