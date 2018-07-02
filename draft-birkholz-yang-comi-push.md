@@ -550,7 +550,7 @@ This example would point to the filter selection associated with subscription id
 
 YANG Push provides augmented RPC for establishing, modifying, deleting, or killing a subscription. CoMI uses the same module as YANG Push and provides a corresponding interface to allow for a corresponding confirmable POST message to RPC resources (see [I-D.ietf-core-comi] Section 5.3.2.).
 
-CoMI Push also defines the capabilites to point confirmable FETCH messeges – including the Observe option - to sub-resources provided by “/c”. If the body of the FETCH message includes a CBOR modeled [I-D.ietf-core-yang-cbor] subtree filter expression, a new subscription is created and a corresponding subscription id is returned. Additionally, a corresponding subscription sub-resource under “/s” is created.
+CoMI Push also defines the capabilities to point confirmable FETCH messages – including the Observe option - to sub-resources provided by “/c”. If the body of the FETCH message includes a CBOR modeled [I-D.ietf-core-yang-cbor] subtree filter expression, a new subscription is created and a corresponding subscription id is returned. Additionally, a corresponding subscription sub-resource under “/s” is created.
 
 # Upcoming Features and Stories
 
@@ -580,3 +580,8 @@ Carsten Bormann, Klaus Hartke, Michel Veillette
 First version -00
 
 --- back
+
+<!--  LocalWords:  datastore RPC subtree confirmable datastores XPATH
+ -->
+<!--  LocalWords:  discoverable onboarding SIDs
+ -->
