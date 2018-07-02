@@ -126,6 +126,20 @@ Update Record:
 : A single YANG data item in a Series of YANG Notifications or YANG Notification Bundle
 Messages conveying the changes to a YANG datastore's module's Data Node Values.
 
+Resilient Subscription:
+
+: A YANG Subscription used to create Concise YANG Telemetry that continues to
+function in a given scope of CoMI Clients, or discoverable homes (see CoAP Call
+Home, respectively), if the current receiver of Concise YANG Telemetry is rendered
+unavailable.
+
+: This subscription characteristic enables a CoMI datastore to detect loss of a
+specific CoMI Client that is the target of Concise YANG Telemetry, provided that
+the CoMI Client is part of a group of CoMI Clients that supports this kind of
+fail-over mechanism. This subscription characteristic can have a deteriorating effect on the level
+of assurance with respect to Visibility and can therefore result in missed
+Updated Records, which a "new home" has to be notified about.
+
 Series:
 
 : Series Transfer Pattern are described in {{-series}} as the conveyance of a
@@ -135,6 +149,15 @@ the Series and to learn about new items.
 : YANG Customized Subscriptions or a YANG Datastore Subscription creates an
 specific Series Transfer Pattern composed of individual YANG Notifications or
 YANG Notification Bundle Messages that include related updated records.
+
+Subscription Characteristics:
+
+: The set of attributes associated with an active YANG Subscription.
+
+: The set of attributes is defined by the data definition statements {{RFC7950}}
+defined by the augments in YANG Customized Subscriptions to a Publisher's Event
+Streams {{-yangnote}}, YANG Datastore Subscription {{-yangpush}} and
+corresponding CoAP Tokens for Concise YANG Telemetry.
 
 Visibility:
 
@@ -208,7 +231,7 @@ of Concise YANG Telemetry with respect to the Constrained Application Protocol:
 
 CoAP Call Home:
 
-A procedure similar to the one defined in {{RFC8071}} NETCONF Call Home and
+: A procedure similar to the one defined in {{RFC8071}} NETCONF Call Home and
 RESTCONF Call Home, in which a YANG datastore can trigger a YANG Client to
 initiate a YANG Subscription (typically by taking on the role of a CoAP client
 and indicating to a CoAP node that is including a YANG Client to initiate a YANG
@@ -253,34 +276,38 @@ additions include:
 
 ## Telemetry-Specific CoMI datastores
 
-The CoMI architecture assumes that both YANG client and YANG datastore (server)
+The CoMI architecture (and YANG in general) assumes that both YANG client and YANG datastores (server)
 retain or have access to knowledge about the same YANG specification (see Figure
 1 in {{-comi}}). This is not necessarily true for a YANG Push capable CoMI
-server. Highly constrained nodes can emit series of subscribed notifications
+server. Highly constrained nodes can emit Series of subscribed notifications
 unsolicitedly; allowing them to create well-formed YANG-modeled Telemetry from
 hard-coded building blocks of YANG-modeled data, which are in compliance to YANG
 modules. In consequence, while taking on the role of a YANG datastore, a YANG
-Push capable CoMI server SHOULD be capable to process YANG queries, but MAY not
+Subscription capable CoMI server SHOULD be capable to process YANG queries, but MAY not
 be due to the lack of corresponding functions or knowledge of a complete YANG
 module.
 
 As these flavors of YANG datastores are not necessarily able to create CoMI
 responses based on client request, it is likely that highly constrained
-datastores initiate a Call-Home procedure (see [insert NETCONF Call Home here])
+datastores initiate a Call-Home procedure (see {{RFC8071}})
 acting as if a request was already received (see Configured Subscription above),
 enticing a very specific request they can fulfill (dynamic subscription) or
-rendezvous via a discoverable YANG Zero Touch component. In all these use cases,
-the datastore intends to create device specific Telemetry to be collected by
+rendezvous via a discoverable YANG Zero Touch entity. In all these usage scenarios,
+the datastore intends to create device specific YANG Telemetry to be conveyed to
 corresponding YANG clients.
 
-In essence, incorporating a complete YANG module is not required to enable the
-initiation of Concise YANG Telemetry within a very specific scope.
+In essence, incorporating a complete YANG module on a CoMI datastore that is
+capable of YANG Subscriptions is not required to enable the initiation of
+Concise YANG Telemetry within a very specific scope. This kin of
+Telemetry-Specific CoMI datastore is therefore not a fully YANG 1.1 compliant
+datastore, but able to create valid YANG modeled YANG Data Items.
 
 
 # Subscription Content and State
 
 Two generic YANG notification statements for Update Records are introduced by
-YANG Datastore Subscriptions augments to enable the following capabilities:
+YANG Datastore Subscriptions {{-yangpush}} augments to enable the following
+capabilities:
 
 push-update:
 
@@ -293,22 +320,22 @@ push-change-update:
 of data node values of YANG datastore nodes since the last (change-)update
 notification.
 
-Every Update Record Notification (Bundle) Message in a Series that is the context of a
+Every Update Record Notification (Bundle) Message in a Series that is generated in the context of a
 subscription is emitted per the characteristics of the subscription state
-maintained by the YANG datastore. Subscription state can be created on the YANG
+maintained by the CoMI datastore. Subscription state can be created on the CoMI
 datastore during manufacturing, onboarding, enrollment, deployment, or
-maintenance of the YANG datastore. Most typically, subscription state is created
+maintenance of the CoMI datastore. Most typically, subscription state is created
 by a YANG Client (e.g. a Network Management System) via a dynamic subscription.
 
 
 ## Selection Filter
 
-A vital part of the subscription state that defines the content of a Telemetry
-stream is the filter expression included in the subscription characteristics. A
-filter expression enables a YANG datastore to emit only a subset of potential
+A vital part of the subscription state that defines the content of a YANG Telemetry
+stream is the filter expression associated with the subscription characteristics. A
+filter expression enables a CoMI datastore to emit only a subset of potential
 notification content; reducing the volume of data in motion, significantly.
 
-Two generic YANG Filter Expressions enable a YANG datastore to emit filtered
+Three types of Filter Expressions enable a CoMI datastore to emit filtered
 subsets of data node value updates:
 
 Subtree Filter Expression:
@@ -324,11 +351,11 @@ XPATH Filter Expression:
 node values that update records are created for. The corresponding
 representation of XPATH Filter Expressions for COMI is defined in {{-yangcbor}}.
 
-Conditional SID Selectors:
+Conditional SID Selectors (experimental):
 
-: The SID concept introduced by CoMI and represented via YANG modeled CBOR allows
-for a simplified Filter Expression that retains most of the capabilities of an XPATH
-Filter Expression, while using a significantly simpler representation.
+: The SID concept introduced by CoMI and represented via YANG modeled date conveyed using CBOR allows
+for a simplified Filter Expression data model that retains most of the capabilities of an XPATH
+Filter Expression, while using a significantly simpler model definition.
 
 # Subscription Characteristics
 
@@ -339,62 +366,115 @@ subscription characteristics:
 2. Subscription Interval (periodic / on-change)
 3. Subscription Type (stream / datastore)
 
-These characteristics define how subscription state is deployed and how the
-resulting Telemetry stream behaves. As an example, corresponding subscription
+These characteristics define how subscription state is created and how the
+resulting Telemetry streams behave. In general, corresponding subscription
 state can be created by a YANG client via the "establish-subscription" RPC as
 defined in {{-yangnote}}.
 
 ## Subscription Trigger
 
-In general, to establish a Telemetry stream via YANG Push there are three options:
+There are three options how to establish a YANG Telemetry stream via YANG Subscriptions:
 
 1. a YANG client starts to receive a Telemetry stream from a YANG datastore,
-   unsolicitedly. In this case, persistent subscription characteristics are
-   created on the YANG data store before deployment, e.g. during onboarding, and
-   come into effect directly after deployment.
+unsolicitedly. In this case, persistent subscription characteristics are
+retained on a YANG datastore before deployment (e.g. during onboarding), but
+are unknownn to the YANG Client and
+have to be acquired or inferred via procedures that are---at the time of this
+wirting---out-of-scope of this document. In essence,
+corresponding CoAP Tokens are unknown to the YANG Client when the first YANG
+Data Item is received from the datastore.
 
 2. a YANG client starts to receive a Telemetry stream from a YANG datastore,
-   solicitedly. In this case, persistent subscription characteristics are created
-   on both the YANG client and the YANG datastore before deployment.
+solicitedly. In this case, persistent subscription characteristics are
+known by a YANG Client and a YANG datastore before deployment or acquired after
+their deployment. In essence, corresponding CoAP Tokens and Subscription State
+are already known by the YANG Client and the YANG datastore when the first YANG
+Data Item is received from the datastore.
 
-2. a YANG datastore initiates contact with a YANG client via a Rendezvous, Join, or
-   Call Home procedure and triggers the initiation of a telemetry stream. In
-   this case, the subscription characteristics are configured on the YANG client
-   and come into effect when the YANG datastore successfully discovered its
-   home.
+3. a YANG datastore initiates contact with a YANG client via a Rendezvous, Join, or
+Call Home procedure and triggers the creation of a Telemetry stream by the
+YANG Client. In
+this case, the subscription characteristics are provisioned by the YANG Client
+and come into effect after a YANG datastore successfully discovered the corresponding
+YANG Client that is its home. In essence, the corresponding CoAP Tokens are
+created by the CoAP Client and are conveyed to the YANG datastore via the
+traditional CoAP interaction model.
 
-### CoMI Push Configured Subscriptions
+### CoMI Configured Subscriptions
 
 CoAP defines a strict coupling of request and corresponding response messages
 via the CoAP Token. Every CoAP Request MUST include a CoAP Token that is
-generated by the requestor (client). Analogously, every CoAP response that is
-associated with that request MUST include the corresponding CoAP Token in order
-for the CoAP Request not to be discarded,
+generated by the CoAP requestor (client). Analogously, every CoAP response that is
+associated with that request MUST include the corresponding CoAP Token in order for the CoAP Request not to be discarded.
+
+In order to enable this type of YANG Subscription, one or more CoMI Clients have
+to retain or gain knowledge about the corresponding CoAP Tokens (via declarative guidance, a distribution
+mechanism, or by inferring them via a Call Home procedure), for which they are intended to receive Concise YANG Telemetry by. This implies the existence of a deployed solution that enables a secure and resilient distribution of corresponding CoAP Tokens in a group of CoMI Clients. The exact architecture of this solution is---at the time of this writing---out-of-scope of this document.
 
 ### Dynamic Subscriptions
 
+This subscription trigger requires knowledge about potential YANG datastores to
+subscribe to by a YANG Client. This subscription characteristics have to be
+pre-configured or discoverable by the YANG Client. A typical procedure to
+facilitate a dynamic subscription is the Call Home discovery mechanism.
+
 ## Subscription Interval
+
+The subscription interval is a specific Subscription Characteristic that defines
+the events that trigger emission of an Update Record in the context of a YANG
+Subscription. There are two types of subscription interval: periodic
+subscription and on-change subscription.
 
 ### Periodic Subscription
 
+A periodic subscription uses a timer in order to emit an Update Record in the
+context of a YANG Subscription. This type of Subscription Characteristic is
+intended to be used if Data Node Values change rapidly or continuously. A
+typically example of Data Node Values that benefit from this type of Subscription Characteristic is
+used are PDU Counters.
+
 ### On-Change Subscription
+
+An on-change subscription uses the event of a Data Node Value change to emit an
+Update Record in the context of a YANG Subscription. This type of Subscription
+Characteristic is intended to be used if Data Node Values changes only occasionally,
+but conveyance of information about that change in a timely fashion is required.
+Typical examples are, deployment of a new IEEE 802.1AR LDevID, or the
+modification of an ACL by a logged in user.
 
 #### On-Change Subscription Prerequisites
 
-An On-Change Subscription capability MUST be explicitly annotated in a YANG
-module definition in order to prevent subscription to meaningless nodes. E.g. it
-is advisable not to allow for subscriptions to YANG modules representing rapidly
-changing counters.
+An on-change subscription capability MUST be explicitly annotated in a YANG
+module definition in order to prevent a meaningless or harmful association of
+Subscription Characteristics to a YANG Subscription. E.g. it
+is advisable not to allow for on-change subscriptions to data definition
+statements that provide Data Node Values representing rapidly changing counters.
 
-The actual syntax and corresponding semantics of statements that intend to
-annotate On-Change Subscription capabilities is out-of-scope of {{-yangpush}} or
-{{-yangnote}} and in consequence also out-of-scope of this document.
+The actual syntax and corresponding semantics of data definition statements that
+are intended to allow for associating an on-change Subscription Characteristic
+with a YANG Datastore Subscription to a YANG module is out-of-scope of {{-yangpush}} or
+{{-yangnote}} and---in consequence---also out-of-scope of this document.
 
 #### Visibility
-"publisher MUST set the "updates-not-sent" flag on any update record which
-is known to be missing information."
-* dampening-period MUST be set to 0 in order to ensure complete visibility
-* non-zero may just indicate that there was a change, but not which one (e.g. interface-flapping)
+
+In usage scenarios that require a high level of assurance with respect to
+Visibility (most prominently security-related events) it is vital for a YANG
+Client to gain knowledge about a deterioration of Visibility of Update Records.
+
+In order to request complete Visibility of every Data Node Value change via a
+corresponding Update Record, the dampening-period (see section 4.2. in
+{{-yangpush}} MUST be set to 0. The use of YANG Notification Bundle Messages
+{{-notemsgs}} can mitigate the deteriorating impact of a dampening-period higher
+than 0, but can still result in missed Update Records in an constrained-node
+environment.
+
+If the conveyance of an Update Record (bundled or not) failed, the YANG
+datastore MUST include an "updates-not-sent" flag in the next Update Record.
+
+There are usage scenarios, in which complete Visibility of every Change to Data
+Node Values, but only the information that there was a Data Node Values change
+occurred is appropriate. In these cases, a dampening-period higher than 0 should
+be used. A prominent example are "interface-flapping" events.
 
 ## Subscription Type
 
