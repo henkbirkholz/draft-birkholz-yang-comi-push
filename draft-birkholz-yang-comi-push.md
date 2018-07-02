@@ -551,6 +551,8 @@ YANG Push provides augmented RPC for establishing, modifying, deleting, or killi
 
 CoMI Push also defines the capabilities to point confirmable FETCH messages – including the Observe option - to sub-resources provided by “/c”. If the body of the FETCH message includes a CBOR modeled [I-D.ietf-core-yang-cbor] subtree filter expression, a new subscription is created and a corresponding subscription id is returned. Additionally, a corresponding subscription sub-resource under “/s” is created.
 
+As usual in CoMI, iPATCH requests can be used to perform a number of operations on the datastore in one request, such as deleting, creating, and updating subscriptions.
+
 # Upcoming Features and Stories
 
 * maybe we should introduce /sn and /snmb for stream subscriptions and
