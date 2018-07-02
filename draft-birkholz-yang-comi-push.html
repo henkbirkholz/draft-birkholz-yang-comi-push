@@ -321,7 +321,7 @@ ul.toc li {
   <meta name="generator" content="xml2rfc version 2.9.9 - https://tools.ietf.org/tools/xml2rfc" />
   <link rel="schema.dct" href="http://purl.org/dc/terms/" />
 
-  <meta name="dct.creator" content="Birkholz, H., Voit, E., Liu, X., and T. Zhou" />
+  <meta name="dct.creator" content="Birkholz, H. and E. Voit" />
   <meta name="dct.identifier" content="urn:ietf:id:draft-birkholz-yang-comi-push-latest" />
   <meta name="dct.issued" scheme="ISO8601" content="2018-04-18" />
   <meta name="dct.abstract" content="This documents defines CoAP operations that implement the capabilities of YANG Datastore Subscriptions and YANG Customized Subscriptions for the CoAP Management Interface (CoMI). The '/s' resource, as defined in CoMI, is extended analogously to include a set of sub-resources, each of them representing an observable resource identified by its subscription-id. Specific additions include but are not limited to new FETCH Body definitions and simplified subtree subscriptions to intermediate data nodes in YANG datastore modules using SID." />
@@ -349,22 +349,6 @@ ul.toc li {
 <tr>
 <td class="left">Expires: October 20, 2018</td>
 <td class="right">Cisco Systems</td>
-</tr>
-<tr>
-<td class="left"></td>
-<td class="right">X. Liu</td>
-</tr>
-<tr>
-<td class="left"></td>
-<td class="right">Jabil</td>
-</tr>
-<tr>
-<td class="left"></td>
-<td class="right">T. Zhou</td>
-</tr>
-<tr>
-<td class="left"></td>
-<td class="right">Huawei</td>
 </tr>
 <tr>
 <td class="left"></td>
@@ -539,18 +523,26 @@ ul.toc li {
 <dd style="margin-left: 8">An encapsulation header for one or more YANG notifications as defined in <a href="#I-D.ietf-netconf-notification-messages" class="xref">[I-D.ietf-netconf-notification-messages]</a>. The message header includes a specific set of well-known objects, which are of potential use to networking layers prior being interpreted by some receiving application layer process.</dd>
 <dt></dt>
 <dd style="margin-left: 8">Examples of header object include, but are not limited to: timestamps, signatures, or evidence about the integrity of the agents creating messages or notifications.</dd>
+<dt>YANG Subscription:</dt>
+<dd style="margin-left: 8">A Subscription in the context of YANG is defined in <a href="#RFC5277" class="xref">[RFC5277]</a> NETCONF Event Notification as an agreement and method to receive event notifications over a NETCONF session.  A concept related to the delivery of notifications (if there are any to send) involving destination and selection of notifications.</dd>
+<dt></dt>
+<dd style="margin-left: 8">In the context of Concise YANG Telemetry, this is a parent term that encompasses the concepts of YANG Datastore Subscriptions, YANG Customized Subscriptions, and traditional subscription to notifications as defined by YANG based network protocols in accordance to YANG 1.1.</dd>
 </dl>
 <h1 id="rfc.section.2.1">
 <a href="#rfc.section.2.1">2.1.</a> <a href="#coap-terminology" id="coap-terminology">CoAP Terminology</a>
 </h1>
-<p id="rfc.section.2.1.p.1">In addition to the illustration of the scope of YANG Telemetry above, this section highlights the most important terms that are vital to the functionality of Concise YANG Telemetry.</p>
+<p id="rfc.section.2.1.p.1">In addition to the illustration of the scope of YANG Telemetry above, this section highlights the most important terms that are vital to the functionality of Concise YANG Telemetry with respect to the Constrained Application Protocol:</p>
+<p id="rfc.section.2.1.p.2">CoAP Call Home:</p>
+<p id="rfc.section.2.1.p.3">A procedure similar to the one defined in <a href="#RFC8071" class="xref">[RFC8071]</a> NETCONF Call Home and RESTCONF Call Home, in which a YANG datastore can trigger a YANG Client to initiate a YANG Subscription (typically by taking on the role of a CoAP client and indicating to a CoAP node that is including a YANG Client to initiate a YANG Subscription).</p>
 <p></p>
 
 <dl>
 <dt>CoAP Requestor:</dt>
-<dd style="margin-left: 8">The entity that emits CoAP requests to a CoAP Node with server capabilities.  In the context of Concise YANG Telemetry, a YANG client that is creating dynamic subscriptions is a CoAP Requestor.</dd>
+<dd style="margin-left: 8">The entity that emits CoAP requests to a CoAP Node with server capabilities.  In the context of Concise YANG Telemetry, a YANG client, for example. that is creating dynamic subscriptions is a CoAP Requestor.</dd>
 <dt>CoAP Token:</dt>
-<dd style="margin-left: 8">A token used to match a CoAP response with a CoAP request. It is intended for use as a client-local identifier for to differentiate between concurrent requests (similar to a request ID).</dd>
+<dd style="margin-left: 8">A token used to match a CoAP response with a CoAP request. It is intended for use as a client-local identifier to differentiate between concurrent requests (similar to a request ID).</dd>
+<dt></dt>
+<dd style="margin-left: 8">A CoAP Token must be known, or at least deterministically inferable by a YANG Client in order to receive a Series of CoAP responses that compose Concise YANG Telemetry.</dd>
 </dl>
 <h1 id="rfc.section.3">
 <a href="#rfc.section.3">3.</a> <a href="#summary-of-the-additions-to-comi" id="summary-of-the-additions-to-comi">Summary of the Additions to CoMI</a>
@@ -598,7 +590,7 @@ ul.toc li {
 <dt>XPATH Filter Expression:</dt>
 <dd style="margin-left: 8">A more detailed selection of SIDs and corresponding data node values that update records are created for. The corresponding representation of XPATH Filter Expressions for COMI is defined in <a href="#I-D.ietf-core-yang-cbor" class="xref">[I-D.ietf-core-yang-cbor]</a>.</dd>
 <dt>Conditional SID Selectors:</dt>
-<dd style="margin-left: 8">The SID concept introduced by CoMI and represented via YANG modeled CBOR allows for a simplified Filter Expression that retains all the capabilities of an XPATH Filter Expression, while using a significantly simpler representation.</dd>
+<dd style="margin-left: 8">The SID concept introduced by CoMI and represented via YANG modeled CBOR allows for a simplified Filter Expression that retains most of the capabilities of an XPATH Filter Expression, while using a significantly simpler representation.</dd>
 </dl>
 <h1 id="rfc.section.5">
 <a href="#rfc.section.5">5.</a> <a href="#subscription-characteristics" id="subscription-characteristics">Subscription Characteristics</a>
@@ -835,6 +827,11 @@ ul.toc li {
 <td class="top">
 <a>Bierman, A.</a>, <a>Bjorklund, M.</a> and <a>K. Watsen</a>, "<a href="https://tools.ietf.org/html/rfc8040">RESTCONF Protocol</a>", RFC 8040, DOI 10.17487/RFC8040, January 2017.</td>
 </tr>
+<tr>
+<td class="reference"><b id="RFC8071">[RFC8071]</b></td>
+<td class="top">
+<a>Watsen, K.</a>, "<a href="https://tools.ietf.org/html/rfc8071">NETCONF Call Home and RESTCONF Call Home</a>", RFC 8071, DOI 10.17487/RFC8071, February 2017.</td>
+</tr>
 </tbody></table>
 <h1 id="rfc.authors"><a href="#rfc.authors">Authors' Addresses</a></h1>
 <div class="avoidbreak">
@@ -878,50 +875,6 @@ ul.toc li {
 	  <span class="country-name vcardline"></span>
 	</span>
 	<span class="vcardline">EMail: <a href="mailto:evoit@cisco.com">evoit@cisco.com</a></span>
-
-  </address>
-</div><div class="avoidbreak">
-  <address class="vcard">
-	<span class="vcardline">
-	  <span class="fn">Xufeng Liu</span> 
-	  <span class="n hidden">
-		<span class="family-name">Liu</span>
-	  </span>
-	</span>
-	<span class="org vcardline">Jabil</span>
-	<span class="adr">
-	  <span class="vcardline">8281 Greensboro Drive, Suite 200</span>
-
-	  <span class="vcardline">
-		<span class="locality"></span> 
-		<span class="region">McLean VA</span> 
-		<span class="code">22102</span>
-	  </span>
-	  <span class="country-name vcardline">USA</span>
-	</span>
-	<span class="vcardline">EMail: <a href="mailto:Xufeng_Liu@jabil.com">Xufeng_Liu@jabil.com</a></span>
-
-  </address>
-</div><div class="avoidbreak">
-  <address class="vcard">
-	<span class="vcardline">
-	  <span class="fn">Tianran Zhou</span> 
-	  <span class="n hidden">
-		<span class="family-name">Zhou</span>
-	  </span>
-	</span>
-	<span class="org vcardline">Huawei</span>
-	<span class="adr">
-	  <span class="vcardline">156 Beiqing Rd.</span>
-
-	  <span class="vcardline">
-		<span class="locality">Beijing</span>,  
-		<span class="region">Haidian District</span> 
-		<span class="code"></span>
-	  </span>
-	  <span class="country-name vcardline">China</span>
-	</span>
-	<span class="vcardline">EMail: <a href="mailto:zhoutianran@huawei.com">zhoutianran@huawei.com</a></span>
 
   </address>
 </div>
