@@ -14,15 +14,14 @@ Expires: October 20, 2018                                  Cisco Systems
 
 Abstract
 
-   This documents defines CoAP operations that implement the
-   capabilities of YANG Datastore Subscriptions and YANG Customized
-   Subscriptions for the CoAP Management Interface (CoMI).  The '/s'
-   resource, as defined in CoMI, is extended analogously to include a
-   set of sub-resources, each of them representing an observable
-   resource identified by its subscription-id.  Specific additions
-   include but are not limited to new FETCH Body definitions and
-   simplified subtree subscriptions to intermediate data nodes in YANG
-   datastore modules using SID.
+   This document defines CoAP operations that implement the capabilities
+   of YANG Datastore Subscriptions and YANG Customized Subscriptions for
+   the CoAP Management Interface (CoMI).  The '/s' resource, as defined
+   in CoMI, is extended analogously to include a set of sub-resources,
+   each of them representing an observable resource identified by its
+   subscription-id.  Specific additions include but are not limited to
+   new FETCH Body definitions and simplified subtree subscriptions to
+   intermediate data nodes in YANG datastore modules using SID.
 
 Status of This Memo
 
@@ -50,6 +49,7 @@ Copyright Notice
    Provisions Relating to IETF Documents
    (https://trustee.ietf.org/license-info) in effect on the date of
    publication of this document.  Please review these documents
+   carefully, as they describe your rights and restrictions with respect
 
 
 
@@ -58,7 +58,6 @@ Birkholz & Voit         Expires October 20, 2018                [Page 1]
 Internet-Draft                  CoMI Push                     April 2018
 
 
-   carefully, as they describe your rights and restrictions with respect
    to this document.  Code Components extracted from this document must
    include Simplified BSD License text as described in Section 4.e of
    the Trust Legal Provisions and are provided without warranty as
@@ -106,6 +105,7 @@ Table of Contents
    15. Change Log  . . . . . . . . . . . . . . . . . . . . . . . . .  15
    16. Normative References  . . . . . . . . . . . . . . . . . . . .  15
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  17
+
 
 
 
@@ -493,9 +493,9 @@ Internet-Draft                  CoMI Push                     April 2018
    1.  a YANG client starts to receive a Telemetry stream from a YANG
        datastore, unsolicitedly.  In this case, persistent subscription
        characteristics are retained on a YANG datastore before
-       deployment (e.g. during onboarding), but are unknownn to the YANG
+       deployment (e.g. during onboarding), but are unknown to the YANG
        Client and have to be acquired or inferred via procedures that
-       are--at the time of this wirting--out-of-scope of this document.
+       are--at the time of this writing--out-of-scope of this document.
        In essence, corresponding CoAP Tokens are unknown to the YANG
 
 
@@ -828,9 +828,9 @@ Internet-Draft                  CoMI Push                     April 2018
 16.  Normative References
 
    [I-D.bormann-t2trg-stp]
-              Bormann, C., "The Series Transfer Pattern (STP)", draft-
-              bormann-t2trg-stp-00 (work in progress), March 2018.
-
+              Bormann, C. and K. Hartke, "The Series Transfer Pattern
+              (STP)", draft-bormann-t2trg-stp-01 (work in progress),
+              July 2018.
 
 
 

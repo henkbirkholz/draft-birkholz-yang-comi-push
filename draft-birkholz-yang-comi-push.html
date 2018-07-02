@@ -324,8 +324,8 @@ ul.toc li {
   <meta name="dct.creator" content="Birkholz, H. and E. Voit" />
   <meta name="dct.identifier" content="urn:ietf:id:draft-birkholz-yang-comi-push-latest" />
   <meta name="dct.issued" scheme="ISO8601" content="2018-04-18" />
-  <meta name="dct.abstract" content="This documents defines CoAP operations that implement the capabilities of YANG Datastore Subscriptions and YANG Customized Subscriptions for the CoAP Management Interface (CoMI). The '/s' resource, as defined in CoMI, is extended analogously to include a set of sub-resources, each of them representing an observable resource identified by its subscription-id. Specific additions include but are not limited to new FETCH Body definitions and simplified subtree subscriptions to intermediate data nodes in YANG datastore modules using SID." />
-  <meta name="description" content="This documents defines CoAP operations that implement the capabilities of YANG Datastore Subscriptions and YANG Customized Subscriptions for the CoAP Management Interface (CoMI). The '/s' resource, as defined in CoMI, is extended analogously to include a set of sub-resources, each of them representing an observable resource identified by its subscription-id. Specific additions include but are not limited to new FETCH Body definitions and simplified subtree subscriptions to intermediate data nodes in YANG datastore modules using SID." />
+  <meta name="dct.abstract" content="This document defines CoAP operations that implement the capabilities of YANG Datastore Subscriptions and YANG Customized Subscriptions for the CoAP Management Interface (CoMI). The '/s' resource, as defined in CoMI, is extended analogously to include a set of sub-resources, each of them representing an observable resource identified by its subscription-id. Specific additions include but are not limited to new FETCH Body definitions and simplified subtree subscriptions to intermediate data nodes in YANG datastore modules using SID." />
+  <meta name="description" content="This document defines CoAP operations that implement the capabilities of YANG Datastore Subscriptions and YANG Customized Subscriptions for the CoAP Management Interface (CoMI). The '/s' resource, as defined in CoMI, is extended analogously to include a set of sub-resources, each of them representing an observable resource identified by its subscription-id. Specific additions include but are not limited to new FETCH Body definitions and simplified subtree subscriptions to intermediate data nodes in YANG datastore modules using SID." />
 
 </head>
 
@@ -363,7 +363,7 @@ ul.toc li {
   <span class="filename">draft-birkholz-yang-comi-push-latest</span></p>
   
   <h1 id="rfc.abstract"><a href="#rfc.abstract">Abstract</a></h1>
-<p>This documents defines CoAP operations that implement the capabilities of YANG Datastore Subscriptions and YANG Customized Subscriptions for the CoAP Management Interface (CoMI). The '/s' resource, as defined in CoMI, is extended analogously to include a set of sub-resources, each of them representing an observable resource identified by its subscription-id. Specific additions include but are not limited to new FETCH Body definitions and simplified subtree subscriptions to intermediate data nodes in YANG datastore modules using SID.</p>
+<p>This document defines CoAP operations that implement the capabilities of YANG Datastore Subscriptions and YANG Customized Subscriptions for the CoAP Management Interface (CoMI). The '/s' resource, as defined in CoMI, is extended analogously to include a set of sub-resources, each of them representing an observable resource identified by its subscription-id. Specific additions include but are not limited to new FETCH Body definitions and simplified subtree subscriptions to intermediate data nodes in YANG datastore modules using SID.</p>
 <h1 id="rfc.status"><a href="#rfc.status">Status of This Memo</a></h1>
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at https://datatracker.ietf.org/drafts/current/.</p>
@@ -619,7 +619,7 @@ ul.toc li {
 <p></p>
 
 <ol>
-<li>a YANG client starts to receive a Telemetry stream from a YANG datastore, unsolicitedly. In this case, persistent subscription characteristics are retained on a YANG datastore before deployment (e.g. during onboarding), but are unknownn to the YANG Client and have to be acquired or inferred via procedures that are&#8212;at the time of this wirting&#8212;out-of-scope of this document. In essence, corresponding CoAP Tokens are unknown to the YANG Client when the first YANG Data Item is received from the datastore.</li>
+<li>a YANG client starts to receive a Telemetry stream from a YANG datastore, unsolicitedly. In this case, persistent subscription characteristics are retained on a YANG datastore before deployment (e.g. during onboarding), but are unknown to the YANG Client and have to be acquired or inferred via procedures that are&#8212;at the time of this writing&#8212;out-of-scope of this document. In essence, corresponding CoAP Tokens are unknown to the YANG Client when the first YANG Data Item is received from the datastore.</li>
 <li>a YANG client starts to receive a Telemetry stream from a YANG datastore, solicitedly. In this case, persistent subscription characteristics are known by a YANG Client and a YANG datastore before deployment or acquired after their deployment. In essence, corresponding CoAP Tokens and Subscription State are already known by the YANG Client and the YANG datastore when the first YANG Data Item is received from the datastore.</li>
 <li>a YANG datastore initiates contact with a YANG client via a Rendezvous, Join, or Call Home procedure and triggers the creation of a Telemetry stream by the YANG Client. In this case, the subscription characteristics are provisioned by the YANG Client and come into effect after a YANG datastore successfully discovered the corresponding YANG Client that is its home. In essence, the corresponding CoAP Tokens are created by the CoAP Client and are conveyed to the YANG datastore via the traditional CoAP interaction model.</li>
 </ol>
@@ -781,7 +781,7 @@ ul.toc li {
 <tr>
 <td class="reference"><b id="I-D.bormann-t2trg-stp">[I-D.bormann-t2trg-stp]</b></td>
 <td class="top">
-<a>Bormann, C.</a>, "<a href="https://tools.ietf.org/html/draft-bormann-t2trg-stp-00">The Series Transfer Pattern (STP)</a>", Internet-Draft draft-bormann-t2trg-stp-00, March 2018.</td>
+<a>Bormann, C.</a> and <a>K. Hartke</a>, "<a href="https://tools.ietf.org/html/draft-bormann-t2trg-stp-01">The Series Transfer Pattern (STP)</a>", Internet-Draft draft-bormann-t2trg-stp-01, July 2018.</td>
 </tr>
 <tr>
 <td class="reference"><b id="I-D.ietf-core-comi">[I-D.ietf-core-comi]</b></td>
