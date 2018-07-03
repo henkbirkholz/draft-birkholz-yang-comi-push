@@ -1,8 +1,7 @@
 ---
 title: Concise YANG Telemetry
 abbrev: CoMI Push
-docname: draft-birkholz-yang-comi-push-latest
-date: 2018-04-18
+docname: draft-birkholz-yang-core-telemetry-latest
 
 ipr: trust200902
 area: ops
@@ -41,6 +40,7 @@ normative:
   RFC5277:
   RFC6020:
   RFC8071:
+  RFC8342:
   I-D.ietf-core-yang-cbor: yangcbor
   I-D.ietf-core-comi: comi
   I-D.ietf-netconf-subscribed-notifications: yangnote
@@ -171,9 +171,8 @@ Client about the characteristics of the loss of Update Records.
 
 YANG Client:
 
-: Called a YANG-based client or just client in {{RFC7950}}, a YANG Client is the
-entity communicating with a YANG Sever (running potentially multiple YANG
-datastores) in order to access YANG-defined data.
+: Called a client in {{RFC8342}}, a YANG Client is the entity that can access
+YANG-defined data on a server, over some network management protocol.
 
 : YANG Client is a representation agnostic term. Specific network protocols that
 operate on YANG Servers via YANG Clients use representations, such as XML, JSON,
@@ -193,12 +192,8 @@ database, flash memory locations, or combinations thereof.
 
 YANG Notification:
 
-: Defined in {{RFC6241}}, a Notification is a server-initiated message indicating
-that a certain event has been recognized by the server.
-
-: While this definition is found in {{RFC6241}}, which is based on YANG 1.0
-{{RFC6020}}, it also applies to the general definition of the YANG Notification
-statement in YANG 1.1 {{RFC7950}}.
+: Defined in {{RFC8342}}, a Notification is a server-initiated message
+indicating that a certain event has been recognized by the server.
 
 YANG Notification (Bundle) Message:
 
@@ -213,15 +208,13 @@ notifications.
 
 YANG Subscription:
 
-: A Subscription in the context of YANG is defined in {{RFC5277}} NETCONF
-Event Notification as an agreement and method to receive event notifications
-over a NETCONF session.  A concept related to the delivery of notifications (if
-there are any to send) involving destination and selection of notifications.
+: A Subscription in the context of YANG is defined in {{-yangnote}} as a contract
+with a publisher, stipulating which information one or more receivers wish to
+have pushed from the publisher without the need for further solicitation.
 
 : In the context of Concise YANG Telemetry, this is a parent term that
-encompasses the concepts of YANG Datastore Subscriptions, YANG Customized
-Subscriptions, and traditional subscription to notifications as defined by YANG
-based network protocols in accordance to YANG 1.1.
+encompasses the concepts of YANG Datastore Subscriptions and YANG Customized
+Subscriptions.
 
 ## CoAP Terminology
 
@@ -477,7 +470,7 @@ be used. A prominent example are "interface-flapping" events.
 
 ## Subscription Type
 
-The YANG Push subscription trigger mechanisms illustrated above create
+The YANG Push subscription trigger mechanisms illustrated above creates
 subscription state between a YANG client and a YANG datastore. As long as this
 subscription state between these two entities persists, a datastore can emit
 series of YANG notifications to a YANG client, if appropriate conditions are
@@ -495,6 +488,22 @@ different types of YANG Notification Series [-cabo-series], respectively:
 ### Stream Subscription
 
 ### Datastore Subscription
+
+# Resilient Subscriptions
+
+In usage scenarios with a group of more than one CoMI Client a CoMI datastore
+can potentially convey Concise YANG Telemetry to, a YANG Subscription can be
+maintained in a more resilient manner. Emitting a CoAP response in a confirmable
+message enables a CoMI datastore to detect that a corresponding CoMI Client became unavailable (due to
+missing confirmation messages). In order to create a Resilient Subscription,
+a detected loss of a CoMI Client MUST immediately re-trigger the CoAP Call
+Home procedure in order to discover an equivalent "new home" to send the
+corresponding Concise YANG Telemetry Stream to. The maximum interval between
+confirmable message as a part of the Concise YANG Telemetry stream is 24 hours.
+The interval can be chosen smaller and appropriate to the requirements of the usage
+scenario. Theoretically -- but not necessarily advisable in a
+constrained-node environment -- every CoAP response can be send in a confirmable
+message.
 
 # Subscription Management (better word?)
 
@@ -537,30 +546,29 @@ Every subscription-id is created by the YANG datastore and is used in the corres
 
 A standard CoMI datastore as defined in [I-D.ietf-core-comi] typically uses the datastore resource “/c” to provide the YANG datastore tree and the resource “/s” to provide the YANG notification stream. Sub-resources under “/c” are represented in the format of /c/sid.
 
-CoMI Push extends the scope of the “/s” resource. Sub-resources under “/s” are represented as /s/key, where key is a numeric string representation of the subscription identifier, e.g. “/s/65536/”. The key representation reduces the ambiguity with respect to sid, which uses an URI safe base64 representation.
+Concise YANG Telemetry extends the scope of the “/s” resource. Sub-resources under “/s” are represented as /s/key, where key is a numeric string representation of the subscription identifier, e.g. “/s/65536/”. The key representation reduces the ambiguity with respect to sid, which uses an URI safe base64 representation.
 
-Under each subscription identifier key provided as a sub-resource of the “/s” resource, a YANG tree instance of the subscription characteristics yang:ietf-subscribed-notifications/subscriptions (as defined in YANG Push [I-D.ietf-netconf-yang-push], which augments ietf-subscribed-notification defined in [I-D.ietf-netconf-subscribed-notifications]) is provided. In the following example every sid is illustrated as a “string” as there is no sid for corresponding instance identifiers yet:
+## Extension of the CoMI Datastore Resource
 
-/s/”65536”/”stream”/”within-subscription”/”filter-spec”/”stream-xpath-filter”/”stream-xpath-filter“
-
-This example would point to the filter selection associated with subscription id 65536.
+Each subscription identifier key is instantiated as a sub-resource of the
+“/c/subid” resource, a YANG tree instance of the subscription characteristics
+yang:ietf-subscribed-notifications/subscriptions (as defined in YANG Push
+[I-D.ietf-netconf-yang-push], which augments ietf-subscribed-notification
+defined in [I-D.ietf-netconf-subscribed-notifications]) is provided here for
+each active subscription.
 
 ## Extension of the YANG Subscription Mechanism
 
-YANG Push provides augmented RPC for establishing, modifying, deleting, or killing a subscription. CoMI uses the same module as YANG Push and provides a corresponding interface to allow for a corresponding confirmable POST message to RPC resources (see [I-D.ietf-core-comi] Section 5.3.2.).
+YANG Customized Subscriptions provides augmented RPC for establishing, modifying, deleting, or killing a subscription. CoMI uses the same module as YANG Push and provides a corresponding interface to allow for a corresponding confirmable POST message to RPC resources (see [I-D.ietf-core-comi] Section 5.3.2.).
 
-CoMI Push also defines the capabilities to point confirmable FETCH messages – including the Observe option - to sub-resources provided by “/c”. If the body of the FETCH message includes a CBOR modeled [I-D.ietf-core-yang-cbor] subtree filter expression, a new subscription is created and a corresponding subscription id is returned. Additionally, a corresponding subscription sub-resource under “/s” is created.
+Concise YANG Telemetry also defines the capabilities to point confirmable FETCH messages – including the Observe option - to sub-resources provided by “/c”. If the body of the FETCH message includes a CBOR modeled [I-D.ietf-core-yang-cbor] subtree filter expression, a new subscription is created and a corresponding subscription id is returned. Additionally, a corresponding subscription sub-resource under “/s” is created.
 
 As usual in CoMI, iPATCH requests can be used to perform a number of operations on the datastore in one request, such as deleting, creating, and updating subscriptions.
 
 # Upcoming Features and Stories
 
-* maybe we should introduce /sn and /snmb for stream subscriptions and
-* SIDs and subscription-id have to be both "the same" and "distinguishable" from sid
-  * maybe we have to create a new content-format application/yang-subest+cbor
-    and application/yang-subres+cbor?
-* my resource goes away during subscription (e.g. FRU pulled)
-* back channel liveness check - important for udp and sudden outage in telemetry flows
+* definition of a module that populates /c with sub-resources representing the Subscription Characteristics for every active subscription.
+
 
 #  IANA considerations
 
