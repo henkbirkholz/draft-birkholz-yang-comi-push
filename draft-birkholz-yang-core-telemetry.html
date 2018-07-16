@@ -26,7 +26,7 @@ body {
   font-weight: bold;
   color: #333;
   line-height: 100%;
-  margin: 0.8em 0 0.3em;
+  margin: 1.2em 0 0.3em;
 }
 .title, #rfc\.title h1 { font-size: 32px; }
 h1, section h1, h2, section h2, section h3, nav h2 { font-size: 20px; }
@@ -165,12 +165,17 @@ a[href]:hover {
   background-color: #eee;
 }
 
-ol, ul, li, p {
+p, ol, ul, li {
   padding: 0;
-  margin: 0.5em 0 0.5em 2em;
 }
-li, p {
-  margin-left: 0;
+p {
+  margin: 0.5em 0;
+}
+ol, ul {
+  margin: 0.2em 0 0.2em 2em;
+}
+li {
+  margin: 0.2em 0;
 }
 address {
   font-style: normal;
@@ -325,9 +330,9 @@ ul.toc li {
 
   <meta name="dct.creator" content="Birkholz, H. and E. Voit" />
   <meta name="dct.identifier" content="urn:ietf:id:draft-birkholz-yang-core-telemetry-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="2018-07-03" />
-  <meta name="dct.abstract" content="This document defines CoAP operations that implement the capabilities of YANG Datastore Subscriptions and YANG Customized Subscriptions for the CoAP Management Interface (CoMI). The '/s' resource, as defined in CoMI, is extended analogously to include a set of sub-resources, each of them representing an observable resource identified by its subscription-id. Specific additions include but are not limited to new FETCH Body definitions and simplified subtree subscriptions to intermediate data nodes in YANG datastore modules using SID." />
-  <meta name="description" content="This document defines CoAP operations that implement the capabilities of YANG Datastore Subscriptions and YANG Customized Subscriptions for the CoAP Management Interface (CoMI). The '/s' resource, as defined in CoMI, is extended analogously to include a set of sub-resources, each of them representing an observable resource identified by its subscription-id. Specific additions include but are not limited to new FETCH Body definitions and simplified subtree subscriptions to intermediate data nodes in YANG datastore modules using SID." />
+  <meta name="dct.issued" scheme="ISO8601" content="2018-07-16" />
+  <meta name="dct.abstract" content="This document defines CoAP operations that implement the capabilities of YANG Datastore Subscriptions and YANG Customized Subscriptions for the CoAP Management Interface (CoMI). The &#8216;/s&#8217; resource, as defined in CoMI, is extended analogously to include a set of sub-resources, each of them representing an observable resource identified by its subscription-id. Specific additions include but are not limited to new FETCH Body definitions and simplified subtree subscriptions to intermediate data nodes in YANG datastore modules using SID." />
+  <meta name="description" content="This document defines CoAP operations that implement the capabilities of YANG Datastore Subscriptions and YANG Customized Subscriptions for the CoAP Management Interface (CoMI). The &#8216;/s&#8217; resource, as defined in CoMI, is extended analogously to include a set of sub-resources, each of them representing an observable resource identified by its subscription-id. Specific additions include but are not limited to new FETCH Body definitions and simplified subtree subscriptions to intermediate data nodes in YANG datastore modules using SID." />
 
 </head>
 
@@ -349,12 +354,12 @@ ul.toc li {
 <td class="right">E. Voit</td>
 </tr>
 <tr>
-<td class="left">Expires: January 4, 2019</td>
+<td class="left">Expires: January 17, 2019</td>
 <td class="right">Cisco Systems</td>
 </tr>
 <tr>
 <td class="left"></td>
-<td class="right">July 03, 2018</td>
+<td class="right">July 16, 2018</td>
 </tr>
 
     	
@@ -365,12 +370,12 @@ ul.toc li {
   <span class="filename">draft-birkholz-yang-core-telemetry-latest</span></p>
   
   <h1 id="rfc.abstract"><a href="#rfc.abstract">Abstract</a></h1>
-<p>This document defines CoAP operations that implement the capabilities of YANG Datastore Subscriptions and YANG Customized Subscriptions for the CoAP Management Interface (CoMI). The '/s' resource, as defined in CoMI, is extended analogously to include a set of sub-resources, each of them representing an observable resource identified by its subscription-id. Specific additions include but are not limited to new FETCH Body definitions and simplified subtree subscriptions to intermediate data nodes in YANG datastore modules using SID.</p>
+<p>This document defines CoAP operations that implement the capabilities of YANG Datastore Subscriptions and YANG Customized Subscriptions for the CoAP Management Interface (CoMI). The &#8216;/s&#8217; resource, as defined in CoMI, is extended analogously to include a set of sub-resources, each of them representing an observable resource identified by its subscription-id. Specific additions include but are not limited to new FETCH Body definitions and simplified subtree subscriptions to intermediate data nodes in YANG datastore modules using SID.</p>
 <h1 id="rfc.status"><a href="#rfc.status">Status of This Memo</a></h1>
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at https://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on January 4, 2019.</p>
+<p>This Internet-Draft will expire on January 17, 2019.</p>
 <h1 id="rfc.copyrightnotice"><a href="#rfc.copyrightnotice">Copyright Notice</a></h1>
 <p>Copyright (c) 2018 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
 <p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (https://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
@@ -483,9 +488,10 @@ ul.toc li {
 <p></p>
 
 <ul>
-<li>enrich its capabilities to subscribe to a variety of YANG modeled notifications&#8212;based on YANG Customized Subscriptions to a Publisher's Event Streams <a href="#I-D.ietf-netconf-subscribed-notifications" class="xref">[I-D.ietf-netconf-subscribed-notifications]</a>, and</li>
+<li>enrich its capabilities to subscribe to a variety of YANG modeled notifications&#8212;based on YANG Customized Subscriptions to a Publisher&#8217;s Event Streams <a href="#I-D.ietf-netconf-subscribed-notifications" class="xref">[I-D.ietf-netconf-subscribed-notifications]</a>, and</li>
 <li>enable subscriptions to changes data note values in modules provided by the YANG datastore (or parts of them)&#8212;based on YANG Datastore Subscription <a href="#I-D.ietf-netconf-yang-push" class="xref">[I-D.ietf-netconf-yang-push]</a>.</li>
 </ul>
+<p id="rfc.section.1.p.5">The key words &#8220;MUST&#8221;, &#8220;MUST NOT&#8221;, &#8220;REQUIRED&#8221;, &#8220;SHALL&#8221;, &#8220;SHALL NOT&#8221;, &#8220;SHOULD&#8221;, &#8220;SHOULD NOT&#8221;, &#8220;RECOMMENDED&#8221;, &#8220;NOT RECOMMENDED&#8221;, &#8220;MAY&#8221;, and &#8220;OPTIONAL&#8221; in this document are to be interpreted as described in BCP&#160;14 <a href="#RFC2119" class="xref">[RFC2119]</a> <a href="#RFC8174" class="xref">[RFC8174]</a> when, and only when, they appear in all capitals, as shown here.</p>
 <h1 id="rfc.section.2">
 <a href="#rfc.section.2">2.</a> <a href="#terminology" id="terminology">Terminology</a>
 </h1>
@@ -494,41 +500,41 @@ ul.toc li {
 
 <dl>
 <dt>YANG Telemetry:</dt>
-<dd style="margin-left: 8">A Series of YANG Notifications or YANG Notification Bundle Messages that are composed of YANG modeled data, potentially composing update records, sent from a YANG datastore to a YANG client either solicited or unsolicited in a fashion that can guarantee well-defined levels of Visibility with respect to Data Node Value changes.</dd>
+<dd style="margin-left: 8">A Series of YANG modeled data items, potentially composing Update Records, sent from a YANG datastore <a href="#RFC8342" class="xref">[RFC8342]</a> to a YANG receiver <a href="#I-D.ietf-netconf-subscribed-notifications" class="xref">[I-D.ietf-netconf-subscribed-notifications]</a> either solicited or unsolicited in a fashion that can guarantee well-defined levels of Visibility with respect to Data Node Value changes.</dd>
 </dl>
 <p id="rfc.section.2.p.3">Please note: while the focus of YANG is typically on management and operations, the scope of YANG Telemetry extends into the Security Area with respect to Security Events. Because of this, YANG Telemetry characteristics that address security requirements, such as Visibility and Resilient YANG Subscriptions, are addressed in this document.</p>
-<p id="rfc.section.2.p.4">The definition of YANG Telemetry is based on the following existing terminology:</p>
+<p id="rfc.section.2.p.4">The definition of YANG Telemetry is based on the following terminology:</p>
 <p></p>
 
 <dl>
 <dt>Data Node Value:</dt>
-<dd style="margin-left: 8">Defined in CoMI as the value assigned to a data node instance. Data node values are serialized into the payload according to the rules defined in section 4 of <a href="#I-D.ietf-core-yang-cbor" class="xref">[I-D.ietf-core-yang-cbor]</a>.</dd>
+<dd style="margin-left: 8">Defined in CoMI as the value assigned to a data node instance. Data node values are serialized into the payload according to the rules defined in section 4 of <a href="#I-D.ietf-core-yang-cbor" class="xref">[I-D.ietf-core-yang-cbor]</a>. Changes in Data Node Values are conveyed via data node updates referred to as Update Records.</dd>
 <dt>Update Record:</dt>
-<dd style="margin-left: 8">A single YANG data item in a Series of YANG Notifications or YANG Notification Bundle Messages conveying the changes to a YANG datastore's module's Data Node Values.</dd>
+<dd style="margin-left: 8">Defined in <a href="#I-D.ietf-netconf-yang-push" class="xref">[I-D.ietf-netconf-yang-push]</a>, in the context of Concise YANG Telemetry, an Update Record composes a single YANG data item in a Series of YANG Notifications or YANG Notification Bundle Messages conveying the changes to a YANG datastore&#8217;s module&#8217;s Data Node Values.</dd>
 <dt>Resilient Subscription:</dt>
-<dd style="margin-left: 8">A YANG Subscription used to create Concise YANG Telemetry that continues to function in a given scope of CoMI Clients, or discoverable homes (see CoAP Call Home, respectively), if the current receiver of Concise YANG Telemetry is rendered unavailable.</dd>
+<dd style="margin-left: 8">A subscription <a href="#I-D.ietf-netconf-subscribed-notifications" class="xref">[I-D.ietf-netconf-subscribed-notifications]</a> used to create Concise YANG Telemetry that continues to function in a given scope of CoMI Clients, or discoverable homes (see CoAP Call Home, respectively), if the current receiver of Concise YANG Telemetry is rendered unavailable.</dd>
 <dt></dt>
-<dd style="margin-left: 8">This subscription characteristic enables a CoMI datastore to detect loss of a specific CoMI Client that is the target of Concise YANG Telemetry, provided that the CoMI Client is part of a group of CoMI Clients that supports this kind of fail-over mechanism. This subscription characteristic can have a deteriorating effect on the level of assurance with respect to Visibility and can therefore result in missed Updated Records, which a "new home" has to be notified about.</dd>
+<dd style="margin-left: 8">This subscription characteristic enables a CoMI datastore to detect loss of a specific CoMI Client that is the target of Concise YANG Telemetry, provided that the CoMI Client is part of a group of CoMI Clients that supports this kind of fail-over mechanism. This subscription characteristic can have a deteriorating effect on the level of assurance with respect to Visibility and can therefore result in missed Updated Records, which a &#8220;new home&#8221; has to be notified about.</dd>
 <dt>Series:</dt>
 <dd style="margin-left: 8">Series Transfer Pattern are described in <a href="#I-D.bormann-t2trg-stp" class="xref">[I-D.bormann-t2trg-stp]</a> as the conveyance of a sequence of associated data items over time, where a client is able to obtain the Series and to learn about new items.</dd>
 <dt></dt>
-<dd style="margin-left: 8">YANG Customized Subscriptions or a YANG Datastore Subscription creates an specific Series Transfer Pattern composed of individual YANG Notifications or YANG Notification Bundle Messages that include related updated records.</dd>
+<dd style="margin-left: 8">YANG Event Stream Subscriptions or a YANG Datastore Subscription creates an specific Series Transfer Pattern composed of individual YANG Notifications or YANG Notification Bundle Messages that include related updated records.</dd>
 <dt>Subscription Characteristics:</dt>
 <dd style="margin-left: 8">The set of attributes associated with an active YANG Subscription.</dd>
 <dt></dt>
-<dd style="margin-left: 8">The set of attributes is defined by the data definition statements <a href="#RFC7950" class="xref">[RFC7950]</a> defined by the augments in YANG Customized Subscriptions to a Publisher's Event Streams <a href="#I-D.ietf-netconf-subscribed-notifications" class="xref">[I-D.ietf-netconf-subscribed-notifications]</a>, YANG Datastore Subscription <a href="#I-D.ietf-netconf-yang-push" class="xref">[I-D.ietf-netconf-yang-push]</a> and corresponding CoAP Tokens for Concise YANG Telemetry.</dd>
+<dd style="margin-left: 8">The set of attributes is defined by the data definition statements <a href="#RFC7950" class="xref">[RFC7950]</a> defined by the augments in YANG Customized Subscriptions to a Publisher&#8217;s Event Streams <a href="#I-D.ietf-netconf-subscribed-notifications" class="xref">[I-D.ietf-netconf-subscribed-notifications]</a>, YANG Datastore Subscription <a href="#I-D.ietf-netconf-yang-push" class="xref">[I-D.ietf-netconf-yang-push]</a> and corresponding CoAP Tokens for Concise YANG Telemetry.</dd>
 <dt>Visibility:</dt>
 <dd style="margin-left: 8">A level of assurance that Update Records will be received by a YANG Client.</dd>
 <dt></dt>
 <dd style="margin-left: 8">There might be reasons, such as resource exhaustion or dampening settings, that result in Update Records being lost in transit or not being emitted by the YANG datastore. Sequential Message-IDs or specific YANG Notifications that report, e.g., about past events of resource exhaustion will inform the YANG Client about the characteristics of the loss of Update Records.</dd>
-<dt>YANG Client:</dt>
-<dd style="margin-left: 8">Called a client in <a href="#RFC8342" class="xref">[RFC8342]</a>, a YANG Client is the entity that can access YANG-defined data on a server, over some network management protocol.</dd>
+<dt>YANG Receiver:</dt>
+<dd style="margin-left: 8">A subset of clients as defined in <a href="#RFC8342" class="xref">[RFC8342]</a>. A YANG Receiver is the entity that can receive and process &#8211; in contrast to access, which is mandatory in order to create a subscription, but not mandatory in order to receive the corresponding telemetry stream &#8211; YANG-defined data originating from a server, over some network management protocol.</dd>
 <dt></dt>
-<dd style="margin-left: 8">YANG Client is a representation agnostic term. Specific network protocols that operate on YANG Servers via YANG Clients use representations, such as XML, JSON, or CBOR.</dd>
+<dd style="margin-left: 8">YANG Receiver is a representation agnostic term. Specific network protocols that operate on YANG Servers via YANG Clients use representations, such as XML, JSON, or CBOR.</dd>
 <dt>YANG Data Item:</dt>
-<dd style="margin-left: 8">An instance of YANG a modules Data Node Values or the changes to Data Node Values, conveyed as data in motion, serialized in a specific representation, such as XML, JSON, or CBOR.</dd>
+<dd style="margin-left: 8">An instance of YANG a modules Data Node Values or the changes to Data Node Values, conveyed as data in motion, serialized in a specific representation, such as XML, JSON, or CBOR. A Data Node Update as defined in <a href="#I-D.ietf-netconf-yang-push" class="xref">[I-D.ietf-netconf-yang-push]</a> is a YANG data item.</dd>
 <dt>YANG Datastore:</dt>
-<dd style="margin-left: 8">Defined in <a href="#RFC6241" class="xref">[RFC6241]</a>, a datastore is a conceptual place to store and access information. A datastore might be implemented, for example, using files, a database, flash memory locations, or combinations thereof.</dd>
+<dd style="margin-left: 8">Defined in <a href="#RFC8342" class="xref">[RFC8342]</a>, a datastore is a conceptual place to store and access information. A datastore might be implemented, for example, using files, a database, flash memory locations, or combinations thereof.</dd>
 <dt>YANG Notification:</dt>
 <dd style="margin-left: 8">Defined in <a href="#RFC8342" class="xref">[RFC8342]</a>, a Notification is a server-initiated message indicating that a certain event has been recognized by the server.</dd>
 <dt>YANG Notification (Bundle) Message:</dt>
@@ -549,8 +555,8 @@ ul.toc li {
 <dl>
 <dt>CoAP Call Home:</dt>
 <dd style="margin-left: 8">A procedure similar to the one defined in <a href="#RFC8071" class="xref">[RFC8071]</a> NETCONF Call Home and RESTCONF Call Home, in which a YANG datastore can trigger a YANG Client to initiate a YANG Subscription (typically by taking on the role of a CoAP client and indicating to a CoAP node that is including a YANG Client to initiate a YANG Subscription).</dd>
-<dt>CoAP Requestor:</dt>
-<dd style="margin-left: 8">The entity that emits CoAP requests to a CoAP Node with server capabilities.  In the context of Concise YANG Telemetry, a YANG client, for example. that is creating dynamic subscriptions is a CoAP Requestor.</dd>
+<dt>CoAP Client:</dt>
+<dd style="margin-left: 8">The entity that emits CoAP requests to a CoAP Node with server capabilities.  In the context of Concise YANG Telemetry, a YANG client, for example. that is creating dynamic subscriptions is a CoAP Client.</dd>
 <dt>CoAP Token:</dt>
 <dd style="margin-left: 8">A token used to match a CoAP response with a CoAP request <a href="#RFC7252" class="xref">[RFC7252]</a>. It is intended for use as a client-local identifier to differentiate between concurrent requests (similar to a request ID).</dd>
 <dt></dt>
@@ -567,14 +573,14 @@ ul.toc li {
 <li>a CoAP iPATCH operation to create, modify, delete or kill modify one or more Telemetry subscription states,</li>
 <li>a CoAP GET operation including the Observe option to receive a Telemetry stream,</li>
 <li>a CoAP FETCH operation including the Observe option to receive multiple Telemetry streams,</li>
-<li>an extension of the "/s" resource that includes sub-resource, such as subscription identifiers and corresponding SID instances, and</li>
-<li>the capability to direct GET and FETCH operations including the Observe option at resources that are sub-resources of "/c".</li>
+<li>an extension of the &#8220;/s&#8221; resource that includes sub-resource, such as subscription identifiers and corresponding SID instances, and</li>
+<li>the capability to direct GET and FETCH operations including the Observe option at resources that are sub-resources of &#8220;/c&#8221;.</li>
 </ul>
 <h1 id="rfc.section.3.1">
 <a href="#rfc.section.3.1">3.1.</a> <a href="#telemetry-specific-comi-datastores" id="telemetry-specific-comi-datastores">Telemetry-Specific CoMI datastores</a>
 </h1>
-<p id="rfc.section.3.1.p.1">The CoMI architecture (and YANG in general) assumes that both YANG client and YANG datastores (server) retain or have access to knowledge about the same YANG specification (see Figure 1 in <a href="#I-D.ietf-core-comi" class="xref">[I-D.ietf-core-comi]</a>). This is not necessarily true for a YANG Push capable CoMI server. Highly constrained nodes can emit Series of subscribed notifications without previous solicitation: this allows them to create well-formed YANG-modeled Telemetry from hard-coded building blocks of YANG-modeled data, which are in compliance to YANG modules. In consequence, while taking on the role of a YANG datastore, a YANG Subscription capable CoMI server SHOULD be capable to process YANG queries, but MAY not be due to the lack of corresponding functions or knowledge of a complete YANG module.</p>
-<p id="rfc.section.3.1.p.2">As these flavors of YANG datastores are not necessarily able to create CoMI responses based on client request, it is likely that highly constrained datastores initiate a Call-Home procedure (see <a href="#RFC8071" class="xref">[RFC8071]</a>) acting as if a request was already received (see Configured Subscription above), enticing a very specific request they can fulfill (dynamic subscription) or rendezvous via a discoverable YANG Zero Touch entity. In all these usage scenarios, the datastore intends to create device specific YANG Telemetry to be conveyed to corresponding YANG clients.</p>
+<p id="rfc.section.3.1.p.1">The CoMI architecture (and YANG in general) assumes that both YANG client and YANG datastores (server) retain or have access to knowledge about the same YANG specification (see Figure 1 in <a href="#I-D.ietf-core-comi" class="xref">[I-D.ietf-core-comi]</a>). This is not necessarily true for a YANG Push capable CoMI server. Highly constrained nodes can emit Series of subscribed notifications without previous solicitation: this allows them to create well-formed YANG-modeled Telemetry from hard-coded building blocks of YANG-modeled data, which are in compliance to YANG modules. In consequence, while taking on the role of a YANG datastore, a YANG Subscription capable CoMI server SHOULD be capable to process YANG queries, but MAY not be due to the lack of corresponding functions or knowledge of the resulting structures received.</p>
+<p id="rfc.section.3.1.p.2">As these flavors of YANG datastores are not necessarily able to create CoMI responses based on client request, it is likely that highly constrained datastores initiate a Call-Home procedure (see <a href="#RFC8071" class="xref">[RFC8071]</a>) acting as if a request was already received (see Configured Subscription above), soliciting a very specific request they can fulfill (dynamic subscription) or rendezvous via a discoverable YANG Zero Touch entity. In all these usage scenarios, the datastore intends to create device specific YANG Telemetry to be conveyed to corresponding YANG clients.</p>
 <p id="rfc.section.3.1.p.3">In essence, incorporating a complete YANG module on a CoMI datastore that is capable of YANG Subscriptions is not required to enable the initiation of Concise YANG Telemetry within a very specific scope. This kin of Telemetry-Specific CoMI datastore is therefore not a fully YANG 1.1 compliant datastore, but able to create valid YANG modeled YANG Data Items.</p>
 <h1 id="rfc.section.4">
 <a href="#rfc.section.4">4.</a> <a href="#subscription-content-and-state" id="subscription-content-and-state">Subscription Content and State</a>
@@ -588,7 +594,7 @@ ul.toc li {
 <dt>push-change-update:</dt>
 <dd style="margin-left: 8">A notification that includes an incremental (and potentially filtered) update of data node values of YANG datastore nodes since the last (change-)update notification.</dd>
 </dl>
-<p id="rfc.section.4.p.3">Every Update Record Notification (Bundle) Message in a Series that is generated in the context of a subscription is emitted per the characteristics of the subscription state maintained by the CoMI datastore. Subscription state can be created on the CoMI datastore during manufacturing, onboarding, enrollment, deployment, or maintenance of the CoMI datastore. Most typically, subscription state is created by a YANG Client (e.g. a Network Management System) via a dynamic subscription.</p>
+<p id="rfc.section.4.p.3">Every Update Record in a Series that is generated in the context of a subscription is emitted per the characteristics of the subscription state maintained by the CoMI datastore. Subscription state can be created on the CoMI datastore during manufacturing, onboarding, enrollment, deployment, or maintenance of the CoMI datastore. Most typically, subscription state is created by a YANG Client (e.g. a Network Management System) via a dynamic subscription.</p>
 <h1 id="rfc.section.4.1">
 <a href="#rfc.section.4.1">4.1.</a> <a href="#selection-filter" id="selection-filter">Selection Filter</a>
 </h1>
@@ -615,7 +621,7 @@ ul.toc li {
 <li>Subscription Interval (periodic / on-change)</li>
 <li>Subscription Type (stream / datastore)</li>
 </ol>
-<p id="rfc.section.5.p.3">These characteristics define how subscription state is created and how the resulting Telemetry streams behave. In general, corresponding subscription state can be created by a YANG client via the "establish-subscription" RPC as defined in <a href="#I-D.ietf-netconf-subscribed-notifications" class="xref">[I-D.ietf-netconf-subscribed-notifications]</a>.</p>
+<p id="rfc.section.5.p.3">These characteristics define how subscription state is created and how the resulting Telemetry streams behave. In general, corresponding subscription state can be created by a YANG client via the &#8220;establish-subscription&#8221; RPC as defined in <a href="#I-D.ietf-netconf-subscribed-notifications" class="xref">[I-D.ietf-netconf-subscribed-notifications]</a>.</p>
 <h1 id="rfc.section.5.1">
 <a href="#rfc.section.5.1">5.1.</a> <a href="#subscription-trigger" id="subscription-trigger">Subscription Trigger</a>
 </h1>
@@ -623,14 +629,14 @@ ul.toc li {
 <p></p>
 
 <ol>
-<li>a YANG client starts to receive a Telemetry stream from a YANG datastore, without previous solicitation. To enable this, persistent subscription characteristics must have been configured on the YANG datastore before deployment (e.g. during onboarding), but may be left unknown to the YANG Client.  They then have to be acquired or inferred via procedures that are&#8212;at the time of this writing&#8212;out-of-scope of this document.  In essence, corresponding CoAP Tokens are unknown to the YANG Client when the first YANG Data Item is received from the datastore.</li>
-<li>a YANG client starts to receive a Telemetry stream from a YANG datastore, after being solicited to do so. In this case, persistent subscription characteristics are known by a YANG Client and a YANG datastore before deployment or acquired after their deployment. In essence, corresponding CoAP Tokens and Subscription State are already known by the YANG Client and the YANG datastore when the first YANG Data Item is received from the datastore.</li>
+<li>a YANG client starts to receive a Telemetry stream from a YANG datastore, without previous solicitation. To enable this, persistent subscription characteristics must have been configured on the YANG datastore earlier (e.g. during onboarding), but may be left unknown to the YANG Client.  They then have to be acquired or inferred via procedures that are&#8212;at the time of this writing&#8212;out-of-scope of this document.  In essence, corresponding CoAP Tokens are unknown to the YANG Client when the first YANG Data Item is received from the datastore.</li>
 <li>a YANG datastore initiates contact with a YANG client via a Rendezvous, Join, or Call Home procedure and triggers the creation of a Telemetry stream by the YANG Client. In this case, the subscription characteristics are provisioned by the YANG Client and come into effect after a YANG datastore successfully discovered the corresponding YANG Client that is its home. In essence, the corresponding CoAP Tokens are created by the CoAP Client and are conveyed to the YANG datastore via the traditional CoAP interaction model.</li>
+<li>a YANG client starts to receive a Telemetry stream from a YANG datastore, after being solicited to do so. In this case, persistent subscription characteristics are known by a YANG Client and a YANG datastore before deployment or acquired after their deployment. In essence, corresponding CoAP Tokens and Subscription State are already known by the YANG Client and the YANG datastore when the first YANG Data Item is received from the datastore.</li>
 </ol>
 <h1 id="rfc.section.5.1.1">
 <a href="#rfc.section.5.1.1">5.1.1.</a> <a href="#comi-configured-subscriptions" id="comi-configured-subscriptions">CoMI Configured Subscriptions</a>
 </h1>
-<p id="rfc.section.5.1.1.p.1">CoAP defines a strict coupling of request and corresponding response messages via the CoAP Token. Every CoAP Request MUST include a CoAP Token that is generated by the CoAP requestor (client). Analogously, every CoAP response that is associated with that request MUST include the corresponding CoAP Token in order for the CoAP Request not to be discarded.</p>
+<p id="rfc.section.5.1.1.p.1">CoAP defines a strict coupling of request and corresponding response messages via the CoAP Token. Every CoAP Request MUST include a CoAP Token that is generated by the CoAP Client. Analogously, every CoAP response that is associated with that request MUST include the corresponding CoAP Token in order for the CoAP Request not to be discarded.</p>
 <p id="rfc.section.5.1.1.p.2">In order to enable this type of YANG Subscription, one or more CoMI Clients have to retain or gain knowledge about the corresponding CoAP Tokens (via declarative guidance, a distribution mechanism, or by inferring them via a Call Home procedure), for which they are intended to receive Concise YANG Telemetry by. This implies the existence of a deployed solution that enables a secure and resilient distribution of corresponding CoAP Tokens in a group of CoMI Clients. The exact architecture of this solution is&#8212;at the time of this writing&#8212;out-of-scope of this document.</p>
 <h1 id="rfc.section.5.1.2">
 <a href="#rfc.section.5.1.2">5.1.2.</a> <a href="#dynamic-subscriptions" id="dynamic-subscriptions">Dynamic Subscriptions</a>
@@ -643,7 +649,7 @@ ul.toc li {
 <h1 id="rfc.section.5.2.1">
 <a href="#rfc.section.5.2.1">5.2.1.</a> <a href="#periodic-subscription" id="periodic-subscription">Periodic Subscription</a>
 </h1>
-<p id="rfc.section.5.2.1.p.1">A periodic subscription uses a timer in order to emit an Update Record in the context of a YANG Subscription. This type of Subscription Characteristic is intended to be used if Data Node Values change rapidly or continuously. A typically example of Data Node Values that benefit from this type of Subscription Characteristic is used are PDU Counters.</p>
+<p id="rfc.section.5.2.1.p.1">A periodic subscription uses a timer in order to emit an Update Record in the context of a YANG Subscription. This type of Subscription Characteristic is intended to be used if Data Node Values change with a regular, predicable cadence. A typically example of Data Node Values that benefit from this type of Subscription Characteristic is used are PDU Counters.</p>
 <h1 id="rfc.section.5.2.2">
 <a href="#rfc.section.5.2.2">5.2.2.</a> <a href="#on-change-subscription" id="on-change-subscription">On-Change Subscription</a>
 </h1>
@@ -652,19 +658,20 @@ ul.toc li {
 <a href="#rfc.section.5.2.2.1">5.2.2.1.</a> <a href="#on-change-subscription-prerequisites" id="on-change-subscription-prerequisites">On-Change Subscription Prerequisites</a>
 </h1>
 <p id="rfc.section.5.2.2.1.p.1">An on-change subscription capability MUST be explicitly annotated in a YANG module definition in order to prevent a meaningless or harmful association of Subscription Characteristics to a YANG Subscription. E.g. it is advisable not to allow for on-change subscriptions to data definition statements that provide Data Node Values representing rapidly changing counters.</p>
-<p id="rfc.section.5.2.2.1.p.2">The actual syntax and corresponding semantics of data definition statements that are intended to allow for associating an on-change Subscription Characteristic with a YANG Datastore Subscription to a YANG module is out-of-scope of <a href="#I-D.ietf-netconf-yang-push" class="xref">[I-D.ietf-netconf-yang-push]</a> or <a href="#I-D.ietf-netconf-subscribed-notifications" class="xref">[I-D.ietf-netconf-subscribed-notifications]</a> and&#8212;in consequence&#8212;also out-of-scope of this document.</p>
+<p id="rfc.section.5.2.2.1.p.2">The actual syntax and corresponding semantics of data definition statements that are intended to allow for associating an on-change Subscription Characteristic with a YANG Datastore Subscription to a YANG module is out-of-scope of <a href="#I-D.ietf-netconf-yang-push" class="xref">[I-D.ietf-netconf-yang-push]</a> or <a href="#I-D.ietf-netconf-subscribed-notifications" class="xref">[I-D.ietf-netconf-subscribed-notifications]</a> and&#8212;in consequence&#8212;also out-of-scope of this document. Mechanisms being proposed include [draft-lengyel-netconf-notification-capabilities-01].</p>
 <h1 id="rfc.section.5.2.2.2">
 <a href="#rfc.section.5.2.2.2">5.2.2.2.</a> <a href="#visibility" id="visibility">Visibility</a>
 </h1>
 <p id="rfc.section.5.2.2.2.p.1">In usage scenarios that require a high level of assurance with respect to Visibility (most prominently security-related events) it is vital for a YANG Client to gain knowledge about a deterioration of Visibility of Update Records.</p>
 <p id="rfc.section.5.2.2.2.p.2">In order to request complete Visibility of every Data Node Value change via a corresponding Update Record, the dampening-period (see section 4.2. in <a href="#I-D.ietf-netconf-yang-push" class="xref">[I-D.ietf-netconf-yang-push]</a> MUST be set to 0. The use of YANG Notification Bundle Messages <a href="#I-D.ietf-netconf-notification-messages" class="xref">[I-D.ietf-netconf-notification-messages]</a> can mitigate the deteriorating impact of a dampening-period higher than 0, but can still result in missed Update Records in an constrained-node environment.</p>
-<p id="rfc.section.5.2.2.2.p.3">If the conveyance of an Update Record (bundled or not) failed, the YANG datastore MUST include an "updates-not-sent" flag in the next Update Record.</p>
-<p id="rfc.section.5.2.2.2.p.4">There are usage scenarios, in which complete Visibility of every Change to Data Node Values, but only the information that there was a Data Node Values change occurred is appropriate. In these cases, a dampening-period higher than 0 should be used. A prominent example are "interface-flapping" events.</p>
+<p id="rfc.section.5.2.2.2.p.3">If the conveyance of an on-change Update Record failed, lost records can be recognized as a sequence number of pushed updates is included with each sequential update record.</p>
+<p id="rfc.section.5.2.2.2.p.4">If the assambly of an Update Record is incomplete, datastore MUST include an &#8220;updates-not-sent&#8221; flag in the next Update Record.</p>
+<p id="rfc.section.5.2.2.2.p.5">There are usage scenarios, in which complete Visibility of every Change to Data Node Values, but only the information that there was a Data Node Values change occurred is appropriate. In these cases, a dampening-period higher than 0 should be used. A prominent example are &#8220;interface-flapping&#8221; events.</p>
 <h1 id="rfc.section.5.3">
 <a href="#rfc.section.5.3">5.3.</a> <a href="#subscription-type" id="subscription-type">Subscription Type</a>
 </h1>
-<p id="rfc.section.5.3.p.1">The YANG Push subscription trigger mechanisms illustrated above creates subscription state between a YANG client and a YANG datastore. As long as this subscription state between these two entities persists, a datastore can emit series of YANG notifications to a YANG client, if appropriate conditions are met, e.g. the YANG client expects solicited event notifications coming from the datastore due to a dynamic subscription.</p>
-<p id="rfc.section.5.3.p.2">YANG Push <a href="#I-D.ietf-netconf-yang-push" class="xref">[I-D.ietf-netconf-yang-push]</a> and YANG Subscribed Notifications <a href="#I-D.ietf-netconf-subscribed-notifications" class="xref">[I-D.ietf-netconf-subscribed-notifications]</a> extend this mechanism by enabling subscriptions to changes of YANG module data node state in a YANG datastore resulting in two types of sources - or two different types of YANG Notification Series [-cabo-series], respectively:</p>
+<p id="rfc.section.5.3.p.1">The YANG Push subscription trigger mechanisms illustrated above creates subscription state between a YANG client and a YANG datastore. As long as this subscription state between these two entities persists, a datastore can emit Series of YANG notifications to a YANG client, if appropriate conditions are met, e.g. the YANG client expects solicited event notifications coming from the datastore due to a dynamic subscription.</p>
+<p id="rfc.section.5.3.p.2">YANG Push <a href="#I-D.ietf-netconf-yang-push" class="xref">[I-D.ietf-netconf-yang-push]</a> and YANG Subscribed Notifications <a href="#I-D.ietf-netconf-subscribed-notifications" class="xref">[I-D.ietf-netconf-subscribed-notifications]</a> extend this mechanism by enabling subscriptions to changes of YANG module data node state in a YANG datastore resulting in two types of sources - or two different types of YANG Notification Series <a href="#I-D.bormann-t2trg-stp" class="xref">[I-D.bormann-t2trg-stp]</a>, respectively:</p>
 <p></p>
 
 <ul>
@@ -680,7 +687,7 @@ ul.toc li {
 <h1 id="rfc.section.6">
 <a href="#rfc.section.6">6.</a> <a href="#resilient-subscriptions" id="resilient-subscriptions">Resilient Subscriptions</a>
 </h1>
-<p id="rfc.section.6.p.1">In usage scenarios with a group of more than one CoMI Client a CoMI datastore can potentially convey Concise YANG Telemetry to, a YANG Subscription can be maintained in a more resilient manner. Emitting a CoAP response in a confirmable message enables a CoMI datastore to detect that a corresponding CoMI Client became unavailable (due to missing confirmation messages). In order to create a Resilient Subscription, a detected loss of a CoMI Client MUST immediately re-trigger the CoAP Call Home procedure in order to discover an equivalent "new home" to send the corresponding Concise YANG Telemetry Stream to. The maximum interval between confirmable message as a part of the Concise YANG Telemetry stream is 24 hours.  The interval can be chosen smaller and appropriate to the requirements of the usage scenario. Theoretically &#8211; but not necessarily advisable in a constrained-node environment &#8211; every CoAP response can be send in a confirmable message.</p>
+<p id="rfc.section.6.p.1">In usage scenarios with a group of more than one CoMI Client a CoMI datastore can potentially convey Concise YANG Telemetry to, a YANG Subscription can be maintained in a more resilient manner. Emitting a CoAP response in a confirmable message enables a CoMI datastore to detect that a corresponding CoMI Client became unavailable (due to missing confirmation messages). In order to create a Resilient Subscription, a detected loss of a CoMI Client MUST immediately re-trigger the CoAP Call Home procedure in order to discover an equivalent &#8220;new home&#8221; to send the corresponding Concise YANG Telemetry Stream to. The maximum interval between confirmable message as a part of the Concise YANG Telemetry stream is 24 hours.  The interval can be chosen smaller and appropriate to the requirements of the usage scenario. Theoretically &#8211; but not necessarily advisable in a constrained-node environment &#8211; every CoAP response can be send in a confirmable message.</p>
 <h1 id="rfc.section.7">
 <a href="#rfc.section.7">7.</a> <a href="#subscription-management-better-word" id="subscription-management-better-word">Subscription Management (better word?)</a>
 </h1>
@@ -739,23 +746,23 @@ ul.toc li {
 <p></p>
 
 <ul>
-<li>a POST operation on /c executing the establish-subscription RPC corresponding to the included request body with content-type "application/yang-value+cbor" that returns the subscription-id (or an error response) in an "application/yang-value+cbor" response</li>
-<li>a GET Observe operation on the event stream resource /s/subscription-id or a FETCH operation on /s including a FETCH body with content-format "application/yang-selectors+cbor" and one or more subscription-id as content.</li>
+<li>a POST operation on /c executing the establish-subscription RPC corresponding to the included request body with content-type &#8220;application/yang-value+cbor&#8221; that returns the subscription-id (or an error response) in an &#8220;application/yang-value+cbor&#8221; response</li>
+<li>a GET Observe operation on the event stream resource /s/subscription-id or a FETCH operation on /s including a FETCH body with content-format &#8220;application/yang-selectors+cbor&#8221; and one or more subscription-id as content.</li>
 </ul>
 <h1 id="rfc.section.11.1">
 <a href="#rfc.section.11.1">11.1.</a> <a href="#extension-of-the-comi-event-stream-resource" id="extension-of-the-comi-event-stream-resource">Extension of the CoMI Event Stream Resource</a>
 </h1>
-<p id="rfc.section.11.1.p.1">A standard CoMI datastore as defined in <a href="#I-D.ietf-core-comi" class="xref">[I-D.ietf-core-comi]</a> typically uses the datastore resource "/c" to provide the YANG datastore tree and the resource "/s" to provide the YANG notification stream. Sub-resources under "/c" are represented in the format of /c/sid.</p>
-<p id="rfc.section.11.1.p.2">Concise YANG Telemetry extends the scope of the "/s" resource. Sub-resources under "/s" are represented as /s/key, where key is a numeric string representation of the subscription identifier, e.g. "/s/65536/". The key representation reduces the ambiguity with respect to sid, which uses an URI safe base64 representation.</p>
+<p id="rfc.section.11.1.p.1">A standard CoMI datastore as defined in <a href="#I-D.ietf-core-comi" class="xref">[I-D.ietf-core-comi]</a> typically uses the datastore resource &#8220;/c&#8221; to provide the YANG datastore tree and the resource &#8220;/s&#8221; to provide the YANG notification stream. Sub-resources under &#8220;/c&#8221; are represented in the format of /c/sid.</p>
+<p id="rfc.section.11.1.p.2">Concise YANG Telemetry extends the scope of the &#8220;/s&#8221; resource. Sub-resources under &#8220;/s&#8221; are represented as /s/key, where key is a numeric string representation of the subscription identifier, e.g. &#8220;/s/65536/&#8221;. The key representation reduces the ambiguity with respect to sid, which uses an URI safe base64 representation.</p>
 <h1 id="rfc.section.11.2">
 <a href="#rfc.section.11.2">11.2.</a> <a href="#extension-of-the-comi-datastore-resource" id="extension-of-the-comi-datastore-resource">Extension of the CoMI Datastore Resource</a>
 </h1>
-<p id="rfc.section.11.2.p.1">Each subscription identifier key is instantiated as a sub-resource of the "/c/subid" resource, a YANG tree instance of the subscription characteristics yang:ietf-subscribed-notifications/subscriptions (as defined in YANG Push <a href="#I-D.ietf-netconf-yang-push" class="xref">[I-D.ietf-netconf-yang-push]</a>, which augments ietf-subscribed-notification defined in <a href="#I-D.ietf-netconf-subscribed-notifications" class="xref">[I-D.ietf-netconf-subscribed-notifications]</a>) is provided here for each active subscription.</p>
+<p id="rfc.section.11.2.p.1">Each subscription identifier key is instantiated as a sub-resource of the &#8220;/c/subid&#8221; resource, a YANG tree instance of the subscription characteristics yang:ietf-subscribed-notifications/subscriptions (as defined in YANG Push <a href="#I-D.ietf-netconf-yang-push" class="xref">[I-D.ietf-netconf-yang-push]</a>, which augments ietf-subscribed-notification defined in <a href="#I-D.ietf-netconf-subscribed-notifications" class="xref">[I-D.ietf-netconf-subscribed-notifications]</a>) is provided here for each active subscription.</p>
 <h1 id="rfc.section.11.3">
 <a href="#rfc.section.11.3">11.3.</a> <a href="#extension-of-the-yang-subscription-mechanism" id="extension-of-the-yang-subscription-mechanism">Extension of the YANG Subscription Mechanism</a>
 </h1>
 <p id="rfc.section.11.3.p.1">YANG Customized Subscriptions provides augmented RPC for establishing, modifying, deleting, or killing a subscription. CoMI uses the same module as YANG Push and provides a corresponding interface to allow for a corresponding confirmable POST message to RPC resources (see <a href="#I-D.ietf-core-comi" class="xref">[I-D.ietf-core-comi]</a> Section 5.3.2.).</p>
-<p id="rfc.section.11.3.p.2">Concise YANG Telemetry also defines the capabilities to point confirmable FETCH messages &#8211; including the Observe option - to sub-resources provided by "/c". If the body of the FETCH message includes a CBOR modeled <a href="#I-D.ietf-core-yang-cbor" class="xref">[I-D.ietf-core-yang-cbor]</a> subtree filter expression, a new subscription is created and a corresponding subscription id is returned. Additionally, a corresponding subscription sub-resource under "/s" is created.</p>
+<p id="rfc.section.11.3.p.2">Concise YANG Telemetry also defines the capabilities to point confirmable FETCH messages &#8211; including the Observe option - to sub-resources provided by &#8220;/c&#8221;. If the body of the FETCH message includes a CBOR modeled <a href="#I-D.ietf-core-yang-cbor" class="xref">[I-D.ietf-core-yang-cbor]</a> subtree filter expression, a new subscription is created and a corresponding subscription id is returned. Additionally, a corresponding subscription sub-resource under &#8220;/s&#8221; is created.</p>
 <p id="rfc.section.11.3.p.3">As usual in CoMI, iPATCH requests can be used to perform a number of operations on the datastore in one request, such as deleting, creating, and updating subscriptions.</p>
 <h1 id="rfc.section.12">
 <a href="#rfc.section.12">12.</a> <a href="#upcoming-features-and-stories" id="upcoming-features-and-stories">Upcoming Features and Stories</a>
@@ -813,6 +820,11 @@ ul.toc li {
 <a>Clemm, A.</a>, <a>Voit, E.</a>, <a>Prieto, A.</a>, <a>Tripathy, A.</a>, <a>Nilsen-Nygaard, E.</a>, <a>Bierman, A.</a> and <a>B. Lengyel</a>, "<a href="https://tools.ietf.org/html/draft-ietf-netconf-yang-push-17">YANG Datastore Subscription</a>", Internet-Draft draft-ietf-netconf-yang-push-17, July 2018.</td>
 </tr>
 <tr>
+<td class="reference"><b id="RFC2119">[RFC2119]</b></td>
+<td class="top">
+<a>Bradner, S.</a>, "<a href="https://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>", BCP 14, RFC 2119, DOI 10.17487/RFC2119, March 1997.</td>
+</tr>
+<tr>
 <td class="reference"><b id="RFC5277">[RFC5277]</b></td>
 <td class="top">
 <a>Chisholm, S.</a> and <a>H. Trevino</a>, "<a href="https://tools.ietf.org/html/rfc5277">NETCONF Event Notifications</a>", RFC 5277, DOI 10.17487/RFC5277, July 2008.</td>
@@ -851,6 +863,11 @@ ul.toc li {
 <td class="reference"><b id="RFC8071">[RFC8071]</b></td>
 <td class="top">
 <a>Watsen, K.</a>, "<a href="https://tools.ietf.org/html/rfc8071">NETCONF Call Home and RESTCONF Call Home</a>", RFC 8071, DOI 10.17487/RFC8071, February 2017.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC8174">[RFC8174]</b></td>
+<td class="top">
+<a>Leiba, B.</a>, "<a href="https://tools.ietf.org/html/rfc8174">Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words</a>", BCP 14, RFC 8174, DOI 10.17487/RFC8174, May 2017.</td>
 </tr>
 <tr>
 <td class="reference"><b id="RFC8342">[RFC8342]</b></td>

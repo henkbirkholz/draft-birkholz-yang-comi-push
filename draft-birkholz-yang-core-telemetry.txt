@@ -5,8 +5,8 @@
 NETCONF Working Group                                        H. Birkholz
 Internet-Draft                                            Fraunhofer SIT
 Intended status: Standards Track                                 E. Voit
-Expires: January 4, 2019                                   Cisco Systems
-                                                           July 03, 2018
+Expires: January 17, 2019                                  Cisco Systems
+                                                           July 16, 2018
 
 
                          Concise YANG Telemetry
@@ -38,7 +38,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on January 4, 2019.
+   This Internet-Draft will expire on January 17, 2019.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Birkholz & Voit          Expires January 4, 2019                [Page 1]
+Birkholz & Voit         Expires January 17, 2019                [Page 1]
 
 Internet-Draft                  CoMI Push                      July 2018
 
@@ -71,50 +71,50 @@ Table of Contents
    3.  Summary of the Additions to CoMI  . . . . . . . . . . . . . .   7
      3.1.  Telemetry-Specific CoMI datastores  . . . . . . . . . . .   7
    4.  Subscription Content and State  . . . . . . . . . . . . . . .   8
-     4.1.  Selection Filter  . . . . . . . . . . . . . . . . . . . .   8
+     4.1.  Selection Filter  . . . . . . . . . . . . . . . . . . . .   9
    5.  Subscription Characteristics  . . . . . . . . . . . . . . . .   9
-     5.1.  Subscription Trigger  . . . . . . . . . . . . . . . . . .   9
+     5.1.  Subscription Trigger  . . . . . . . . . . . . . . . . . .  10
        5.1.1.  CoMI Configured Subscriptions . . . . . . . . . . . .  10
-       5.1.2.  Dynamic Subscriptions . . . . . . . . . . . . . . . .  10
-     5.2.  Subscription Interval . . . . . . . . . . . . . . . . . .  10
+       5.1.2.  Dynamic Subscriptions . . . . . . . . . . . . . . . .  11
+     5.2.  Subscription Interval . . . . . . . . . . . . . . . . . .  11
        5.2.1.  Periodic Subscription . . . . . . . . . . . . . . . .  11
        5.2.2.  On-Change Subscription  . . . . . . . . . . . . . . .  11
      5.3.  Subscription Type . . . . . . . . . . . . . . . . . . . .  12
-       5.3.1.  Stream Subscription . . . . . . . . . . . . . . . . .  12
-       5.3.2.  Datastore Subscription  . . . . . . . . . . . . . . .  12
-   6.  Resilient Subscriptions . . . . . . . . . . . . . . . . . . .  12
+       5.3.1.  Stream Subscription . . . . . . . . . . . . . . . . .  13
+       5.3.2.  Datastore Subscription  . . . . . . . . . . . . . . .  13
+   6.  Resilient Subscriptions . . . . . . . . . . . . . . . . . . .  13
    7.  Subscription Management (better word?)  . . . . . . . . . . .  13
      7.1.  YANG RPCs . . . . . . . . . . . . . . . . . . . . . . . .  13
      7.2.  NETCONF Access Control Model [RFC6536bis] . . . . . . . .  13
    8.  Selection Filters . . . . . . . . . . . . . . . . . . . . . .  13
      8.1.  SID for subtree Selection Filter  . . . . . . . . . . . .  13
      8.2.  CBOR-YANG for XPATH-like Selection Filter . . . . . . . .  13
-   9.  Update Triggers for Periodic Subscriptions  . . . . . . . . .  13
-     9.1.  Interval  . . . . . . . . . . . . . . . . . . . . . . . .  13
-     9.2.  Anchor Time . . . . . . . . . . . . . . . . . . . . . . .  13
-   10. Update Triggers for On-Change Subscriptions . . . . . . . . .  13
-     10.1.  dampening period . . . . . . . . . . . . . . . . . . . .  13
-     10.2.  change-type  . . . . . . . . . . . . . . . . . . . . . .  13
-     10.3.  no sync-on-start . . . . . . . . . . . . . . . . . . . .  13
-   11. YANG Push Operations for COMI . . . . . . . . . . . . . . . .  13
+   9.  Update Triggers for Periodic Subscriptions  . . . . . . . . .  14
+     9.1.  Interval  . . . . . . . . . . . . . . . . . . . . . . . .  14
+     9.2.  Anchor Time . . . . . . . . . . . . . . . . . . . . . . .  14
+   10. Update Triggers for On-Change Subscriptions . . . . . . . . .  14
+     10.1.  dampening period . . . . . . . . . . . . . . . . . . . .  14
+     10.2.  change-type  . . . . . . . . . . . . . . . . . . . . . .  14
+     10.3.  no sync-on-start . . . . . . . . . . . . . . . . . . . .  14
+   11. YANG Push Operations for COMI . . . . . . . . . . . . . . . .  14
      11.1.  Extension of the CoMI Event Stream Resource  . . . . . .  14
-     11.2.  Extension of the CoMI Datastore Resource . . . . . . . .  14
-     11.3.  Extension of the YANG Subscription Mechanism . . . . . .  14
+     11.2.  Extension of the CoMI Datastore Resource . . . . . . . .  15
+     11.3.  Extension of the YANG Subscription Mechanism . . . . . .  15
    12. Upcoming Features and Stories . . . . . . . . . . . . . . . .  15
    13. IANA considerations . . . . . . . . . . . . . . . . . . . . .  15
-   14. Security Considerations . . . . . . . . . . . . . . . . . . .  15
-   15. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  15
-   16. Change Log  . . . . . . . . . . . . . . . . . . . . . . . . .  15
-   17. Normative References  . . . . . . . . . . . . . . . . . . . .  15
+   14. Security Considerations . . . . . . . . . . . . . . . . . . .  16
+   15. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  16
+   16. Change Log  . . . . . . . . . . . . . . . . . . . . . . . . .  16
+   17. Normative References  . . . . . . . . . . . . . . . . . . . .  16
 
 
 
-Birkholz & Voit          Expires January 4, 2019                [Page 2]
+Birkholz & Voit         Expires January 17, 2019                [Page 2]
 
 Internet-Draft                  CoMI Push                      July 2018
 
 
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  17
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  18
 
 1.  Introduction
 
@@ -147,6 +147,12 @@ Internet-Draft                  CoMI Push                      July 2018
       provided by the YANG datastore (or parts of them)--based on YANG
       Datastore Subscription [I-D.ietf-netconf-yang-push].
 
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in
+   BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+   capitals, as shown here.
+
 2.  Terminology
 
    Due to the utilization of CoAP, the interaction model of CoMI is
@@ -156,26 +162,25 @@ Internet-Draft                  CoMI Push                      July 2018
    in [RFC7950]--result in Series [I-D.bormann-t2trg-stp] of Server Sent
    Events [W3C.REC-eventsource-20150203]}.  A corresponding Event Stream
    specification for NETCONF [RFC6241] Event Notifications is defined in
+
+
+
+Birkholz & Voit         Expires January 17, 2019                [Page 3]
+
+Internet-Draft                  CoMI Push                      July 2018
+
+
    section 3.2.3 of [RFC5277].  To simplify corresponding terminology
    (and especially consolidate the impedance mismatch of the terms
    Notifications and Events), this document defines the following new
    term:
 
-
-
-
-
-Birkholz & Voit          Expires January 4, 2019                [Page 3]
-
-Internet-Draft                  CoMI Push                      July 2018
-
-
-   YANG Telemetry:  A Series of YANG Notifications or YANG Notification
-      Bundle Messages that are composed of YANG modeled data,
-      potentially composing update records, sent from a YANG datastore
-      to a YANG client either solicited or unsolicited in a fashion that
-      can guarantee well-defined levels of Visibility with respect to
-      Data Node Value changes.
+   YANG Telemetry:  A Series of YANG modeled data items, potentially
+      composing Update Records, sent from a YANG datastore [RFC8342] to
+      a YANG receiver [I-D.ietf-netconf-subscribed-notifications] either
+      solicited or unsolicited in a fashion that can guarantee well-
+      defined levels of Visibility with respect to Data Node Value
+      changes.
 
    Please note: while the focus of YANG is typically on management and
    operations, the scope of YANG Telemetry extends into the Security
@@ -184,19 +189,23 @@ Internet-Draft                  CoMI Push                      July 2018
    Visibility and Resilient YANG Subscriptions, are addressed in this
    document.
 
-   The definition of YANG Telemetry is based on the following existing
+   The definition of YANG Telemetry is based on the following
    terminology:
 
    Data Node Value:  Defined in CoMI as the value assigned to a data
       node instance.  Data node values are serialized into the payload
       according to the rules defined in section 4 of
-      [I-D.ietf-core-yang-cbor].
+      [I-D.ietf-core-yang-cbor].  Changes in Data Node Values are
+      conveyed via data node updates referred to as Update Records.
 
-   Update Record:  A single YANG data item in a Series of YANG
-      Notifications or YANG Notification Bundle Messages conveying the
-      changes to a YANG datastore's module's Data Node Values.
+   Update Record:  Defined in [I-D.ietf-netconf-yang-push], in the
+      context of Concise YANG Telemetry, an Update Record composes a
+      single YANG data item in a Series of YANG Notifications or YANG
+      Notification Bundle Messages conveying the changes to a YANG
+      datastore's module's Data Node Values.
 
-   Resilient Subscription:  A YANG Subscription used to create Concise
+   Resilient Subscription:  A subscription
+      [I-D.ietf-netconf-subscribed-notifications] used to create Concise
       YANG Telemetry that continues to function in a given scope of CoMI
       Clients, or discoverable homes (see CoAP Call Home, respectively),
       if the current receiver of Concise YANG Telemetry is rendered
@@ -208,6 +217,15 @@ Internet-Draft                  CoMI Push                      July 2018
       group of CoMI Clients that supports this kind of fail-over
       mechanism.  This subscription characteristic can have a
       deteriorating effect on the level of assurance with respect to
+
+
+
+
+Birkholz & Voit         Expires January 17, 2019                [Page 4]
+
+Internet-Draft                  CoMI Push                      July 2018
+
+
       Visibility and can therefore result in missed Updated Records,
       which a "new home" has to be notified about.
 
@@ -216,16 +234,8 @@ Internet-Draft                  CoMI Push                      July 2018
       associated data items over time, where a client is able to obtain
       the Series and to learn about new items.
 
-      YANG Customized Subscriptions or a YANG Datastore Subscription
+      YANG Event Stream Subscriptions or a YANG Datastore Subscription
       creates an specific Series Transfer Pattern composed of individual
-
-
-
-Birkholz & Voit          Expires January 4, 2019                [Page 4]
-
-Internet-Draft                  CoMI Push                      July 2018
-
-
       YANG Notifications or YANG Notification Bundle Messages that
       include related updated records.
 
@@ -249,20 +259,33 @@ Internet-Draft                  CoMI Push                      July 2018
       events of resource exhaustion will inform the YANG Client about
       the characteristics of the loss of Update Records.
 
-   YANG Client:  Called a client in [RFC8342], a YANG Client is the
-      entity that can access YANG-defined data on a server, over some
+   YANG Receiver:  A subset of clients as defined in [RFC8342].  A YANG
+      Receiver is the entity that can receive and process - in contrast
+      to access, which is mandatory in order to create a subscription,
+      but not mandatory in order to receive the corresponding telemetry
+      stream - YANG-defined data originating from a server, over some
       network management protocol.
 
-      YANG Client is a representation agnostic term.  Specific network
+      YANG Receiver is a representation agnostic term.  Specific network
       protocols that operate on YANG Servers via YANG Clients use
       representations, such as XML, JSON, or CBOR.
 
    YANG Data Item:  An instance of YANG a modules Data Node Values or
       the changes to Data Node Values, conveyed as data in motion,
       serialized in a specific representation, such as XML, JSON, or
-      CBOR.
 
-   YANG Datastore:  Defined in [RFC6241], a datastore is a conceptual
+
+
+
+Birkholz & Voit         Expires January 17, 2019                [Page 5]
+
+Internet-Draft                  CoMI Push                      July 2018
+
+
+      CBOR.  A Data Node Update as defined in
+      [I-D.ietf-netconf-yang-push] is a YANG data item.
+
+   YANG Datastore:  Defined in [RFC8342], a datastore is a conceptual
       place to store and access information.  A datastore might be
       implemented, for example, using files, a database, flash memory
       locations, or combinations thereof.
@@ -274,14 +297,6 @@ Internet-Draft                  CoMI Push                      July 2018
    YANG Notification (Bundle) Message:  An encapsulation header for one
       or more YANG notifications as defined in
       [I-D.ietf-netconf-notification-messages].  The message header
-
-
-
-Birkholz & Voit          Expires January 4, 2019                [Page 5]
-
-Internet-Draft                  CoMI Push                      July 2018
-
-
       includes a specific set of well-known objects, which are of
       potential use to networking layers prior being interpreted by some
       receiving application layer process.
@@ -314,10 +329,19 @@ Internet-Draft                  CoMI Push                      July 2018
       indicating to a CoAP node that is including a YANG Client to
       initiate a YANG Subscription).
 
-   CoAP Requestor:  The entity that emits CoAP requests to a CoAP Node
-      with server capabilities.  In the context of Concise YANG
-      Telemetry, a YANG client, for example. that is creating dynamic
-      subscriptions is a CoAP Requestor.
+
+
+
+
+Birkholz & Voit         Expires January 17, 2019                [Page 6]
+
+Internet-Draft                  CoMI Push                      July 2018
+
+
+   CoAP Client:  The entity that emits CoAP requests to a CoAP Node with
+      server capabilities.  In the context of Concise YANG Telemetry, a
+      YANG client, for example. that is creating dynamic subscriptions
+      is a CoAP Client.
 
    CoAP Token:  A token used to match a CoAP response with a CoAP
       request [RFC7252].  It is intended for use as a client-local
@@ -327,16 +351,6 @@ Internet-Draft                  CoMI Push                      July 2018
       A CoAP Token must be known, or at least deterministically
       inferable by a YANG Client in order to receive a Series of CoAP
       responses that compose Concise YANG Telemetry.
-
-
-
-
-
-
-Birkholz & Voit          Expires January 4, 2019                [Page 6]
-
-Internet-Draft                  CoMI Push                      July 2018
-
 
 3.  Summary of the Additions to CoMI
 
@@ -372,27 +386,29 @@ Internet-Draft                  CoMI Push                      July 2018
    subscribed notifications without previous solicitation: this allows
    them to create well-formed YANG-modeled Telemetry from hard-coded
    building blocks of YANG-modeled data, which are in compliance to YANG
+
+
+
+Birkholz & Voit         Expires January 17, 2019                [Page 7]
+
+Internet-Draft                  CoMI Push                      July 2018
+
+
    modules.  In consequence, while taking on the role of a YANG
    datastore, a YANG Subscription capable CoMI server SHOULD be capable
    to process YANG queries, but MAY not be due to the lack of
-   corresponding functions or knowledge of a complete YANG module.
+   corresponding functions or knowledge of the resulting structures
+   received.
 
    As these flavors of YANG datastores are not necessarily able to
    create CoMI responses based on client request, it is likely that
    highly constrained datastores initiate a Call-Home procedure (see
    [RFC8071]) acting as if a request was already received (see
-   Configured Subscription above), enticing a very specific request they
-   can fulfill (dynamic subscription) or rendezvous via a discoverable
-   YANG Zero Touch entity.  In all these usage scenarios, the datastore
-   intends to create device specific YANG Telemetry to be conveyed to
-   corresponding YANG clients.
-
-
-
-Birkholz & Voit          Expires January 4, 2019                [Page 7]
-
-Internet-Draft                  CoMI Push                      July 2018
-
+   Configured Subscription above), soliciting a very specific request
+   they can fulfill (dynamic subscription) or rendezvous via a
+   discoverable YANG Zero Touch entity.  In all these usage scenarios,
+   the datastore intends to create device specific YANG Telemetry to be
+   conveyed to corresponding YANG clients.
 
    In essence, incorporating a complete YANG module on a CoMI datastore
    that is capable of YANG Subscriptions is not required to enable the
@@ -416,14 +432,23 @@ Internet-Draft                  CoMI Push                      July 2018
       potentially filtered) update of data node values of YANG datastore
       nodes since the last (change-)update notification.
 
-   Every Update Record Notification (Bundle) Message in a Series that is
-   generated in the context of a subscription is emitted per the
-   characteristics of the subscription state maintained by the CoMI
-   datastore.  Subscription state can be created on the CoMI datastore
-   during manufacturing, onboarding, enrollment, deployment, or
-   maintenance of the CoMI datastore.  Most typically, subscription
-   state is created by a YANG Client (e.g. a Network Management System)
-   via a dynamic subscription.
+   Every Update Record in a Series that is generated in the context of a
+   subscription is emitted per the characteristics of the subscription
+   state maintained by the CoMI datastore.  Subscription state can be
+   created on the CoMI datastore during manufacturing, onboarding,
+   enrollment, deployment, or maintenance of the CoMI datastore.  Most
+   typically, subscription state is created by a YANG Client (e.g. a
+   Network Management System) via a dynamic subscription.
+
+
+
+
+
+
+Birkholz & Voit         Expires January 17, 2019                [Page 8]
+
+Internet-Draft                  CoMI Push                      July 2018
+
 
 4.1.  Selection Filter
 
@@ -442,13 +467,6 @@ Internet-Draft                  CoMI Push                      July 2018
       data node and its potential child nodes.  Effectively, a single
       SID points to the root node of the subtree update records are
       created for.
-
-
-
-Birkholz & Voit          Expires January 4, 2019                [Page 8]
-
-Internet-Draft                  CoMI Push                      July 2018
-
 
    XPATH Filter Expression:  A more detailed selection of SIDs and
       corresponding data node values that update records are created
@@ -478,6 +496,16 @@ Internet-Draft                  CoMI Push                      July 2018
    the "establish-subscription" RPC as defined in
    [I-D.ietf-netconf-subscribed-notifications].
 
+
+
+
+
+
+Birkholz & Voit         Expires January 17, 2019                [Page 9]
+
+Internet-Draft                  CoMI Push                      July 2018
+
+
 5.1.  Subscription Trigger
 
    There are three options how to establish a YANG Telemetry stream via
@@ -486,31 +514,14 @@ Internet-Draft                  CoMI Push                      July 2018
    1.  a YANG client starts to receive a Telemetry stream from a YANG
        datastore, without previous solicitation.  To enable this,
        persistent subscription characteristics must have been configured
-       on the YANG datastore before deployment (e.g. during onboarding),
-       but may be left unknown to the YANG Client.  They then have to be
+       on the YANG datastore earlier (e.g. during onboarding), but may
+       be left unknown to the YANG Client.  They then have to be
        acquired or inferred via procedures that are--at the time of this
        writing--out-of-scope of this document.  In essence,
        corresponding CoAP Tokens are unknown to the YANG Client when the
        first YANG Data Item is received from the datastore.
 
-   2.  a YANG client starts to receive a Telemetry stream from a YANG
-       datastore, after being solicited to do so.  In this case,
-       persistent subscription characteristics are known by a YANG
-       Client and a YANG datastore before deployment or acquired after
-       their deployment.  In essence, corresponding CoAP Tokens and
-
-
-
-Birkholz & Voit          Expires January 4, 2019                [Page 9]
-
-Internet-Draft                  CoMI Push                      July 2018
-
-
-       Subscription State are already known by the YANG Client and the
-       YANG datastore when the first YANG Data Item is received from the
-       datastore.
-
-   3.  a YANG datastore initiates contact with a YANG client via a
+   2.  a YANG datastore initiates contact with a YANG client via a
        Rendezvous, Join, or Call Home procedure and triggers the
        creation of a Telemetry stream by the YANG Client.  In this case,
        the subscription characteristics are provisioned by the YANG
@@ -520,13 +531,22 @@ Internet-Draft                  CoMI Push                      July 2018
        Client and are conveyed to the YANG datastore via the traditional
        CoAP interaction model.
 
+   3.  a YANG client starts to receive a Telemetry stream from a YANG
+       datastore, after being solicited to do so.  In this case,
+       persistent subscription characteristics are known by a YANG
+       Client and a YANG datastore before deployment or acquired after
+       their deployment.  In essence, corresponding CoAP Tokens and
+       Subscription State are already known by the YANG Client and the
+       YANG datastore when the first YANG Data Item is received from the
+       datastore.
+
 5.1.1.  CoMI Configured Subscriptions
 
    CoAP defines a strict coupling of request and corresponding response
    messages via the CoAP Token.  Every CoAP Request MUST include a CoAP
-   Token that is generated by the CoAP requestor (client).  Analogously,
-   every CoAP response that is associated with that request MUST include
-   the corresponding CoAP Token in order for the CoAP Request not to be
+   Token that is generated by the CoAP Client.  Analogously, every CoAP
+   response that is associated with that request MUST include the
+   corresponding CoAP Token in order for the CoAP Request not to be
    discarded.
 
    In order to enable this type of YANG Subscription, one or more CoMI
@@ -534,6 +554,14 @@ Internet-Draft                  CoMI Push                      July 2018
    Tokens (via declarative guidance, a distribution mechanism, or by
    inferring them via a Call Home procedure), for which they are
    intended to receive Concise YANG Telemetry by.  This implies the
+
+
+
+Birkholz & Voit         Expires January 17, 2019               [Page 10]
+
+Internet-Draft                  CoMI Push                      July 2018
+
+
    existence of a deployed solution that enables a secure and resilient
    distribution of corresponding CoAP Tokens in a group of CoMI Clients.
    The exact architecture of this solution is--at the time of this
@@ -555,21 +583,14 @@ Internet-Draft                  CoMI Push                      July 2018
    subscription interval: periodic subscription and on-change
    subscription.
 
-
-
-Birkholz & Voit          Expires January 4, 2019               [Page 10]
-
-Internet-Draft                  CoMI Push                      July 2018
-
-
 5.2.1.  Periodic Subscription
 
    A periodic subscription uses a timer in order to emit an Update
    Record in the context of a YANG Subscription.  This type of
    Subscription Characteristic is intended to be used if Data Node
-   Values change rapidly or continuously.  A typically example of Data
-   Node Values that benefit from this type of Subscription
-   Characteristic is used are PDU Counters.
+   Values change with a regular, predicable cadence.  A typically
+   example of Data Node Values that benefit from this type of
+   Subscription Characteristic is used are PDU Counters.
 
 5.2.2.  On-Change Subscription
 
@@ -590,12 +611,20 @@ Internet-Draft                  CoMI Push                      July 2018
    definition statements that provide Data Node Values representing
    rapidly changing counters.
 
+
+
+Birkholz & Voit         Expires January 17, 2019               [Page 11]
+
+Internet-Draft                  CoMI Push                      July 2018
+
+
    The actual syntax and corresponding semantics of data definition
    statements that are intended to allow for associating an on-change
    Subscription Characteristic with a YANG Datastore Subscription to a
    YANG module is out-of-scope of [I-D.ietf-netconf-yang-push] or
    [I-D.ietf-netconf-subscribed-notifications] and--in consequence--also
-   out-of-scope of this document.
+   out-of-scope of this document.  Mechanisms being proposed include
+   [draft-lengyel-netconf-notification-capabilities-01].
 
 5.2.2.2.  Visibility
 
@@ -610,20 +639,15 @@ Internet-Draft                  CoMI Push                      July 2018
    use of YANG Notification Bundle Messages
    [I-D.ietf-netconf-notification-messages] can mitigate the
    deteriorating impact of a dampening-period higher than 0, but can
-
-
-
-Birkholz & Voit          Expires January 4, 2019               [Page 11]
-
-Internet-Draft                  CoMI Push                      July 2018
-
-
    still result in missed Update Records in an constrained-node
    environment.
 
-   If the conveyance of an Update Record (bundled or not) failed, the
-   YANG datastore MUST include an "updates-not-sent" flag in the next
-   Update Record.
+   If the conveyance of an on-change Update Record failed, lost records
+   can be recognized as a sequence number of pushed updates is included
+   with each sequential update record.
+
+   If the assambly of an Update Record is incomplete, datastore MUST
+   include an "updates-not-sent" flag in the next Update Record.
 
    There are usage scenarios, in which complete Visibility of every
    Change to Data Node Values, but only the information that there was a
@@ -636,17 +660,26 @@ Internet-Draft                  CoMI Push                      July 2018
    The YANG Push subscription trigger mechanisms illustrated above
    creates subscription state between a YANG client and a YANG
    datastore.  As long as this subscription state between these two
-   entities persists, a datastore can emit series of YANG notifications
+   entities persists, a datastore can emit Series of YANG notifications
    to a YANG client, if appropriate conditions are met, e.g. the YANG
    client expects solicited event notifications coming from the
    datastore due to a dynamic subscription.
+
+
+
+
+
+Birkholz & Voit         Expires January 17, 2019               [Page 12]
+
+Internet-Draft                  CoMI Push                      July 2018
+
 
    YANG Push [I-D.ietf-netconf-yang-push] and YANG Subscribed
    Notifications [I-D.ietf-netconf-subscribed-notifications] extend this
    mechanism by enabling subscriptions to changes of YANG module data
    node state in a YANG datastore resulting in two types of sources - or
-   two different types of YANG Notification Series [-cabo-series],
-   respectively:
+   two different types of YANG Notification Series
+   [I-D.bormann-t2trg-stp], respectively:
 
    o  event stream telemetry
 
@@ -666,14 +699,6 @@ Internet-Draft                  CoMI Push                      July 2018
    missing confirmation messages).  In order to create a Resilient
    Subscription, a detected loss of a CoMI Client MUST immediately re-
    trigger the CoAP Call Home procedure in order to discover an
-
-
-
-Birkholz & Voit          Expires January 4, 2019               [Page 12]
-
-Internet-Draft                  CoMI Push                      July 2018
-
-
    equivalent "new home" to send the corresponding Concise YANG
    Telemetry Stream to.  The maximum interval between confirmable
    message as a part of the Concise YANG Telemetry stream is 24 hours.
@@ -693,6 +718,17 @@ Internet-Draft                  CoMI Push                      July 2018
 8.1.  SID for subtree Selection Filter
 
 8.2.  CBOR-YANG for XPATH-like Selection Filter
+
+
+
+
+
+
+
+Birkholz & Voit         Expires January 17, 2019               [Page 13]
+
+Internet-Draft                  CoMI Push                      July 2018
+
 
 9.  Update Triggers for Periodic Subscriptions
 
@@ -722,14 +758,6 @@ Internet-Draft                  CoMI Push                      July 2018
    the corresponding subscription state to provide the root identifier,
    by which dedicated subscription characteristics are associated with
    an established subscription.  In consequence, the basic interaction
-
-
-
-Birkholz & Voit          Expires January 4, 2019               [Page 13]
-
-Internet-Draft                  CoMI Push                      July 2018
-
-
    model of Concise YANG Push is split into two operations that are
    initiated by the YANG client in sequence:
 
@@ -750,6 +778,13 @@ Internet-Draft                  CoMI Push                      July 2018
    datastore tree and the resource "/s" to provide the YANG notification
    stream.  Sub-resources under "/c" are represented in the format of
    /c/sid.
+
+
+
+Birkholz & Voit         Expires January 17, 2019               [Page 14]
+
+Internet-Draft                  CoMI Push                      July 2018
+
 
    Concise YANG Telemetry extends the scope of the "/s" resource.  Sub-
    resources under "/s" are represented as /s/key, where key is a
@@ -778,14 +813,6 @@ Internet-Draft                  CoMI Push                      July 2018
    Concise YANG Telemetry also defines the capabilities to point
    confirmable FETCH messages - including the Observe option - to sub-
    resources provided by "/c".  If the body of the FETCH message
-
-
-
-Birkholz & Voit          Expires January 4, 2019               [Page 14]
-
-Internet-Draft                  CoMI Push                      July 2018
-
-
    includes a CBOR modeled [I-D.ietf-core-yang-cbor] subtree filter
    expression, a new subscription is created and a corresponding
    subscription id is returned.  Additionally, a corresponding
@@ -805,6 +832,15 @@ Internet-Draft                  CoMI Push                      July 2018
 
    This document includes no requests to IANA, but solutions drafts
    incubated via this document might.
+
+
+
+
+
+Birkholz & Voit         Expires January 17, 2019               [Page 15]
+
+Internet-Draft                  CoMI Push                      July 2018
+
 
 14.  Security Considerations
 
@@ -831,17 +867,6 @@ Internet-Draft                  CoMI Push                      July 2018
               Management Interface", draft-ietf-core-comi-03 (work in
               progress), June 2018.
 
-
-
-
-
-
-
-Birkholz & Voit          Expires January 4, 2019               [Page 15]
-
-Internet-Draft                  CoMI Push                      July 2018
-
-
    [I-D.ietf-core-yang-cbor]
               Veillette, M., Pelov, A., Somaraju, A., Turner, R., and A.
               Minaburo, "CBOR Encoding of Data Modeled with YANG",
@@ -866,6 +891,18 @@ Internet-Draft                  CoMI Push                      July 2018
               Subscription", draft-ietf-netconf-yang-push-17 (work in
               progress), July 2018.
 
+
+
+Birkholz & Voit         Expires January 17, 2019               [Page 16]
+
+Internet-Draft                  CoMI Push                      July 2018
+
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <https://www.rfc-editor.org/info/rfc2119>.
+
    [RFC5277]  Chisholm, S. and H. Trevino, "NETCONF Event
               Notifications", RFC 5277, DOI 10.17487/RFC5277, July 2008,
               <https://www.rfc-editor.org/info/rfc5277>.
@@ -889,15 +926,6 @@ Internet-Draft                  CoMI Push                      July 2018
               DOI 10.17487/RFC7252, June 2014,
               <https://www.rfc-editor.org/info/rfc7252>.
 
-
-
-
-
-Birkholz & Voit          Expires January 4, 2019               [Page 16]
-
-Internet-Draft                  CoMI Push                      July 2018
-
-
    [RFC7950]  Bjorklund, M., Ed., "The YANG 1.1 Data Modeling Language",
               RFC 7950, DOI 10.17487/RFC7950, August 2016,
               <https://www.rfc-editor.org/info/rfc7950>.
@@ -910,10 +938,21 @@ Internet-Draft                  CoMI Push                      July 2018
               RFC 8071, DOI 10.17487/RFC8071, February 2017,
               <https://www.rfc-editor.org/info/rfc8071>.
 
+   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/info/rfc8174>.
+
    [RFC8342]  Bjorklund, M., Schoenwaelder, J., Shafer, P., Watsen, K.,
               and R. Wilton, "Network Management Datastore Architecture
               (NMDA)", RFC 8342, DOI 10.17487/RFC8342, March 2018,
               <https://www.rfc-editor.org/info/rfc8342>.
+
+
+
+Birkholz & Voit         Expires January 17, 2019               [Page 17]
+
+Internet-Draft                  CoMI Push                      July 2018
+
 
 Authors' Addresses
 
@@ -949,4 +988,21 @@ Authors' Addresses
 
 
 
-Birkholz & Voit          Expires January 4, 2019               [Page 17]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Birkholz & Voit         Expires January 17, 2019               [Page 18]
