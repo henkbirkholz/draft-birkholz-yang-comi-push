@@ -1,7 +1,7 @@
 ---
 title: Concise YANG Telemetry
 abbrev: CoMI Push
-docname: draft-birkholz-yang-core-telemetry-01
+docname: draft-birkholz-yang-core-telemetry-latest
 
 ipr: trust200902
 area: ops
