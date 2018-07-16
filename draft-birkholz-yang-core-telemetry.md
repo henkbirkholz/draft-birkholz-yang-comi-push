@@ -1,7 +1,7 @@
 ---
 title: Concise YANG Telemetry
 abbrev: CoMI Push
-docname: draft-birkholz-yang-core-telemetry-latest
+docname: draft-birkholz-yang-core-telemetry-01
 
 ipr: trust200902
 area: ops
@@ -9,7 +9,6 @@ wg: NETCONF Working Group
 kw: Internet-Draft
 cat: std
 
-coding: us-ascii
 pi:
    toc: yes
    sortrefs: yes
@@ -87,7 +86,7 @@ This document defines additions to CoMI called Concise YANG Telemetry that:
   YANG datastore (or parts of them)---based on YANG Datastore Subscription
   {{-yangpush}}.
 
-{:: boilerplate bcp14}
+{::boilerplate bcp14}
 
 # Terminology
 
